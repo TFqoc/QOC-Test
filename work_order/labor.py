@@ -10,3 +10,4 @@ class MrpProductionWorkcenterLine(models.Model):
     def _compute_component_qty_to_do(self):
         for wo in self:
             wo.component_qty_to_do = 12
+        raise Warning("Overwrite successful.")
