@@ -22,6 +22,7 @@ def load_iot_handlers():
                 module = util.module_from_spec(spec)
                 spec.loader.exec_module(module)
     ## Now look in this module
+    """
     path = get_resource_path('my_module', 'drivers')
     filesList = os.listdir(path)
     for file in filesList:
@@ -30,6 +31,7 @@ def load_iot_handlers():
             if spec:
                 module = util.module_from_spec(spec)
                 spec.loader.exec_module(module)
+    """
     ##
     http.addons_manifest = {}
     http.root = http.Root()
