@@ -5,7 +5,7 @@ from pathlib import Path
 
 from odoo.modules.module import get_resource_path
 
-def load_iot_handlers():
+def load_iot_handlers_two():
     """
     This method loads local files: 'odoo/addons/hw_drivers/iot_handlers/drivers' and
     'odoo/addons/hw_drivers/iot_handlers/interfaces' and also
