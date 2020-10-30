@@ -8,7 +8,7 @@ class Arduino(Driver):
     connection_type = 'serial'
 
     def __init__(self, identifier, device):
-        super(ArduinoDriver, self).__init__(identifier, device)
+        super(Arduino, self).__init__(identifier, device)
         self._device_type = 'Arduino'
         self._device_connection = 'serial'
         self._device_name = 'Arduino'
