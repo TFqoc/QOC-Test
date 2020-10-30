@@ -39,4 +39,21 @@ class Arduino(Driver):
 
     @classmethod
     def supported(cls, device):
-        return cls.connection_test() or cls.connection_test()
+        ser = serial.Serial(device['identifier'], 9600, timeout=1)#device['identifier']
+
+        # Test connection Twice
+        for x in range(0, 2):
+            try:
+                ser.write(b"S\n")
+                time.sleep(0.2)
+                answer = sser.readline().decode('utf-8').rstrip()#connection.read(8)
+                if answer == "H":
+                    ser.close()
+                    return True
+            except serial.serialutil.SerialTimeoutException:
+                pass
+            except Exception:
+                pass
+        ser.close()
+        return True#False
+        #return cls.connection_test() or cls.connection_test()
