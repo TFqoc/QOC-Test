@@ -39,4 +39,4 @@ class Arduino(Driver):
 
     @classmethod
     def supported(cls, device):
-        return self.connection_test() or self.connection_test()
+        return cls.connection_test() or cls.connection_test()
