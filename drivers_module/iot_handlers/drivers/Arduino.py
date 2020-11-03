@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# -*- coding: utf-8 -*-
+
 from odoo.addons.hw_drivers.driver import Driver
 import serial
 import time
