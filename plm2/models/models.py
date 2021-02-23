@@ -3,9 +3,9 @@
 # from odoo import models, fields, api
 
 
-# class work_order(models.Model):
-#     _name = 'work_order.work_order'
-#     _description = 'work_order.work_order'
+# class plm2(models.Model):
+#     _name = 'plm2.plm2'
+#     _description = 'plm2.plm2'
 
 #     name = fields.Char()
 #     value = fields.Integer()
