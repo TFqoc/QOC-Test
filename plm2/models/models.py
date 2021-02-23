@@ -9,11 +9,22 @@ class SaleLine(models.Model):
 
     version = fields.Integer()
 
+    @api.onchange('version')
+    def version_change(self):
+        if self.version < 1:
+            self.version = 1
+        elif self.version > self.product_id.version:
+            if False:#Check if possible valid number
+                pass
+            else:
+                self.version = self.product_id.version
+        
+
     @api.onchange('product_id')
     def product_id_change(self):
         if not self.product_id:
             return
-
+        # Copy over the version field as well
         self.version = self.product_id.version
         
         valid_values = self.product_id.product_tmpl_id.valid_product_template_attribute_line_ids.product_template_value_ids
