@@ -14,9 +14,11 @@ class SaleLine(models.Model):
         if self.version < 1:
             self.version = 1
         elif self.version > self.product_id.version:
-            if False:#Check if possible valid number
-                pass
-            else:
+            valid = False
+            for eco in self.product_id.eco_ids:
+                if eco.new_bom_revision is self.version:
+                    valid = True
+            if not valid:
                 self.version = self.product_id.version
         
 
