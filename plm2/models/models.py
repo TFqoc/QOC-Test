@@ -20,6 +20,10 @@ class SaleLine(models.Model):
                     valid = True
             if not valid:
                 self.version = self.product_id.version
+        if self.version > self.product_id.version: #if we are still on an unapproved version
+            return {
+                'warning': {'title': "Warning", 'message': "Version " + str(self.version) + " of " + self.product_id.name + " is not yet approved. You will need to wait to manufacture this product until this version is approved",}
+                }
         
 
     @api.onchange('product_id')
