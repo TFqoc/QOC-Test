@@ -1,5 +1,17 @@
 <odoo>
   <data>
+
+    <record id="view_sale_order_inherit" model="ir.ui.view">
+      <field name="name">sale.order.inherit</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="	sale.view_order_form"/>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <xpath expr="//notebook/page/field/tree/field[@name='product_id']" position="after">
+          <field name="version"/>
+        </xpath>
+      </field>
+    </record>
     <!-- explicit list view definition -->
 <!--
     <record model="ir.ui.view" id="plm2.list">
