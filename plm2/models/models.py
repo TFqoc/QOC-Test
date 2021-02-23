@@ -77,3 +77,7 @@ class SaleLine(models.Model):
 
         return result
 
+class Product(models.Model):
+    _inherit = 'product.template'
+
+    version = fields.Integer('Version', default=1, readonly = True, help="The current version of the product.")
