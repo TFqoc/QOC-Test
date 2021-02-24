@@ -122,7 +122,7 @@ class Eco(models.Model):
             })
         return res.id, attr_id
             
-class SaleConfigurator(models.Model):
+class SaleConfigurator(models.TransientModel):
     _inherit = 'sale.product.configurator'
 
     product_template_attribute_value_ids = fields.Many2many(
