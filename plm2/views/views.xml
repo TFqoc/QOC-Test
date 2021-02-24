@@ -22,7 +22,7 @@
         <field name="type" position="after">
           <field name="previous_bom_id"/>
           <field name="revision_ids"/>
-          <!--  -->
+          <field name="version"/>
         </field>
       </field>
     </record>

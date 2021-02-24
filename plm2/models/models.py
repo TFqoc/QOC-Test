@@ -142,7 +142,7 @@ class Eco(models.Model):
 
     def ensure_variant(self):
         # check if attribute exists. If not, create it
-        attr = self.env['product.attribute'].search(['name','=','Version'])
+        attr = self.env['product.attribute'].search([('name','=','Version')])
         if not attr:
             #create record for the attribute
             attr = self.env['product.attribute'].create({
@@ -159,8 +159,7 @@ class Eco(models.Model):
         res = False
         if attr.value_ids:#in case the list is empty
             for val in attr.value_ids:
-                num = int(val.name.split(' ')[1])
-                if num == tag_number:
+                if int(val.name.split(' ')[1]) == tag_number:
                     res = val
                     break
         if not res:
