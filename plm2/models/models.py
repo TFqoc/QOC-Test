@@ -130,12 +130,15 @@ class Eco(models.Model):
                 added = False
                 while True:
                     for line in eco.product_tmpl_id.attribute_line_ids:
-                        if line.name == 'Version':
+                        if line.attribute_id.name == 'Version':
                             added = True
-                            line.write({'value_ids',(4,version_id,0)})
+                            line.write({'product_template_value_ids',(4,version_id,0)})
                             break
                     if not added:
-                        eco.product_tmpl_id.write({'attribute_line_ids':(4,attribute_id,0)})
+                        eco.product_tmpl_id.write({'attribute_line_ids':(0,0,{
+                            'attribute_id': attribute_id,
+                            'product_tmpl_id': eco.product_tmpl_id,
+                        })})
                     else:
                         break
         self.write({'state': 'progress'})
