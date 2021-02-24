@@ -12,6 +12,19 @@
         </xpath>
       </field>
     </record>
+
+    <record id="view_mrp_bom_inherit" model="ir.ui.view">
+      <field name="name">mrp_bom.inherit</field>
+      <field name="model">mrp.bom</field>
+      <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <field name="type" position="after">
+          <field name="previous_bom_id"/>
+          <field name="revision_ids"/>
+        </field>
+      </field>
+    </record>
     <!-- explicit list view definition -->
 <!--
     <record model="ir.ui.view" id="plm2.list">
