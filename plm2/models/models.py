@@ -135,10 +135,14 @@ class Eco(models.Model):
                             line.value_ids = [(4,version_id,0)]
                             break
                     if not added:
-                        eco.product_tmpl_id.write({'attribute_line_ids':(0,0,{
+                        # eco.product_tmpl_id.write({'attribute_line_ids':(0,0,{
+                        #     'attribute_id': attribute_id,
+                        #     'product_tmpl_id': eco.product_tmpl_id,
+                        # })})
+                        eco.product_tmpl_id.attribute_line_ids = [(0,0,{
                             'attribute_id': attribute_id,
                             'product_tmpl_id': eco.product_tmpl_id,
-                        })})
+                        })]
                     else:
                         break
                 # attach old bom to previous variant
