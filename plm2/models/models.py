@@ -7,8 +7,6 @@ from odoo.tools.misc import get_lang
 class SaleLine(models.Model):
     _inherit = 'sale.order.line'
 
-    version = fields.Integer()
-
     @api.onchange('product_id')
     def check_version(self):
         if not self.product_id:
