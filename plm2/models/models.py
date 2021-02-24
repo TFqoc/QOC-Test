@@ -9,22 +9,24 @@ class SaleLine(models.Model):
 
     version = fields.Integer()
 
-    @api.onchange('version')
-    def version_change(self):
+    #TODO Change to product_id and test variant instead of version
+    @api.onchange('product_id')
+    def check_version(self):
         if not self.product_id:
             return
-        if self.version < 1:
-            self.version = 1
-        elif self.version > self.product_id.version:
-            valid = False
-            for eco in self.product_id.eco_ids:
-                if eco.new_bom_revision is self.version:
-                    valid = True
-            if not valid:
-                self.version = self.product_id.version
-        if self.version > self.product_id.version: #if we are still on an unapproved version
+        version_tag = False
+        version_number = -1
+        for line in self.product_id.attribute_line_ids:
+            if line.attribute_id.name == 'Version':
+                for attr in line.value_ids:
+                    num = int(attr.name.split(' ')[1])
+                    if num > version_number:
+                        version_tag = attr.name
+                        version_number = num
+                break # don't loop more if we already found the 'Version'
+        if version_number > self.product_id.version: #if we are still on an unapproved version
             return {
-                'warning': {'title': "Warning", 'message': "Version " + str(self.version) + " of " + self.product_id.name + " is not yet approved. You will need to wait to manufacture this product until this version is approved",}
+                'warning': {'title': "Warning", 'message': str(version_tag) + " of " + self.product_id.name + " is not yet approved. You will need to wait to manufacture this product until this version is approved",}
                 }
         
 
@@ -180,4 +182,16 @@ class Eco(models.Model):
             })
         return res.id, attr_id
             
+class SaleConfigurator(models.Model):
+    _inherit = 'sale.product.configurator'
+
+    # product_template_attribute_value_ids = fields.Many2many(
+    #     'product.template.attribute.value', 'product_configurator_template_attribute_value_rel', 
+    #     string='Attribute Values', readonly=True,compute='_newest_version')
+
+    # def _newest_version(self):
+    #     version = -1
+    #     values = self.env['product.template.attribute.value'].search([('','','')])
+    #     self.product_template_attribute_value_ids = [(6,0,[version])]
+
         
