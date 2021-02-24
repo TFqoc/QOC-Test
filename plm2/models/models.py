@@ -182,8 +182,9 @@ class Eco(models.Model):
             })
         return res.id, attr_id
             
-class SaleConfigurator(models.Model):
-    _inherit = 'sale.product.configurator'
+### TODO Add to manifest
+# class SaleConfigurator(models.Model):
+#     _inherit = 'sale.product.configurator'
 
     # product_template_attribute_value_ids = fields.Many2many(
     #     'product.template.attribute.value', 'product_configurator_template_attribute_value_rel', 
