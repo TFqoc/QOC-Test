@@ -167,7 +167,7 @@ class Eco(models.Model):
                     break
         if not res:
             # res = attr.copy(default={'name':'Version '+str(tag_number)})
-            res = attr.create({
+            res = attr.value_ids.create({
                 'name':'Version ' + str(tag_number),
                 'attribute_id': attr_id,
             })
