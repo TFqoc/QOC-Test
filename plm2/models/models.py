@@ -140,9 +140,10 @@ class Eco(models.Model):
                         'value_ids': [(4,version_id,0)],
                     })]
                 # attach old bom to previous variant
-                eco.bom_id.product_id = self.env['product.product'].search([
-                    ('product_template_attribute_value_ids.name','=','Version ' + str(eco.bom_id.version)),
-                    ('product_tmpl_id','=',eco.bom_id.product_tmpl_id.id)])[0]
+                if eco.bom_id.product_tmpl_id.is_product_variant:
+                    eco.bom_id.product_id = self.env['product.product'].search([
+                        ('product_template_attribute_value_ids.name','=','Version ' + str(eco.bom_id.version)),
+                        ('product_tmpl_id','=',eco.bom_id.product_tmpl_id.id)])[0]
                 # attach new bom to previous variant
                 eco.new_bom_id.product_id = self.env['product.product'].search([
                     ('product_template_attribute_value_ids.name','=','Version ' + str(eco.new_bom_id.version)),
