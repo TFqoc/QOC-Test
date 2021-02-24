@@ -9,21 +9,18 @@ class SaleLine(models.Model):
 
     version = fields.Integer()
 
-    #TODO Change to product_id and test variant instead of version
     @api.onchange('product_id')
     def check_version(self):
         if not self.product_id:
             return
         version_tag = False
         version_number = -1
-        for line in self.product_id.attribute_line_ids:
-            if line.attribute_id.name == 'Version':
-                for attr in line.value_ids:
-                    num = int(attr.name.split(' ')[1])
-                    if num > version_number:
-                        version_tag = attr.name
-                        version_number = num
-                break # don't loop more if we already found the 'Version'
+        for line in self.product_id.product_template_attribute_value_ids:
+            if line.name.split(' ')[0] == 'Version':
+                num = int(line.name.split(' ')[1])
+                if num > version_number:
+                    version_tag = line.name
+                    version_number = num
         if version_number > self.product_id.version: #if we are still on an unapproved version
             return {
                 'warning': {'title': "Warning", 'message': str(version_tag) + " of " + self.product_id.name + " is not yet approved. You will need to wait to manufacture this product until this version is approved",}
