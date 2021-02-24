@@ -87,3 +87,84 @@ class Product(models.Model):
     _inherit = 'product.template'
 
     version = fields.Integer('Version', default=1, readonly = True, help="The current version of the product.")
+
+class Eco(models.Model):
+    _inherit = 'mrp.eco'
+
+    def action_new_revision(self):
+        IrAttachment = self.env['ir.attachment']
+        for eco in self:
+            if eco.type in ('bom', 'both'):
+                eco.new_bom_id = eco.bom_id.copy(default={
+                    'version': eco.bom_id.version + 1,
+                    'active': False,
+                    'previous_bom_id': eco.bom_id.id,
+                })
+                attachments = IrAttachment.search([('res_model', '=', 'mrp.bom'),
+                                                   ('res_id', '=', eco.bom_id.id)])
+                for attachment in attachments:
+                    attachment.copy(default={'res_id':eco.new_bom_id.id})
+            if eco.type in ('routing', 'both'):
+                eco.new_routing_id = eco.routing_id.copy(default={
+                    'version': eco.routing_id.version + 1,
+                    'active': False,
+                    'previous_routing_id': eco.routing_id.id
+                }).id
+                attachments = IrAttachment.search([('res_model', '=', 'mrp.routing'),
+                                                   ('res_id', '=', eco.routing_id.id)])
+                for attachment in attachments:
+                    attachment.copy(default={'res_id':eco.new_routing_id.id})
+            if eco.type == 'both':
+                eco.new_bom_id.routing_id = eco.new_routing_id.id
+                for line in eco.new_bom_id.bom_line_ids:
+                    line.operation_id = eco.new_routing_id.operation_ids.filtered(lambda x: x.name == line.operation_id.name).id
+            # duplicate all attachment on the product
+            if eco.type in ('bom', 'both', 'product'):
+                attachments = self.env['mrp.document'].search([('res_model', '=', 'product.template'), ('res_id', '=', eco.product_tmpl_id.id)])
+                for attach in attachments:
+                    attach.copy({'res_model': 'mrp.eco', 'res_id': eco.id})
+            # add new variant to product
+            if eco.type in ('product','bom','both'):
+                version = eco.bom_id.version + 1
+                version_id, attribute_id = eco.ensure_version_tag(version)
+                added = False
+                while True:
+                    for line in eco.product_id.attribute_line_ids:
+                        if line.name == 'Version':
+                            added = True
+                            line.write({'value_ids',(4,version_id,0)})
+                            break
+                    if not added:
+                        eco.product_id.write({'attribute_line_ids':(4,attribute_id,0)})
+                    else:
+                        break
+        self.write({'state': 'progress'})
+
+    def ensure_variant(self):
+        # check if attribute exists. If not, create it
+        attr = self.env['product.attribute'].search(['name','=','Version'])
+        if not attr:
+            #create record for the attribute
+            attr = self.env['product.attribute'].create({
+                'name':'Version',
+                'display_type':'select',
+                'create_variant':'always',
+            })
+        return attr.id
+
+    def ensure_version_tag(self, tag_number):
+        attr_id = self.ensure_variant()
+        # check if version tag exists. If not, create it
+        attr = self.env['product.attribute'].browse(attr_id)
+        res = False
+        if attr.value_ids:#in case the list is empty
+            for val in attr.value_ids:
+                num = int(val.name.split(' ')[1])
+                if num == tag_number:
+                    res = val
+                    break
+        if not res:
+            res = attr.copy(default={'name':'Version '+str(tag_number)})
+        return res.id, attr_id
+            
+        
