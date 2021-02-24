@@ -132,7 +132,6 @@ class Eco(models.Model):
                     for line in eco.product_tmpl_id.attribute_line_ids:
                         if line.attribute_id.name == 'Version':
                             added = True
-                            # line.write({'product_template_value_ids',(4,version_id,0)})
                             line.value_ids = [(4,version_id,0)]
                             break
                     if not added:
@@ -167,7 +166,11 @@ class Eco(models.Model):
                     res = val
                     break
         if not res:
-            res = attr.copy(default={'name':'Version '+str(tag_number)})
+            # res = attr.copy(default={'name':'Version '+str(tag_number)})
+            res = attr.create({
+                'name':'Version ' + str(tag_number),
+                'attribute_id': attr_id,
+            })
         return res.id, attr_id
             
         
