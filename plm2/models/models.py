@@ -128,23 +128,17 @@ class Eco(models.Model):
                 version = eco.bom_id.version + 1
                 version_id, attribute_id = eco.ensure_version_tag(version)
                 added = False
-                while True:
-                    for line in eco.product_tmpl_id.attribute_line_ids:
-                        if line.attribute_id.name == 'Version':
-                            added = True
-                            line.value_ids = [(4,version_id,0)]
-                            break
-                    if not added:
-                        # eco.product_tmpl_id.write({'attribute_line_ids':(0,0,{
-                        #     'attribute_id': attribute_id,
-                        #     'product_tmpl_id': eco.product_tmpl_id,
-                        # })})
-                        eco.product_tmpl_id.attribute_line_ids = [(0,0,{
-                            'attribute_id': attribute_id,
-                            'product_tmpl_id': eco.product_tmpl_id,
-                        })]
-                    else:
+                for line in eco.product_tmpl_id.attribute_line_ids:
+                    if line.attribute_id.name == 'Version':
+                        added = True
+                        line.value_ids = [(4,version_id,0)]
                         break
+                if not added:
+                    eco.product_tmpl_id.attribute_line_ids = [(0,0,{
+                        'attribute_id': attribute_id,
+                        'product_tmpl_id': eco.product_tmpl_id,
+                        'value_ids': [(4,version_id,0)],
+                    })]
                 # attach old bom to previous variant
                 eco.bom_id.product_id = self.env['product.product'].search([
                     ('product_template_attribute_value_ids.name','=','Version ' + str(eco.bom_id.version)),
