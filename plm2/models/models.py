@@ -145,6 +145,10 @@ class Eco(models.Model):
                 eco.bom_id.product_id = self.env['product.product'].search([
                     ('product_template_attribute_value_ids.name','=','Version ' + str(eco.bom_id.version)),
                     ('product_tmpl_id','=',eco.bom_id.product_tmpl_id.id)])[0]
+                # attach new bom to previous variant
+                eco.new_bom_id.product_id = self.env['product.product'].search([
+                    ('product_template_attribute_value_ids.name','=','Version ' + str(eco.new_bom_id.version)),
+                    ('product_tmpl_id','=',eco.new_bom_id.product_tmpl_id.id)])[0]
         self.write({'state': 'progress'})
 
     def ensure_variant(self):
