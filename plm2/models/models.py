@@ -129,13 +129,13 @@ class Eco(models.Model):
                 version_id, attribute_id = eco.ensure_version_tag(version)
                 added = False
                 while True:
-                    for line in eco.product_id.attribute_line_ids:
+                    for line in eco.product_tmpl_id.attribute_line_ids:
                         if line.name == 'Version':
                             added = True
                             line.write({'value_ids',(4,version_id,0)})
                             break
                     if not added:
-                        eco.product_id.write({'attribute_line_ids':(4,attribute_id,0)})
+                        eco.product_tmpl_id.write({'attribute_line_ids':(4,attribute_id,0)})
                     else:
                         break
         self.write({'state': 'progress'})
