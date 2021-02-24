@@ -11,6 +11,8 @@ class SaleLine(models.Model):
 
     @api.onchange('version')
     def version_change(self):
+        if not self.product_id:
+            return
         if self.version < 1:
             self.version = 1
         elif self.version > self.product_id.version:
