@@ -19,6 +19,7 @@ class SaleLine(models.Model):
                 if num > version_number:
                     version_tag = line.name
                     version_number = num
+                break
         if version_number > self.product_id.version: #if we are still on an unapproved version
             return {
                 'warning': {'title': "Warning", 'message': str(version_tag) + " of " + self.product_id.name + " is not yet approved. You will need to wait to manufacture this product until this version is approved",}
@@ -121,17 +122,20 @@ class Eco(models.Model):
             })
         return res.id, attr_id
             
-### TODO Add to manifest
-# class SaleConfigurator(models.Model):
-#     _inherit = 'sale.product.configurator'
+class SaleConfigurator(models.Model):
+    _inherit = 'sale.product.configurator'
 
-    # product_template_attribute_value_ids = fields.Many2many(
-    #     'product.template.attribute.value', 'product_configurator_template_attribute_value_rel', 
-    #     string='Attribute Values', readonly=True,compute='_newest_version')
+    product_template_attribute_value_ids = fields.Many2many(
+        'product.template.attribute.value', 'product_configurator_template_attribute_value_rel', 
+        string='Attribute Values', readonly=True,compute='_newest_version')
 
-    # def _newest_version(self):
-    #     version = -1
-    #     values = self.env['product.template.attribute.value'].search([('','','')])
-    #     self.product_template_attribute_value_ids = [(6,0,[version])]
+    def _newest_version(self):
+        version_id = -1
+        values = self.env['product.template.attribute.value'].search([('product_attribute_value_id','=','Version')])
+        for v in values:
+            if v.name == "Version " + str(self.project_template_id.version):
+                version_id = v.id
+                break
+        self.product_template_attribute_value_ids = [(6,0,[version_id])]
 
         
