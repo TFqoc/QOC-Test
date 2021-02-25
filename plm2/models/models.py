@@ -179,7 +179,7 @@ class StockRule(models.Model):
 
     @api.model
     def _run_manufacture(self, procurements):
-        # return True
+        return True
         productions_values_by_company = defaultdict(list)
         errors = []
         for procurement, rule in procurements:
@@ -189,7 +189,6 @@ class StockRule(models.Model):
                 if p.name.split(' ')[0] == "Version":
                     version = int(p.name.split(' ')[1])
                     break
-                pass
             if version > procurement.product_id.product_tmpl_id.version:
                 continue
             # End my code
