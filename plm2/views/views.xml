@@ -23,13 +23,13 @@
       </field>
     </record>
 
-    <record model="ir.actions.act_window" id="plm2.action_window">
-      <field name="name">delayed.procurement.action</field>
+    <record model="ir.actions.act_window" id="plm2_action_window">
+      <field name="name">Delayed_Procurement</field>
       <field name="res_model">delayed.procurement</field>
-      <field name="view_mode">list</field>
+      <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem id="procurement" name="Procurement" sequence="10" action="plm2.action_window"/>
+    <menuitem id="procurement_2" name="Procurement" sequence="1" action="plm2_action_window"/>
 
     <record id="view_mrp_bom_inherit" model="ir.ui.view">
       <field name="name">mrp_bom.inherit</field>
