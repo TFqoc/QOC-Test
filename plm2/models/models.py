@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
+import json
 
 from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.tools.misc import get_lang
@@ -174,12 +175,30 @@ class MRPbom(models.Model):
 #                 version_id = v.id
 #                 break
 #         self.product_template_attribute_value_ids = [(6,0,[version_id])]
+class Procurements(models.Model):
+    _name = 'delayed.procurement'
+    _description = """
+        Holds all the procurment data for manufacturing orders that were
+        put on hold due to their version not being approved yet in eco.
+    """
+
+    dict_string = fields.Char(readonly=True)
+
+    def get_dict(self):
+        return json.loads(self.dict_string)
+
+    def try_manufacture(self):
+        procurements  = {}
+        for p in self:
+            procurements.update(self.get_dict())
+        self.unlink(self)
+        self.env['stock.rule']._run_manufacture(procurements)
+
 class StockRule(models.Model):
     _inherit = 'stock.rule'
 
     @api.model
     def _run_manufacture(self, procurements):
-        # return True
         productions_values_by_company = defaultdict(list)
         errors = []
         for procurement, rule in procurements:
@@ -188,6 +207,8 @@ class StockRule(models.Model):
             for p in procurement.product_id.product_template_attribute_value_ids:
                 if p.name.split(' ')[0] == "Version":
                     version = int(p.name.split(' ')[1])
+                    # Create a stored procurement record
+                    self.env['delayed.procurement'].create({'dict_string':str({procurement, rule})})
                     break
             if version > procurement.product_id.product_tmpl_id.version:
                 continue
