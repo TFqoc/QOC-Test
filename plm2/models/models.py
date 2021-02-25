@@ -119,7 +119,7 @@ class Eco(models.Model):
             res = attr.value_ids.create({
                 'name':'Version ' + str(tag_number),
                 'attribute_id': attr_id,
-                'sequence': 0,
+                'sequence': -tag_number, #so the newest version has the lowest sequence.
             })
         return res.id, attr_id
 
