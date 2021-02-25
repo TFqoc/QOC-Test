@@ -121,6 +121,32 @@ class Eco(models.Model):
                 'attribute_id': attr_id,
             })
         return res.id, attr_id
+
+class MRPbom(models.Model):
+    _inherit = 'mrp.bom'
+
+    def apply_new_version(self):
+        """ Put old BoM as deprecated - TODO: Set to stage that is production_ready """
+        MrpEco = self.env['mrp.eco']
+        for new_bom in self:
+            new_bom.write({'active': True})
+            # Move eco's into rebase state which is in progress state.
+            ecos = MrpEco.search(['|',
+                    ('bom_id', '=', new_bom.previous_bom_id.id),
+                    ('current_bom_id', '=', new_bom.previous_bom_id.id),
+                    ('new_bom_id', '!=', False),
+                    ('new_bom_id', '!=', new_bom.id),
+                    ('state', 'not in', ('done', 'new'))])
+            ecos.write({'state': 'rebase', 'current_bom_id': new_bom.id})
+            # Change old bom of eco which is in draft state.
+            draft_ecos = MrpEco.search(['|',
+                ('bom_id', '=', new_bom.previous_bom_id.id),
+                ('current_bom_id', '=', new_bom.previous_bom_id.id),
+                ('new_bom_id', '=', False)])
+            draft_ecos.write({'bom_id': new_bom.id})
+            # Deactivate previous revision of BoM
+            # new_bom.previous_bom_id.write({'active': False})
+        return True
             
 class SaleConfigurator(models.TransientModel):
     _inherit = 'sale.product.configurator'
