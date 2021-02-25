@@ -13,8 +13,8 @@
       </field>
     </record> -->
 
-    <record model="ir.ui.view" id="plm2.delayed.procurement">
-      <field name="name">Delayed Procurement</field>
+    <record model="ir.ui.view" id="plm2_view_delayed_procurement">
+      <field name="name">delayed.procurement.view</field>
       <field name="model">delayed.procurement</field>
       <field name="arch" type="xml">
         <tree>
