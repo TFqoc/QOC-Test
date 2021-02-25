@@ -68,18 +68,22 @@ class Eco(models.Model):
             # add new variant to product
             if eco.type in ('product','bom','both'):
                 version = eco.bom_id.version + 1
+                v1 = False if version != 2 else eco.ensure_version_tag(1)[0]
                 version_id, attribute_id = eco.ensure_version_tag(version)
                 added = False
                 for line in eco.product_tmpl_id.attribute_line_ids:
                     if line.attribute_id.name == 'Version':
                         added = True
                         line.value_ids = [(4,version_id,0)]
+                        # Special case for first eco. We need to add version 1 tag so we get 2 total variants.
+                        if v1:
+                            line.value_ids = [(4,v1,0)]
                         break
                 if not added:
                     eco.product_tmpl_id.attribute_line_ids = [(0,0,{
                         'attribute_id': attribute_id,
                         'product_tmpl_id': eco.product_tmpl_id,
-                        'value_ids': [(4,version_id,0)],
+                        'value_ids': [(4,version_id,0)] if not v1 else [(4,version_id,0),(4,v1,0)],
                     })]
                 # attach old bom to previous variant
                 if eco.bom_id.product_tmpl_id.is_product_variant:
@@ -122,6 +126,11 @@ class Eco(models.Model):
                 'sequence': -tag_number, #so the newest version has the lowest sequence.
             })
         return res.id, attr_id
+
+    @api.onchange('product_tmpl_id')
+    def onchange_product_tmpl_id(self):
+        if self.product_tmpl_id.bom_ids:
+            self.bom_id = self.product_tmpl_id.bom_ids.ids[0]
 
 class MRPbom(models.Model):
     _inherit = 'mrp.bom'
