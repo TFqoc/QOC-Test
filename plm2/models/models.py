@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from collections import defaultdict
 
 from odoo import models, fields, api, _
 from odoo.tools.misc import get_lang
+from odoo.addons.stock.models.stock_rule import ProcurementException
 
 
 class SaleLine(models.Model):
@@ -119,18 +121,17 @@ class Eco(models.Model):
                     res = val
                     break
         if not res:
-            # res = attr.copy(default={'name':'Version '+str(tag_number)})
             res = attr.value_ids.create({
                 'name':'Version ' + str(tag_number),
                 'attribute_id': attr_id,
-                'sequence': 9999-tag_number, #so the newest version has the lowest sequence.
+                'sequence': -tag_number, #so the newest version has the lowest sequence.
             })
         return res.id, attr_id
 
-    @api.onchange('product_tmpl_id')
-    def onchange_product_tmpl_id(self):
-        if self.product_tmpl_id.bom_ids:
-            self.bom_id = self.product_tmpl_id.bom_ids.ids[0]
+    # @api.onchange('product_tmpl_id')
+    # def onchange_product_tmpl_id(self):
+    #     if self.product_tmpl_id.bom_ids:
+    #         self.bom_id = self.product_tmpl_id.bom_ids.ids[0]
 
 class MRPbom(models.Model):
     _inherit = 'mrp.bom'
@@ -158,20 +159,57 @@ class MRPbom(models.Model):
             # new_bom.previous_bom_id.write({'active': False})
         return True
             
-class SaleConfigurator(models.TransientModel):
-    _inherit = 'sale.product.configurator'
+# class SaleConfigurator(models.TransientModel):
+#     _inherit = 'sale.product.configurator'
 
-    product_template_attribute_value_ids = fields.Many2many(
-        'product.template.attribute.value', 'product_configurator_template_attribute_value_rel', 
-        string='Attribute Values', readonly=True,compute='_newest_version')
+#     product_template_attribute_value_ids = fields.Many2many(
+#         'product.template.attribute.value', 'product_configurator_template_attribute_value_rel', 
+#         string='Attribute Values', readonly=True,compute='_newest_version')
 
-    def _newest_version(self):
-        version_id = -1
-        values = self.env['product.template.attribute.value'].search([('product_attribute_value_id','=','Version')])
-        for v in values:
-            if v.name == "Version " + str(self.project_template_id.version):
-                version_id = v.id
-                break
-        self.product_template_attribute_value_ids = [(6,0,[version_id])]
+#     def _newest_version(self):
+#         version_id = -1
+#         values = self.env['product.template.attribute.value'].search([('product_attribute_value_id','=','Version')])
+#         for v in values:
+#             if v.name == "Version " + str(self.project_template_id.version):
+#                 version_id = v.id
+#                 break
+#         self.product_template_attribute_value_ids = [(6,0,[version_id])]
+class StockRule(models.Model):
+    _inherit = 'stock.rule'
 
-        
+    @api.model
+    def _run_manufacture(self, procurements):
+        return True
+        productions_values_by_company = defaultdict(list)
+        errors = []
+        for procurement, rule in procurements:
+            bom = self._get_matching_bom(procurement.product_id, procurement.company_id, procurement.values)
+            if not bom:
+                msg = _('There is no Bill of Material of type manufacture or kit found for the product %s. Please define a Bill of Material for this product.') % (procurement.product_id.display_name,)
+                errors.append((procurement, msg))
+
+            productions_values_by_company[procurement.company_id.id].append(rule._prepare_mo_vals(*procurement, bom))
+
+        if errors:
+            raise ProcurementException(errors)
+
+        for company_id, productions_values in productions_values_by_company.items():
+            # create the MO as SUPERUSER because the current user may not have the rights to do it (mto product launched by a sale for example)
+            productions = self.env['mrp.production'].with_user(SUPERUSER_ID).sudo().with_company(company_id).create(productions_values)
+            self.env['stock.move'].sudo().create(productions._get_moves_raw_values())
+            self.env['stock.move'].sudo().create(productions._get_moves_finished_values())
+            productions._create_workorder()
+            productions.filtered(lambda p: p.move_raw_ids).action_confirm()
+
+            for production in productions:
+                origin_production = production.move_dest_ids and production.move_dest_ids[0].raw_material_production_id or False
+                orderpoint = production.orderpoint_id
+                if orderpoint:
+                    production.message_post_with_view('mail.message_origin_link',
+                                                      values={'self': production, 'origin': orderpoint},
+                                                      subtype_id=self.env.ref('mail.mt_note').id)
+                if origin_production:
+                    production.message_post_with_view('mail.message_origin_link',
+                                                      values={'self': production, 'origin': origin_production},
+                                                      subtype_id=self.env.ref('mail.mt_note').id)
+        return True
