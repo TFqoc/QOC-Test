@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.tools.misc import get_lang
 from odoo.addons.stock.models.stock_rule import ProcurementException
 
@@ -179,10 +179,20 @@ class StockRule(models.Model):
 
     @api.model
     def _run_manufacture(self, procurements):
-        return True
+        # return True
         productions_values_by_company = defaultdict(list)
         errors = []
         for procurement, rule in procurements:
+            # Don't manufacture product if it's version is too new
+            version = 0
+            for p in procurement.product_id.product_template_attribute_value_ids:
+                if p.name.split(' ')[0] == "Version":
+                    version = int(p.name.split(' ')[1])
+                    break
+                pass
+            if version > procurement.product_id.product_tmpl_id.version:
+                continue
+            # End my code
             bom = self._get_matching_bom(procurement.product_id, procurement.company_id, procurement.values)
             if not bom:
                 msg = _('There is no Bill of Material of type manufacture or kit found for the product %s. Please define a Bill of Material for this product.') % (procurement.product_id.display_name,)
