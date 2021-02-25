@@ -29,19 +29,6 @@
       <field name="view_mode">tree</field>
     </record>
 
-    <record model="ir.actions.server" id="plm2.action_server">
-      <field name="name">plm2 server</field>
-      <field name="model_id" ref="plm2.plm2_view_delayed_procurement"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
-
     <record id="view_mrp_bom_inherit" model="ir.ui.view">
       <field name="name">mrp_bom.inherit</field>
       <field name="model">mrp.bom</field>
