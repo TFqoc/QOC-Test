@@ -119,6 +119,7 @@ class Eco(models.Model):
             res = attr.value_ids.create({
                 'name':'Version ' + str(tag_number),
                 'attribute_id': attr_id,
+                'sequence': 0,
             })
         return res.id, attr_id
 
@@ -126,7 +127,7 @@ class MRPbom(models.Model):
     _inherit = 'mrp.bom'
 
     def apply_new_version(self):
-        """ Put old BoM as deprecated - TODO: Set to stage that is production_ready """
+        """ Put old BoM as deprecated """
         MrpEco = self.env['mrp.eco']
         for new_bom in self:
             new_bom.write({'active': True})
