@@ -23,6 +23,7 @@
           </header>
           <sheet>
             <group>
+              <field name="active" readonly="1"/>
               <field name="rule"/>
               <field name="product_id"/>
               <field name="product_qty"/>
