@@ -50,7 +50,7 @@
     </record>
 
     <!-- Icon on main page for debugging purposes -->
-    <menuitem action="stock.action_rules_form" id="menu_action_rules_form2"/>
+    <menuitem action="plm2_action_window" id="menu_action_plm2"/>
 
     <record id="view_mrp_bom_inherit" model="ir.ui.view">
       <field name="name">mrp_bom.inherit</field>
