@@ -23,7 +23,8 @@
           </header>
           <sheet>
             <group>
-              <field name="dict_string" string="Dictionary" readonly="1"/>
+              <field name="rule"/>
+              <field name="procurement"/>
             </group>
             <group>
 
