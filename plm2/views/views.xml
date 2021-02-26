@@ -52,6 +52,8 @@
 
     <menuitem id="procurement_root" name="Procurement" sequence="10" action="plm2_action_window"/>
 
+    <menuitem action="stock.action_rules_form" id="menu_action_rules_form2"/>
+
     <record id="view_mrp_bom_inherit" model="ir.ui.view">
       <field name="name">mrp_bom.inherit</field>
       <field name="model">mrp.bom</field>
