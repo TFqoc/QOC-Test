@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
 import json
+import logging
 
 from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.tools.misc import get_lang
 from odoo.addons.stock.models.stock_rule import ProcurementException
 
+_logger = logging.getLogger(__name__)
 
 class SaleLine(models.Model):
     _inherit = 'sale.order.line'
@@ -198,6 +200,7 @@ class StockRule(models.Model):
     def _run_manufacture(self, procurements):
         productions_values_by_company = defaultdict(list)
         errors = []
+        _logger.debug(procurements)
         for procurement, rule in procurements:
             # Don't manufacture product if it's version is too new
             version = 0
@@ -205,7 +208,7 @@ class StockRule(models.Model):
                 if p.name.split(' ')[0] == "Version":
                     version = int(p.name.split(' ')[1])
                     # Create a stored procurement record
-                    self.env['delayed.procurement'].create({'dict_string':str({procurement, rule})})
+                    self.env['delayed.procurement'].create({'dict_string':str({str(procurement), str(rule)})})
                     break
             if version > procurement.product_id.product_tmpl_id.version:
                 continue
