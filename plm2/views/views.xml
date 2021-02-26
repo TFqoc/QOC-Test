@@ -48,7 +48,9 @@
       <field name="arch" type="xml">
         <tree string="Procurement">
           <field name="rule"/>
-          <field name="procurement"/>
+          <field name="product_id"/>
+          <field name="product_qty"/>
+          <field name="product_uom"/>
         </tree>
       </field>
     </record>
