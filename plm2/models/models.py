@@ -233,7 +233,7 @@ class StockRule(models.Model):
                             'name': procurement.name,
                             'origin': procurement.origin,
                             'company_id': procurement.company_id.id,
-                            'values':'',
+                            'values':str(procurement.values),
                             })
                     break
             if version > procurement.product_id.product_tmpl_id.version:
