@@ -208,10 +208,11 @@ class StockRule(models.Model):
                     # Create a stored procurement record
                     # rule is a record of type stock.rule
                     # 
-                    self.env['delayed.procurement'].create({
-                        'procurement':str(procurement),
-                        'rule':rule.id,
-                        })
+                    if version > procurement.product_id.product_tmpl_id.version:
+                        self.env['delayed.procurement'].create({
+                            'procurement':str(procurement),
+                            'rule':rule.id,
+                            })
                     break
             if version > procurement.product_id.product_tmpl_id.version:
                 continue
