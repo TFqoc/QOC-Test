@@ -270,7 +270,7 @@ class StockRule(models.Model):
                             'values_group_id': procurement.values['group_id'],
                             'values_bom_id': procurement.values['bom_id'],
                             'values_supplierinfo_id': procurement.values['supplierinfo_id'],
-                            'values_company_id': procurement.values['company_id'],
+                            'values_company_id': procurement.values['company_id'].id,
                             'values_priority': procurement.values['priority'],
                             })
                     break
