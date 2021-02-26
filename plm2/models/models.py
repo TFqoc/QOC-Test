@@ -256,8 +256,7 @@ class StockRule(models.Model):
                 if p.name.split(' ')[0] == "Version":
                     version = int(p.name.split(' ')[1])
                     # Create a stored procurement record
-                    # rule is a record of type stock.rule
-                    # 
+                    raise Warning(str(version) + " Greater Than " + str(procurement.product_id.product_tmpl_id.version) + " ?")
                     if version > procurement.product_id.product_tmpl_id.version:
                         self.env['delayed.procurement'].create({
                             'rule':rule.id,
