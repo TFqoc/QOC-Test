@@ -26,10 +26,10 @@
     <record model="ir.actions.act_window" id="plm2_action_window">
       <field name="name">Delayed_Procurement</field>
       <field name="res_model">delayed.procurement</field>
-      <field name="view_mode">list,form</field>
+      <field name="view_mode">tree</field>
     </record>
 
-    <menuitem id="procurement_2" name="Procurement" sequence="1" action="plm2_action_window"/>
+    <menuitem id="procurement_root" name="Procurement" sequence="1" action="plm2_action_window"/>
 
     <record id="view_mrp_bom_inherit" model="ir.ui.view">
       <field name="name">mrp_bom.inherit</field>
