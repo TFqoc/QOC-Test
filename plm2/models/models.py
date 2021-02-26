@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
 import json
-import logging
 
 from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.tools.misc import get_lang
 from odoo.addons.stock.models.stock_rule import ProcurementException
 
-_logger = logging.getLogger(__name__)
 
 class SaleLine(models.Model):
     _inherit = 'sale.order.line'
@@ -200,7 +198,6 @@ class StockRule(models.Model):
     def _run_manufacture(self, procurements):
         productions_values_by_company = defaultdict(list)
         errors = []
-        _logger.debug(procurements)
         for procurement, rule in procurements:
             # Don't manufacture product if it's version is too new
             version = 0
@@ -208,7 +205,9 @@ class StockRule(models.Model):
                 if p.name.split(' ')[0] == "Version":
                     version = int(p.name.split(' ')[1])
                     # Create a stored procurement record
-                    self.env['delayed.procurement'].create({'dict_string':str({str(procurement), str(rule)})})
+                    # procurement is a record of type stock.rule
+                    # 
+                    self.env['delayed.procurement'].create({'dict_string':str((procurement, rule))})
                     break
             if version > procurement.product_id.product_tmpl_id.version:
                 continue
@@ -243,3 +242,5 @@ class StockRule(models.Model):
                                                       values={'self': production, 'origin': origin_production},
                                                       subtype_id=self.env.ref('mail.mt_note').id)
         return True
+
+{'stock.rule(6,)', "Procurement(product_id=product.product(1,), product_qty=1.0, product_uom=uom.uom(1,), location_id=stock.location(8,), name='OP/00001', origin='OP/00001', company_id=res.company(1,), values={'route_ids': stock.location.route(), 'date_planned': datetime.datetime(2021, 2, 26, 0, 0), 'date_deadline': datetime.datetime(2021, 2, 26, 0, 0), 'warehouse_id': stock.warehouse(1,), 'orderpoint_id': stock.warehouse.orderpoint(1,), 'group_id': procurement.group(), 'bom_id': mrp.bom(), 'supplierinfo_id': product.supplierinfo(), 'company_id': res.company(1,), 'priority': '0'})"}
