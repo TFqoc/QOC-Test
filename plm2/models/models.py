@@ -237,7 +237,7 @@ class Procurements(models.Model):
         procurements  = []
         for p in self:
             procurements.append(self.get_tuple())
-        self.unlink(self)
+        self.unlink()
         self.env['stock.rule']._run_manufacture(procurements)
 
 class StockRule(models.Model):
