@@ -238,6 +238,8 @@ class Procurements(models.Model):
         for p in self:#.env['delayed.procurement'].search([]):
             procurements.append(p.get_tuple())
         # self.unlink()
+        if len(procurements) < 1:
+            raise Warning("Procurements is empty!")
         self.env['stock.rule']._run_manufacture(procurements)
 
 class StockRule(models.Model):
