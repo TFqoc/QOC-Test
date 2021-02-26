@@ -209,7 +209,7 @@ class Procurements(models.Model):
 
 
     def get_tuple(self):
-        procurement = Procurement(
+        procurement = self.Procurement(
             self.product_id, self.product_qty, self.product_uom, self.location_id, self.name, self.origin,
             self.company_id, self.get_values()
         )
