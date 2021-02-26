@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 import json
 
 from odoo import models, fields, api, _, SUPERUSER_ID
@@ -179,11 +179,26 @@ class Procurements(models.Model):
     _name = 'delayed.procurement'
     _description = 'Delayed Procurement'
 
+    Procurement = namedtuple('Procurement', ['product_id', 'product_qty',
+    'product_uom', 'location_id', 'name', 'origin', 'company_id', 'values'])
+
     rule = fields.Many2one('stock.rule')
-    procurement = fields.Char()
+    product_id = fields.Many2one('product.product')
+    product_qty = fields.Float()
+    product_uom = fields.Many2one('uom.uom')
+    location_id = fields.Many2one('stock.location')
+    name = fields.Char()
+    origin = fields.Char()
+    company_id = fields.Many2one('res.company')
+    
+    values = fields.Char()
 
     def get_tuple(self):
-        return (self.procurement, self.rule)
+        procurement = self.env['stock.rule'].Procurement(
+            self.product_id, self.product_qty, self.product_uom, self.location_id, self.name, self.origin,
+            self.company_id, self.values
+        )
+        return (procurement, self.rule)
 
     def try_manufacture(self):
         procurements  = []
@@ -210,8 +225,15 @@ class StockRule(models.Model):
                     # 
                     if version > procurement.product_id.product_tmpl_id.version:
                         self.env['delayed.procurement'].create({
-                            'procurement':str(procurement),
                             'rule':rule.id,
+                            'product_id': procurement.product_id.id,
+                            'product_qty': procurement.product_qty,
+                            'product_uom': procurement.product_uom.id,
+                            'location_id': procurement.location_id.id,
+                            'name': procurement.name,
+                            'origin': procurement.origin,
+                            'company_id': procurement.company_id.id,
+                            'values':'',
                             })
                     break
             if version > procurement.product_id.product_tmpl_id.version:

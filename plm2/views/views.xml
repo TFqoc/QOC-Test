@@ -24,7 +24,14 @@
           <sheet>
             <group>
               <field name="rule"/>
-              <field name="procurement"/>
+              <field name="product_id"/>
+              <field name="product_qty"/>
+              <field name="product_uom"/>
+              <field name="location_id"/>
+              <field name="name"/>
+              <field name="origin"/>
+              <field name="company_id"/>
+              <field name="values"/>
             </group>
             <group>
 
