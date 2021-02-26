@@ -235,7 +235,7 @@ class Procurements(models.Model):
     @api.model
     def try_manufacture(self):
         procurements  = []
-        for p in self:#.env['delayed.procurement'].search([]):
+        for p in self.env['delayed.procurement'].search([]):
             procurements.append(p.get_tuple())
         # self.unlink()
         if len(procurements) < 1:
