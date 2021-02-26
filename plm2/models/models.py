@@ -38,7 +38,7 @@ class Eco(models.Model):
 
     def action_apply(self):
         super(Eco, self).action_apply()
-        self.env['delayed.procurements'].try_manufacture()
+        self.env['delayed.procurement'].try_manufacture()
 
     def action_new_revision(self):
         IrAttachment = self.env['ir.attachment']
