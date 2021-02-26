@@ -191,14 +191,38 @@ class Procurements(models.Model):
     origin = fields.Char()
     company_id = fields.Many2one('res.company')
     
-    values = fields.Char()
+    values_route_ids = fields.Many2one('stock.location.route')
+    values_date_planned = fields.Date()
+    values_date_deadline = fields.Date()
+    values_warehouse = fields.Many2one('stock.warehouse')
+    values_orderpoint_id = fields.Many2one('stock.warehouse.orderpoint')
+    values_group_id = fields.Many2one('procurement.group')
+    values_bom_id = fields.Many2one('mrp.bom')
+    values_supplierinfo_id = fields.Many2one('product.supplierinfo')
+    values_company_id = fields.Many2one('res.company')
+    values_priority = fields.Integer()
+
 
     def get_tuple(self):
         procurement = self.env['stock.rule'].Procurement(
             self.product_id, self.product_qty, self.product_uom, self.location_id, self.name, self.origin,
-            self.company_id, self.values
+            self.company_id, self.get_values()
         )
         return (procurement, self.rule)
+
+    def get_values(self):
+        return {
+        'route_ids': self.values_route_ids,
+        'date_planned': self.values_date_planned,
+        'date_deadline': self.values_date_deadline,
+        'warehouse': self.values_warehouse,
+        'orderpoint_id': self.values_orderpoint_id,
+        'group_id': self.values_group_id,
+        'bom_id': self.values_bom_id,
+        'supplierinfo_id': self.values_supplierinfo_id,
+        'company_id': self.values_company_id,
+        'priority': self.values_priority,
+    }
 
     def try_manufacture(self):
         procurements  = []
@@ -234,6 +258,16 @@ class StockRule(models.Model):
                             'origin': procurement.origin,
                             'company_id': procurement.company_id.id,
                             'values':str(procurement.values),
+                            'values_route_ids': procurement.values['route_ids'],
+                            'values_date_planned': procurement.values['date_planned'],
+                            'values_date_deadline': procurement.values['date_deadline'],
+                            'values_warehouse': procurement.values['warehouse'],
+                            'values_orderpoint_id': procurement.values['orderpoint_id'],
+                            'values_group_id': procurement.values['group_id'],
+                            'values_bom_id': procurement.values['bom_id'],
+                            'values_supplierinfo_id': procurement.values['supplierinfo_id'],
+                            'values_company_id': procurement.values['company_id'],
+                            'values_priority': procurement.values['priority'],
                             })
                     break
             if version > procurement.product_id.product_tmpl_id.version:
