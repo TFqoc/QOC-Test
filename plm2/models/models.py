@@ -36,6 +36,10 @@ class Product(models.Model):
 class Eco(models.Model):
     _inherit = 'mrp.eco'
 
+    def action_apply(self):
+        super(Eco, self).action_apply()
+        self.env['delayed.procurements'].try_manufacture()
+
     def action_new_revision(self):
         IrAttachment = self.env['ir.attachment']
         for eco in self:
@@ -191,7 +195,7 @@ class Procurements(models.Model):
     origin = fields.Char()
     company_id = fields.Many2one('res.company')
     
-    values = fields.Char(compute='get_values_char')
+    values = fields.Char(compute='_compute_values_char')
     values_route_ids = fields.Many2one('stock.location.route')
     values_date_planned = fields.Date()
     values_date_deadline = fields.Date()
@@ -211,7 +215,7 @@ class Procurements(models.Model):
         )
         return (procurement, self.rule)
 
-    def get_values_char(self):
+    def _compute_values_char(self):
         self.values = str(self.get_values())
 
     def get_values(self):
@@ -228,6 +232,7 @@ class Procurements(models.Model):
         'priority': self.values_priority,
     }
 
+    @api.model
     def try_manufacture(self):
         procurements  = []
         for p in self:
