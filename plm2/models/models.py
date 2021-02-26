@@ -209,7 +209,7 @@ class Procurements(models.Model):
 
 
     def get_tuple(self):
-        procurement = self.env['stock.rule'].Procurement(
+        procurement = Procurement(
             self.product_id, self.product_qty, self.product_uom, self.location_id, self.name, self.origin,
             self.company_id, self.get_values()
         )
