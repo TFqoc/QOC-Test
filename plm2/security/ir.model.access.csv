@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_plm2_plm2,plm2.plm2,model_plm2_plm2,base.group_user,1,1,1,1
+access_delayed_procurement,delayed.procurement,model_delayed_procurement,base.group_user,1,1,1,1
