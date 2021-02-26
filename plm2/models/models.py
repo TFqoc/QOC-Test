@@ -216,17 +216,17 @@ class Procurements(models.Model):
         'priority': self.values_priority,
     }
 
-    @api.model
-    def create(self, vals):
-        # Search records to see if there is one with the same product and increment it.
-        for p in self.env['delayed.procurement'].search([('active','=',True)]):
-            if p.product_id.id == vals['product_id']:
-                #Update our quantity
-                p.product_qty = vals['product_qty']
-                # end the creation early
-                return
-        # If not, then create the new record
-        return super(Procurements, self).create(vals)
+    # @api.model
+    # def create(self, vals):
+    #     # Search records to see if there is one with the same product and increment it.
+    #     for p in self.env['delayed.procurement'].search([('active','=',True)]):
+    #         if p.product_id.id == vals['product_id']:
+    #             #Update our quantity
+    #             p.product_qty = vals['product_qty']
+    #             # end the creation early
+    #             return
+    #     # If not, then create the new record
+    #     return super(Procurements, self).create(vals)
 
     @api.model
     def try_manufacture(self):
