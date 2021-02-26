@@ -39,7 +39,8 @@
       <field name="type">tree</field>
       <field name="arch" type="xml">
         <tree string="Procurement">
-          <field name="dict_string"/>
+          <field name="rule"/>
+          <field name="procurement"/>
         </tree>
       </field>
     </record>

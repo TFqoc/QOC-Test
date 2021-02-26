@@ -179,15 +179,16 @@ class Procurements(models.Model):
     _name = 'delayed.procurement'
     _description = 'Delayed Procurement'
 
-    dict_string = fields.Char(readonly=True)
+    rule = fields.Many2one('stock.rule')
+    procurement = fields.Char()
 
-    def get_dict(self):
-        return json.loads(self.dict_string)
+    def get_tuple(self):
+        return (self.procurement, self.rule)
 
     def try_manufacture(self):
-        procurements  = {}
+        procurements  = []
         for p in self:
-            procurements.update(self.get_dict())
+            procurements.append(self.get_tuple())
         self.unlink(self)
         self.env['stock.rule']._run_manufacture(procurements)
 
@@ -205,9 +206,12 @@ class StockRule(models.Model):
                 if p.name.split(' ')[0] == "Version":
                     version = int(p.name.split(' ')[1])
                     # Create a stored procurement record
-                    # procurement is a record of type stock.rule
+                    # rule is a record of type stock.rule
                     # 
-                    self.env['delayed.procurement'].create({'dict_string':str((procurement, rule))})
+                    self.env['delayed.procurement'].create({
+                        'procurement':str(procurement),
+                        'rule':rule.id,
+                        })
                     break
             if version > procurement.product_id.product_tmpl_id.version:
                 continue
