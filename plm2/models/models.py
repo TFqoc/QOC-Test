@@ -235,9 +235,9 @@ class Procurements(models.Model):
     @api.model
     def try_manufacture(self):
         procurements  = []
-        for p in self:
-            procurements.append(self.get_tuple())
-        self.unlink()
+        for p in self:#.env['delayed.procurement'].search([]):
+            procurements.append(p.get_tuple())
+        # self.unlink()
         self.env['stock.rule']._run_manufacture(procurements)
 
 class StockRule(models.Model):
