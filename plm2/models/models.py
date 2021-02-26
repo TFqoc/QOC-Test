@@ -177,10 +177,7 @@ class MRPbom(models.Model):
 #         self.product_template_attribute_value_ids = [(6,0,[version_id])]
 class Procurements(models.Model):
     _name = 'delayed.procurement'
-    _description = """
-        Holds all the procurment data for manufacturing orders that were
-        put on hold due to their version not being approved yet in eco.
-    """
+    _description = 'Delayed Procurement'
 
     dict_string = fields.Char(readonly=True)
 
