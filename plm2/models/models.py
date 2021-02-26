@@ -191,6 +191,7 @@ class Procurements(models.Model):
     origin = fields.Char()
     company_id = fields.Many2one('res.company')
     
+    values = fields.Char(compute='get_values')
     values_route_ids = fields.Many2one('stock.location.route')
     values_date_planned = fields.Date()
     values_date_deadline = fields.Date()
