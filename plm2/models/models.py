@@ -10,6 +10,7 @@ from odoo.addons.stock.models.stock_rule import ProcurementException
 class SaleLine(models.Model):
     _inherit = 'sale.order.line'
 
+    # Show warning message if product version has not yet been approved in eco
     @api.onchange('product_id')
     def check_version(self):
         if not self.product_id:
@@ -31,6 +32,7 @@ class SaleLine(models.Model):
 class Product(models.Model):
     _inherit = 'product.template'
 
+    # Makes the version from eco readonly
     version = fields.Integer('Version', default=1, readonly = True, help="The current version of the product.")
 
 class Eco(models.Model):
@@ -133,11 +135,6 @@ class Eco(models.Model):
             })
         return res.id, attr_id
 
-    # @api.onchange('product_tmpl_id')
-    # def onchange_product_tmpl_id(self):
-    #     if self.product_tmpl_id.bom_ids:
-    #         self.bom_id = self.product_tmpl_id.bom_ids.ids[0]
-
 class MRPbom(models.Model):
     _inherit = 'mrp.bom'
 
@@ -163,22 +160,7 @@ class MRPbom(models.Model):
             # Deactivate previous revision of BoM
             # new_bom.previous_bom_id.write({'active': False})
         return True
-            
-# class SaleConfigurator(models.TransientModel):
-#     _inherit = 'sale.product.configurator'
 
-#     product_template_attribute_value_ids = fields.Many2many(
-#         'product.template.attribute.value', 'product_configurator_template_attribute_value_rel', 
-#         string='Attribute Values', readonly=True,compute='_newest_version')
-
-#     def _newest_version(self):
-#         version_id = -1
-#         values = self.env['product.template.attribute.value'].search([('product_attribute_value_id','=','Version')])
-#         for v in values:
-#             if v.name == "Version " + str(self.project_template_id.version):
-#                 version_id = v.id
-#                 break
-#         self.product_template_attribute_value_ids = [(6,0,[version_id])]
 class Procurements(models.Model):
     _name = 'delayed.procurement'
     _description = 'Delayed Procurement'
@@ -235,6 +217,18 @@ class Procurements(models.Model):
     }
 
     @api.model
+    def create(self, vals):
+        # Search records to see if there is one with the same product and increment it.
+        for p in self.env['delayed.procurement'].search([('active','=',True)]):
+            if p.product_id.id == vals['product_id']:
+                #Update our quantity
+                p.product_qty = vals['product_qty']
+                # end the creation early
+                return
+        # If not, then create the new record
+        return super(Procurements, self).create(vals)
+
+    @api.model
     def try_manufacture(self):
         procurements  = []
         for p in self.env['delayed.procurement'].search([('active','=',True)]):
@@ -271,7 +265,6 @@ class StockRule(models.Model):
                             'name': procurement.name,
                             'origin': procurement.origin,
                             'company_id': procurement.company_id.id,
-                            # 'values':str(procurement.values),
                             'values_route_ids': procurement.values['route_ids'],
                             'values_date_planned': procurement.values['date_planned'],
                             'values_date_deadline': procurement.values['date_deadline'],
@@ -286,7 +279,7 @@ class StockRule(models.Model):
                     break
             if version > procurement.product_id.product_tmpl_id.version:
                 continue
-            # End my code
+            # End my modifications
             bom = self._get_matching_bom(procurement.product_id, procurement.company_id, procurement.values)
             if not bom:
                 msg = _('There is no Bill of Material of type manufacture or kit found for the product %s. Please define a Bill of Material for this product.') % (procurement.product_id.display_name,)
@@ -317,5 +310,3 @@ class StockRule(models.Model):
                                                       values={'self': production, 'origin': origin_production},
                                                       subtype_id=self.env.ref('mail.mt_note').id)
         return True
-
-{'stock.rule(6,)', "Procurement(product_id=product.product(1,), product_qty=1.0, product_uom=uom.uom(1,), location_id=stock.location(8,), name='OP/00001', origin='OP/00001', company_id=res.company(1,), values={'route_ids': stock.location.route(), 'date_planned': datetime.datetime(2021, 2, 26, 0, 0), 'date_deadline': datetime.datetime(2021, 2, 26, 0, 0), 'warehouse_id': stock.warehouse(1,), 'orderpoint_id': stock.warehouse.orderpoint(1,), 'group_id': procurement.group(), 'bom_id': mrp.bom(), 'supplierinfo_id': product.supplierinfo(), 'company_id': res.company(1,), 'priority': '0'})"}
