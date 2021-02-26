@@ -191,11 +191,11 @@ class Procurements(models.Model):
     origin = fields.Char()
     company_id = fields.Many2one('res.company')
     
-    values = fields.Char(compute='get_values')
+    values = fields.Char(compute='get_values_char')
     values_route_ids = fields.Many2one('stock.location.route')
     values_date_planned = fields.Date()
     values_date_deadline = fields.Date()
-    values_warehouse = fields.Many2one('stock.warehouse')
+    values_warehouse_id = fields.Many2one('stock.warehouse')
     values_orderpoint_id = fields.Many2one('stock.warehouse.orderpoint')
     values_group_id = fields.Many2one('procurement.group')
     values_bom_id = fields.Many2one('mrp.bom')
@@ -211,12 +211,15 @@ class Procurements(models.Model):
         )
         return (procurement, self.rule)
 
+    def get_values_char(self):
+        return str(self.get_values())
+
     def get_values(self):
         return {
         'route_ids': self.values_route_ids,
         'date_planned': self.values_date_planned,
         'date_deadline': self.values_date_deadline,
-        'warehouse': self.values_warehouse,
+        'warehouse_id': self.values_warehouse_id,
         'orderpoint_id': self.values_orderpoint_id,
         'group_id': self.values_group_id,
         'bom_id': self.values_bom_id,
@@ -262,7 +265,7 @@ class StockRule(models.Model):
                             'values_route_ids': procurement.values['route_ids'],
                             'values_date_planned': procurement.values['date_planned'],
                             'values_date_deadline': procurement.values['date_deadline'],
-                            'values_warehouse': procurement.values['warehouse'],
+                            'values_warehouse': procurement.values['warehouse_id'],
                             'values_orderpoint_id': procurement.values['orderpoint_id'],
                             'values_group_id': procurement.values['group_id'],
                             'values_bom_id': procurement.values['bom_id'],
