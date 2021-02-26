@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict, namedtuple
 import json
+import logging
 
 from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.tools.misc import get_lang
 from odoo.addons.stock.models.stock_rule import ProcurementException
 
+_logger = logging.getLogger(__name__)
 
 class SaleLine(models.Model):
     _inherit = 'sale.order.line'
@@ -83,10 +85,10 @@ class Eco(models.Model):
                 for line in eco.product_tmpl_id.attribute_line_ids:
                     if line.attribute_id.name == 'Version':
                         added = True
-                        line.value_ids = [(4,version_id,0)]
                         # Special case for first eco. We need to add version 1 tag so we get 2 total variants.
                         if v1:
                             line.value_ids = [(4,v1,0)]
+                        line.value_ids = [(4,version_id,0)]
                         break
                 if not added:
                     eco.product_tmpl_id.attribute_line_ids = [(0,0,{
@@ -236,6 +238,7 @@ class Procurements(models.Model):
             p.active = False
             p.unlink()
         if len(procurements) < 1:
+            _logger.debug("Procurements are empty")
             raise Warning("Procurements is empty!")
         self.env['stock.rule']._run_manufacture(procurements)
 
