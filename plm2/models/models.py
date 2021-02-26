@@ -212,7 +212,7 @@ class Procurements(models.Model):
         return (procurement, self.rule)
 
     def get_values_char(self):
-        return str(self.get_values())
+        self.values = str(self.get_values())
 
     def get_values(self):
         return {
@@ -261,7 +261,7 @@ class StockRule(models.Model):
                             'name': procurement.name,
                             'origin': procurement.origin,
                             'company_id': procurement.company_id.id,
-                            'values':str(procurement.values),
+                            # 'values':str(procurement.values),
                             'values_route_ids': procurement.values['route_ids'],
                             'values_date_planned': procurement.values['date_planned'],
                             'values_date_deadline': procurement.values['date_deadline'],
