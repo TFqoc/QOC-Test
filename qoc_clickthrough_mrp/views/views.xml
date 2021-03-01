@@ -1,60 +1,18 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="qoc_clickthrough_mrp.list">
-      <field name="name">qoc_clickthrough_mrp list</field>
-      <field name="model">qoc_clickthrough_mrp.qoc_clickthrough_mrp</field>
+    <record id="view_mrp_bom_inherit" model="ir.ui.view">
+      <field name="name">mrp_bom.inherit</field>
+      <field name="model">mrp.bom</field>
+      <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+      <field name="type">form</field>
       <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
+        <xpath expr='//notebook' position="inside">
+          <page string="Clickthrough Data">
+            <field name="orderpoint_id" readonly="1"/>
+            <field name="picking_ids" readonly="1"/>
+          </page>
+        </xpath>
       </field>
     </record>
--->
-
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="qoc_clickthrough_mrp.action_window">
-      <field name="name">qoc_clickthrough_mrp window</field>
-      <field name="res_model">qoc_clickthrough_mrp.qoc_clickthrough_mrp</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="qoc_clickthrough_mrp.action_server">
-      <field name="name">qoc_clickthrough_mrp server</field>
-      <field name="model_id" ref="model_qoc_clickthrough_mrp_qoc_clickthrough_mrp"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
-
-    <!-- Top menu item -->
-<!--
-    <menuitem name="qoc_clickthrough_mrp" id="qoc_clickthrough_mrp.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="qoc_clickthrough_mrp.menu_1" parent="qoc_clickthrough_mrp.menu_root"/>
-    <menuitem name="Menu 2" id="qoc_clickthrough_mrp.menu_2" parent="qoc_clickthrough_mrp.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="qoc_clickthrough_mrp.menu_1_list" parent="qoc_clickthrough_mrp.menu_1"
-              action="qoc_clickthrough_mrp.action_window"/>
-    <menuitem name="Server to list" id="qoc_clickthrough_mrp" parent="qoc_clickthrough_mrp.menu_2"
-              action="qoc_clickthrough_mrp.action_server"/>
--->
   </data>
 </odoo>
