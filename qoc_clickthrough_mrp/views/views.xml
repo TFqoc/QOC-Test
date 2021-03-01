@@ -22,7 +22,7 @@
       <field name="inherit_id" ref="mrp.mrp_production_kanban_view"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
-        <xpath expr='kanban' position="before">
+        <xpath expr='/kanban' position="before">
           <header>
             <h3>Test</h3>
           </header>
