@@ -8,8 +8,9 @@
       <field name="arch" type="xml">
         <xpath expr='//notebook' position="inside">
           <page string="Clickthrough Data">
-            <field name="orderpoint_id" readonly="1"/>
-            <field name="picking_ids" readonly="1"/>
+            <field name="orderpoint_id" string="Order Point (Reordering Rule)" readonly="1"/>
+            <field name="picking_ids" string="Pickings" readonly="1"/>
+            <field name="origin" string="Origin"/>
           </page>
         </xpath>
       </field>
