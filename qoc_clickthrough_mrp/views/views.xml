@@ -1,9 +1,9 @@
 <odoo>
   <data>
-    <record id="view_mrp_bom_inherit" model="ir.ui.view">
-      <field name="name">mrp_bom.inherit</field>
-      <field name="model">mrp.bom</field>
-      <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+    <record id="view_mrp_production_inherit" model="ir.ui.view">
+      <field name="name">mrp.production.inherit</field>
+      <field name="model">mrp.production</field>
+      <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
         <xpath expr='//notebook' position="inside">
