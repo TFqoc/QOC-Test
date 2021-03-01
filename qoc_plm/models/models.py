@@ -40,12 +40,10 @@ class Eco(models.Model):
     @api.onchange('product_tmpl_id')
     def onchange_product_tmpl_id(self):
         if self.product_tmpl_id.bom_ids:
-            id = -1
-            version = -1
-            for bom in self.bom_ids:
-                if bom.version > version:
+            id = False
+            for bom in self.product_tmpl_id.bom_ids:
+                if bom.version == self.product_tmpl_id.version:
                     id = bom.id
-                    version = bom.version
             self.bom_id = id
 
     def action_apply(self):
