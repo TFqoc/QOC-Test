@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict, namedtuple
 import json
-import logging
 
 from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.tools.misc import get_lang
 from odoo.addons.stock.models.stock_rule import ProcurementException
-
-_logger = logging.getLogger(__name__)
 
 class SaleLine(models.Model):
     _inherit = 'sale.order.line'
@@ -39,6 +36,17 @@ class Product(models.Model):
 
 class Eco(models.Model):
     _inherit = 'mrp.eco'
+
+    @api.onchange('product_tmpl_id')
+    def onchange_product_tmpl_id(self):
+        if self.product_tmpl_id.bom_ids:
+            id = -1
+            version = -1
+            for bom in self.bom_ids:
+                if bom.version > version:
+                    id = bom.id
+                    version = bom.version
+            self.bom_id = id
 
     def action_apply(self):
         super(Eco, self).action_apply()
@@ -238,7 +246,6 @@ class Procurements(models.Model):
             p.active = False
             p.unlink()
         if len(procurements) < 1:
-            _logger.debug("Procurements are empty")
             raise Warning("Procurements is empty!")
         self.env['stock.rule']._run_manufacture(procurements)
 
