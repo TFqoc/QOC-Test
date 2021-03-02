@@ -8,7 +8,7 @@ class qoc_sales_order_delivery_schedule(models.Model):
     _description = 'Sales Order Delivery Schedule'
 
     name = fields.Char()
-    partner = fields.Many2one('res.partner')
+    partner_id = fields.Many2one('res.partner')
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
