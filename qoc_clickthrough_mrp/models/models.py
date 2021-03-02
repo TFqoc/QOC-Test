@@ -18,6 +18,7 @@ class AddReorder(models.Model):
 
     @api.model
     def create(self, vals):
+        raise Warning(str(vals))
         super(AddReorder, self).create(vals)
         self.env['stock.warehouse.orderpoint'].create({
             'product_id':vals['id']
