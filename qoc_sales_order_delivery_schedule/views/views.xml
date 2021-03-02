@@ -24,9 +24,8 @@
       <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
         <dashboard>
-          <view type="list"/>
           <group string="Test">
-          <!--  -->
+            <view type="list"/>
           </group>
         </dashboard>
       </field>
