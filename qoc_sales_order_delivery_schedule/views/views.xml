@@ -4,7 +4,7 @@
 
     <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.list">
       <field name="name">qoc_sales_order_delivery_schedule list</field>
-      <field name="model">qoc_sales_order_delivery_schedule.qoc_sales_order_delivery_schedule</field>
+      <field name="model">qoc.sales_order_delivery_schedule</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
@@ -19,7 +19,7 @@
 
     <record model="ir.actions.act_window" id="qoc_sales_order_delivery_schedule.action_window">
       <field name="name">qoc_sales_order_delivery_schedule window</field>
-      <field name="res_model">qoc_sales_order_delivery_schedule.qoc_sales_order_delivery_schedule</field>
+      <field name="res_model">qoc.sales_order_delivery_schedule</field>
       <field name="view_mode">tree,form</field>
     </record>
 
@@ -28,7 +28,7 @@
 
     <record model="ir.actions.server" id="qoc_sales_order_delivery_schedule.action_server">
       <field name="name">qoc_sales_order_delivery_schedule server</field>
-      <field name="model_id" ref="model_qoc_sales_order_delivery_schedule_qoc_sales_order_delivery_schedule"/>
+      <field name="model_id" ref="model_qoc_sales_order_delivery_schedule"/>
       <field name="state">code</field>
       <field name="code">
         action = {

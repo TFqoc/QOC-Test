@@ -4,8 +4,8 @@ from odoo import models, fields, api
 
 
 class qoc_sales_order_delivery_schedule(models.Model):
-    _name = 'qoc_sales_order_delivery_schedule.qoc_sales_order_delivery_schedule'
-    _description = 'qoc_sales_order_delivery_schedule.qoc_sales_order_delivery_schedule'
+    _name = 'qoc.sales_order_delivery_schedule'
+    _description = 'Sales Order Delivery Schedule'
 
     name = fields.Char()
     value = fields.Integer()
