@@ -4,11 +4,9 @@
 
     <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.list">
       <field name="name">qoc_sales_order_delivery_schedule list</field>
-      <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
-      <field name="mode">primary</field>
-      <field name="model">sale.order</field>
+      <field name="model">qoc.sales_order_delivery_schedule</field>
       <field name="arch" type="xml">
-        <xpath expr="//tree" position="replace">
+        <tree>
           <field name="name"/>
           <groupby name="partner_id">
             <field name="name"/> <!-- name of partner_id -->
@@ -16,7 +14,7 @@
               <button type="object" name="my_method" string="Button1"
                 attrs="{'invisible': [('name', '=', 'Georges')]}"/>
           </groupby>
-        </xpath>
+        </tree>
       </field>
     </record>
 
