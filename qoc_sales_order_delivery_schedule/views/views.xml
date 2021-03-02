@@ -14,6 +14,7 @@
               <button type="object" name="my_method" string="Button1"
                 attrs="{'invisible': [('name', '=', 'Georges')]}"/>
           </groupby>
+          <!--  -->
         </tree>
       </field>
     </record>
