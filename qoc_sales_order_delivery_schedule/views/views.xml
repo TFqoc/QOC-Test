@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.list">
+      <field name="name">qoc_sales_order_delivery_schedule list</field>
+      <field name="model">qoc_sales_order_delivery_schedule.qoc_sales_order_delivery_schedule</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="qoc_sales_order_delivery_schedule.action_window">
+      <field name="name">qoc_sales_order_delivery_schedule window</field>
+      <field name="res_model">qoc_sales_order_delivery_schedule.qoc_sales_order_delivery_schedule</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="qoc_sales_order_delivery_schedule.action_server">
+      <field name="name">qoc_sales_order_delivery_schedule server</field>
+      <field name="model_id" ref="model_qoc_sales_order_delivery_schedule_qoc_sales_order_delivery_schedule"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="qoc_sales_order_delivery_schedule" id="qoc_sales_order_delivery_schedule.menu_root"/>
+
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="qoc_sales_order_delivery_schedule.menu_1" parent="qoc_sales_order_delivery_schedule.menu_root"/>
+    <menuitem name="Menu 2" id="qoc_sales_order_delivery_schedule.menu_2" parent="qoc_sales_order_delivery_schedule.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="qoc_sales_order_delivery_schedule.menu_1_list" parent="qoc_sales_order_delivery_schedule.menu_1"
+              action="qoc_sales_order_delivery_schedule.action_window"/>
+    <menuitem name="Server to list" id="qoc_sales_order_delivery_schedule" parent="qoc_sales_order_delivery_schedule.menu_2"
+              action="qoc_sales_order_delivery_schedule.action_server"/>
+-->
+  </data>
+</odoo>
