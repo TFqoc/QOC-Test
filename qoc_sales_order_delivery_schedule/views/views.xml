@@ -4,10 +4,11 @@
 
     <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.list">
       <field name="name">qoc_sales_order_delivery_schedule list</field>
+      <field name="mode">primary</field>
       <field name="model">sale.order</field>
       <field name="arch" type="xml">
         <tree>
-          <!-- <field name="name"/> -->
+          <field name="name"/>
           <groupby name="partner_id">
             <field name="name"/> <!-- name of partner_id -->
               <button type="edit" name="edit" string="Edit"/>
