@@ -16,3 +16,9 @@ class qoc_sales_order_delivery_schedule(models.Model):
     def _value_pc(self):
         for record in self:
             record.value2 = float(record.value) / 100
+
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    def my_method(self):
+        pass
