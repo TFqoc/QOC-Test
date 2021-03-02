@@ -42,7 +42,7 @@
 
     <!-- Top menu item -->
 
-    <menuitem name="qoc_sales_order_delivery_schedule" id="qoc_sales_order_delivery_schedule.menu_root"/>
+    <menuitem name="qoc_sales_order_delivery_schedule" id="qoc_sales_order_delivery_schedule.menu_root" action="qoc_sales_order_delivery_schedule.action_window"/>
 
     <!-- menu categories -->
 <!--
