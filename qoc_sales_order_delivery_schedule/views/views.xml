@@ -7,13 +7,14 @@
       <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
         <tree>
+          <field name="id"/>
           <field name="name"/>
-          <groupby name="partner_id">
-            <field name="name"/> <!-- name of partner_id -->
+          <!-- <groupby name="partner_id">
+            <field name="name"/>
               <button type="edit" name="edit" string="Edit"/>
               <button type="object" name="my_method" string="Button1"
                 attrs="{'invisible': [('name', '=', 'Georges')]}"/>
-          </groupby>
+          </groupby> -->
         </tree>
       </field>
     </record>
