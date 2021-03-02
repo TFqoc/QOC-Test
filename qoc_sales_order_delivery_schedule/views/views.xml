@@ -4,7 +4,7 @@
 
     <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.list">
       <field name="name">qoc_sales_order_delivery_schedule list</field>
-      <field name="model">qoc.sales_order_delivery_schedule</field>
+      <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
