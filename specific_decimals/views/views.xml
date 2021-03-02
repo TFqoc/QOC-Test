@@ -1,60 +1,22 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="specific_decimals.list">
-      <field name="name">specific_decimals list</field>
-      <field name="model">specific_decimals.specific_decimals</field>
+    <record id="view_monetary_decimal_inherit" model="ir.ui.view">
+      <field name="name">monetary_decimal.inherit</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="type">form</field>
       <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
+        <!-- Find the fields I need to overwrite and change the widget -->
+        <field name="amount_untaxed" position="attributes">
+          <attribute name="widget">monetary_decimals</attribute>
+        </field>
+        <field name="amount_tax" position="attributes">
+          <attribute name="widget">monetary_decimals</attribute>
+        </field>
+        <field name="amount_total" position="attributes">
+          <attribute name="widget">monetary_decimals</attribute>
+        </field>
       </field>
-    </record>
--->
 
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="specific_decimals.action_window">
-      <field name="name">specific_decimals window</field>
-      <field name="res_model">specific_decimals.specific_decimals</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="specific_decimals.action_server">
-      <field name="name">specific_decimals server</field>
-      <field name="model_id" ref="model_specific_decimals_specific_decimals"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
-
-    <!-- Top menu item -->
-<!--
-    <menuitem name="specific_decimals" id="specific_decimals.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="specific_decimals.menu_1" parent="specific_decimals.menu_root"/>
-    <menuitem name="Menu 2" id="specific_decimals.menu_2" parent="specific_decimals.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="specific_decimals.menu_1_list" parent="specific_decimals.menu_1"
-              action="specific_decimals.action_window"/>
-    <menuitem name="Server to list" id="specific_decimals" parent="specific_decimals.menu_2"
-              action="specific_decimals.action_server"/>
--->
   </data>
 </odoo>
