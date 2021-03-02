@@ -19,13 +19,23 @@
       </field>
     </record>
 
+    <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.dash">
+      <field name="name">qoc_sales_order_delivery_schedule dashboard</field>
+      <field name="model">sale.order.line</field>
+      <field name="arch" type="xml">
+        <dashboard>
+         <view type="tree" ref="qoc_sales_order_delivery_schedule.list"/>
+        </dashboard>
+      </field>
+    </record>
+
 
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="qoc_sales_order_delivery_schedule.action_window">
       <field name="name">qoc_sales_order_delivery_schedule window</field>
       <field name="res_model">sale.order.line</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">dashboard,tree,form</field>
     </record>
 
 
