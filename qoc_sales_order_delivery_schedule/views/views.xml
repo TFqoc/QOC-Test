@@ -24,6 +24,7 @@
       <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
         <dashboard>
+          <view type="list" ref="qoc_sales_order_delivery_schedule.list"/>
           <group string="Test">
           <!--  -->
           </group>
