@@ -16,7 +16,7 @@ class qoc_clickthrough_mrp(models.Model):
 class AddReorder(models.Model):
     _inherit = 'product.template'
 
-    @api.model()
+    @api.model
     def create(self, vals):
         super(AddReorder, self).create(vals)
         self.env['stock.warehouse.orderpoint'].create({
