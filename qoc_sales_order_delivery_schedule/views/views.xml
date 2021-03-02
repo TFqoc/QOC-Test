@@ -25,7 +25,6 @@
       <field name="arch" type="xml">
         <dashboard>
           <group string="Test">
-            <p>Hello!</p>
           </group>
         </dashboard>
       </field>
