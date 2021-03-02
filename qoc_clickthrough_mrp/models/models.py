@@ -13,13 +13,13 @@ class qoc_clickthrough_mrp(models.Model):
     #     for record in self:
     #         record.value2 = float(record.value) / 100
 
-class AddReorder(models.Model):
-    _inherit = 'product.template'
+# class AddReorder(models.Model):
+#     _inherit = 'product.template'
 
-    @api.model
-    def create(self, vals):
-        res = super(AddReorder, self).create(vals)
-        self.env['stock.warehouse.orderpoint'].create({
-            'product_id':res.id+1
-        })
-        return res
+#     @api.model
+#     def create(self, vals):
+#         res = super(AddReorder, self).create(vals)
+#         self.env['stock.warehouse.orderpoint'].create({
+#             'product_id':res.id+1
+#         })
+#         return res
