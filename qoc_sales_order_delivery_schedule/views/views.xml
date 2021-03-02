@@ -23,7 +23,7 @@
 
     <record model="ir.actions.act_window" id="qoc_sales_order_delivery_schedule.action_window">
       <field name="name">qoc_sales_order_delivery_schedule window</field>
-      <field name="res_model">sale.order</field>
+      <field name="res_model">qoc.sales_order_delivery_schedule</field>
       <field name="view_mode">tree,form</field>
     </record>
 
