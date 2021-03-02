@@ -17,6 +17,7 @@
           <attribute name="widget">monetary_decimals</attribute>
         </field>
       </field>
+    </record>
 
   </data>
 </odoo>
