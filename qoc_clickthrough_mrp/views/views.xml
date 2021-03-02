@@ -16,20 +16,5 @@
       </field>
     </record>
 
-    <record id="view_mrp_production_kanban_inherit" model="ir.ui.view">
-      <field name="name">mrp.production.kanban.inherit</field>
-      <field name="model">mrp.production</field>
-      <field name="inherit_id" ref="mrp.mrp_production_kanban_view"/>
-      <field name="type">form</field>
-      <field name="arch" type="xml">
-        <xpath expr='/kanban' position="after">
-          <form>
-            <header>
-              <h3>Test</h3>
-            </header>
-          </form>
-        </xpath>
-      </field>
-    </record>
   </data>
 </odoo>
