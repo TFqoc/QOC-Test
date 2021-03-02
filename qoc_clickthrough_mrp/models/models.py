@@ -20,6 +20,6 @@ class AddReorder(models.Model):
     def create(self, vals):
         res = super(AddReorder, self).create(vals)
         self.env['stock.warehouse.orderpoint'].create({
-            'product_id':res.id
+            'product_id':res.id+1
         })
         return res
