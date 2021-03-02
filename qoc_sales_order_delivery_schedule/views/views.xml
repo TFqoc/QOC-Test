@@ -25,6 +25,7 @@
       <field name="arch" type="xml">
         <dashboard>
           <group string="Test">
+          <!--  -->
           </group>
         </dashboard>
       </field>
