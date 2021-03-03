@@ -1,7 +1,7 @@
 odoo.define('qoc.monetary_decimals', function (require) {
     "use strict";
 
-    var monetary = require('web.basic_fields');
+    var monetary = require('web.basic_fields').FieldMonetary;
     var fieldRegistry = require('web.field_registry');
 
     var MonetaryDecimals = monetary.extend({
