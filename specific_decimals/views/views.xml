@@ -2,8 +2,8 @@
   <data>
     <record id="view_monetary_decimal_inherit" model="ir.ui.view">
       <field name="name">monetary_decimal.inherit</field>
-      <field name="model">purchase.order</field>
-      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
         <!-- Find the fields I need to overwrite and change the widget -->
