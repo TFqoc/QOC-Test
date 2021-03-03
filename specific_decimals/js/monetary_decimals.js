@@ -57,9 +57,9 @@ odoo.define('qoc.monetary_decimals', function (require) {
             this.formatOptions.currency = this.currency;
             console.log(typeof(this.formatOptions.currency.digits));
             console.log(typeof(this.formatOptions.currency));
-            this.formatOptions.currency.digits = 2;
+            //this.formatOptions.currency.digits = 2;
             this.formatOptions.digits = [16, 2];
-            //this.formatOptions.field_digits = 2;
+            this.formatOptions.field_digits = 2;
             // this.formatType = '2Monetary';
         },
         _renderReadonly: function () {
