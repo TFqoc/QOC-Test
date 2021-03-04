@@ -31,13 +31,23 @@
       </field>
     </record>
 
+    <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.qweb">
+      <field name="name">qoc_sales_order_delivery_schedule qweb</field>
+      <field name="model">sale.order.line</field>
+      <field name="arch" type="xml">
+        <p t-foreach="record" t-as="i">
+          <t t-esc="i"/>
+        </p>
+      </field>
+    </record>
+
 
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="qoc_sales_order_delivery_schedule.action_window">
       <field name="name">qoc_sales_order_delivery_schedule window</field>
       <field name="res_model">sale.order.line</field>
-      <field name="view_mode">tree,form,dashboard</field>
+      <field name="view_mode">qweb,tree,form,dashboard</field>
     </record>
 
 
