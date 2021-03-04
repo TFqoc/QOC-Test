@@ -41,6 +41,17 @@
     </record>
 
 
+    <record model="ir.ui.view" id="hello_world_view_1">
+        <field name="model">res.partner</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <delivery_schedule>
+            </delivery_schedule>
+        </field>
+    </record>
+
+     <menuitem id="main_hello_world_menu" name="Hello World App"/>
+
     <!-- server action to the one above -->
 
     <!-- <record model="ir.actions.server" id="qoc_sales_order_delivery_schedule.action_server">
