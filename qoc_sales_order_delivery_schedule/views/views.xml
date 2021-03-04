@@ -38,6 +38,18 @@
         <qweb>
           <div class="table-responsive">
             <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+              <thead>
+                <tr>
+                  <th class="o_column_sortable">
+                    "ID"
+                    <span class="o_resize"/>
+                  </th>
+                  <th class="o_column_sortable">
+                    "Name"
+                    <span class="o_resize"/>
+                  </th>
+                </tr>
+              </thead>
               <tbody>
                 <t t-foreach="records" t-as="record">
                   <tr>
