@@ -36,9 +36,12 @@
       <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
         <qweb>
-          <p t-foreach="record" t-as="i">
-            <t t-esc="i"/>
-          </p>
+          <field name="id"/>
+          <templates>
+            <p t-foreach="record.id" t-as="i">
+              <t t-esc="i"/>
+            </p>
+          </templates>
         </qweb>
       </field>
     </record>
