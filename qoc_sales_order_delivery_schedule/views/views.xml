@@ -35,9 +35,11 @@
       <field name="name">qoc_sales_order_delivery_schedule qweb</field>
       <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
-        <p t-foreach="record" t-as="i">
-          <t t-esc="i"/>
-        </p>
+        <qweb>
+          <p t-foreach="record" t-as="i">
+            <t t-esc="i"/>
+          </p>
+        </qweb>
       </field>
     </record>
 
