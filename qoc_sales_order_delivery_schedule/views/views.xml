@@ -38,7 +38,7 @@
         <qweb>
           <field name="id"/>
           <templates>
-            <!-- <p t-foreach="record.id" t-as="i">
+            <!-- <p t-foreach="records.id" t-as="i">
               <t t-esc="i"/>
             </p> -->
           </templates>
