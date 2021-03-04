@@ -39,10 +39,12 @@
           <div class="table-responsive">
             <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
               <tbody>
-                <tr t-foreach="records" t-as="record">
-                  <p t-esc="record.id"/>
-                  <span t-esc="record.name"/>
-                </tr>
+                <t t-foreach="records" t-as="record">
+                  <tr>
+                    <td t-esc="record.id"/>
+                    <td t-esc="record.name"/>
+                  </tr>
+                </t>
               </tbody>
             </table>
           </div>
