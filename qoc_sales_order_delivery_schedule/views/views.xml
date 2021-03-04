@@ -3,7 +3,7 @@
     <!-- explicit list view definition -->
 
     <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.list">
-      <field name="name">qoc_sales_order_delivery_schedule list</field>
+      <field name="name">Sales Order Delivery Schedule list</field>
       <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
         <tree>
@@ -20,7 +20,7 @@
     </record>
 
     <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.dash">
-      <field name="name">qoc_sales_order_delivery_schedule dashboard</field>
+      <field name="name">Sales Order Delivery Schedule dashboard</field>
       <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
         <dashboard>
@@ -32,7 +32,7 @@
     </record>
 
     <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.qweb">
-      <field name="name">qoc_sales_order_delivery_schedule qweb</field>
+      <field name="name">Sales Order Delivery Schedule qweb</field>
       <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
         <qweb>
@@ -91,7 +91,7 @@
 
     <!-- Top menu item -->
 
-    <menuitem name="qoc_sales_order_delivery_schedule" id="qoc_sales_order_delivery_schedule.menu_root" action="qoc_sales_order_delivery_schedule.action_window"/>
+    <menuitem name="Sales Order Delivery Schedule" id="qoc_sales_order_delivery_schedule.menu_root" action="qoc_sales_order_delivery_schedule.action_window"/>
 
     <!-- menu categories -->
 <!--
