@@ -38,9 +38,10 @@
         <qweb>
           <field name="id"/>
           <templates>
-            <p t-foreach="records" t-as="record">
-              <t t-esc="record.id"/>
-            </p>
+            <t t-foreach="records" t-as="record">
+              <p t-esc="record.id"/>
+              <p t-esc="record.name"/>
+            </t>
           </templates>
         </qweb>
       </field>
