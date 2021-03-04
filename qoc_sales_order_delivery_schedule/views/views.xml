@@ -41,11 +41,11 @@
               <thead>
                 <tr>
                   <th class="o_column_sortable">
-                    "ID"
+                    ID
                     <span class="o_resize"/>
                   </th>
                   <th class="o_column_sortable">
-                    "Name"
+                    Name
                     <span class="o_resize"/>
                   </th>
                 </tr>
