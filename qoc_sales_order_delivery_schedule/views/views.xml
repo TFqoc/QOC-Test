@@ -36,13 +36,10 @@
       <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
         <qweb>
-          <field name="id"/>
-          <templates>
-            <t t-foreach="records" t-as="record">
-              <p t-esc="record.id"/>
-              <p t-esc="record.name"/>
-            </t>
-          </templates>
+          <t t-foreach="records" t-as="record">
+            <p t-esc="record.id"/>
+            <span t-esc="record.name"/>
+          </t>
         </qweb>
       </field>
     </record>
