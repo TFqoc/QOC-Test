@@ -38,10 +38,12 @@
         <qweb>
           <div class="table-responsive">
             <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-              <t t-foreach="records" t-as="record">
-                <p t-esc="record.id"/>
-                <span t-esc="record.name"/>
-              </t>
+              <tbody>
+                <tr t-foreach="records" t-as="record">
+                  <p t-esc="record.id"/>
+                  <span t-esc="record.name"/>
+                </tr>
+              </tbody>
             </table>
           </div>
         </qweb>
