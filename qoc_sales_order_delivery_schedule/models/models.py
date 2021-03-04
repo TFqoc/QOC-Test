@@ -19,9 +19,9 @@ class ResPartner(models.Model):
 class View(models.Model):
     _inherit = 'ir.ui.view'
 
-    type = fields.Selection(selection_add=[('delivery_schedule','"Delivery Schedule')])
+    type = fields.Selection(selection_add=[('delivery_schedule','Delivery Schedule')])
 
 class ActWindowView(models.Model):
     _inherit = 'ir.actions.act_window.view'
 
-    view_mode = fields.Selection(selection_add=[('delivery_schedule','"Delivery Schedule')])
+    view_mode = fields.Selection(selection_add=[('delivery_schedule','Delivery Schedule')])
