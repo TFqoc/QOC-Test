@@ -70,14 +70,14 @@
                     <tr>
                       <!-- <td t-esc="record.id" /> -->
                       <td>
-                        <span class="fa fa-caret-right dropdown-content" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                        <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                         <span>
                           <t t-esc="record.name" />
                         </span>
                       </td>
                       <t t-foreach="record.order_line" t-as="so_line">
                         <!-- SO Lines -->
-                        <tr>
+                        <tr class="dropdown-content">
                           <td colspan="2" style="padding-left: 10px;">
                             <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                               <thead>
@@ -91,7 +91,7 @@
                                 <tr>
                                   <!-- <td t-esc="so_line.name" /> -->
                                   <td>
-                                    <span class="fa fa-caret-right dropdown-content" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                                    <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                                     <span>
                                       <t t-esc="so_line.name" />
                                     </span>
@@ -100,7 +100,7 @@
                                 <!-- Manufacturing Orders -->
                                 <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
                                 <t t-if="mo_lines">
-                                  <tr>
+                                  <tr class="dropdown-content">
                                     <td colspan="2" style="padding-left: 20px;">
                                       <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                                         <thead>
@@ -123,7 +123,7 @@
                                 </t>
                                 <!-- Purchase Orders -->
                                 <t t-if="so_line.purchase_line_ids">
-                                  <tr>
+                                  <tr class="dropdown-content">
                                     <td colspan="2" style="padding-left: 20px;">
                                       <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                                         <thead>
@@ -138,7 +138,7 @@
                                             <tr>
                                               <!-- <td t-esc="purchase_line.name" /> -->
                                               <td>
-                                                <span class="fa fa-caret-right dropdown-content" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                                                <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                                                 <span>
                                                   <t t-esc="purchase_line.name" />
                                                 </span>
