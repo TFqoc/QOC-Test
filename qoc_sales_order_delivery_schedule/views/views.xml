@@ -39,15 +39,6 @@
           <script>
             function toggle_dropdown(el){
               var target = el.parentElement.parentElement.nextElementSibling;
-              if (target === undefined){
-                console.log("Object is Undefined");
-              }
-              if (target.style === undefined){
-                console.log("Style is Undefined");
-              }
-              if (target.style.display === undefined){
-                console.log("Display is Undefined");
-              }
               if (target.style.display == ''){
                 target.style.display = 'none';
                 el.className = 'fa fa-caret-right dropdown-content';
@@ -84,19 +75,19 @@
                           <t t-esc="record.name" />
                         </span>
                       </td>
-                      <t t-foreach="record.order_line" t-as="so_line">
-                        <!-- SO Lines -->
-                        <tr class="dropdown-content">
-                          <td colspan="2" style="padding-left: 10px;">
-                            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                              <thead>
-                                <tr>
-                                  <th>
-                                    Product Name
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
+                      <!-- New Stuff -->
+                      <tr class="dropdown-content">
+                        <td colspan="2" style="padding-left: 10px;">
+                          <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                            <thead>
+                              <tr>
+                                <th>
+                                  Product Name
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <t t-foreach="record.order_line" t-as="so_line">
                                 <tr>
                                   <!-- <td t-esc="so_line.name" /> -->
                                   <td>
@@ -159,12 +150,14 @@
                                     </td>
                                   </tr>
                                 </t>
-                              </tbody>
-                            </table>
-                          </td>
-                        </tr>
 
-                      </t>
+                              </t>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      <!-- Old Stuff -->
+                      
                     </tr>
                   </t>
                 </tbody>
