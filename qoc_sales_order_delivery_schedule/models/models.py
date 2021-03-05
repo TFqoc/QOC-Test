@@ -16,6 +16,13 @@ class ResPartner(models.Model):
     def my_method(self):
         pass
 
+class SaleLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    @api.model
+    def get_mo_records(self):
+        return self.env['mrp.production'].search([('move_raw_ids.move_line_ids.product_id','=',self.product_id)])
+
 # class View(models.Model):
 #     _inherit = 'ir.ui.view'
 

@@ -56,15 +56,15 @@
                     <tr>
                       <td t-esc="record.id" />
                       <td t-esc="record.name" />
-                      <!-- <t t-if="record.purchase_line_ids"> -->
-                      <t>
+                      <t t-set="lines" t-value="model.get_mo_records()"/>
+                      <t t-if="lines">
                         <tr>
                           <td colspan="2">
                             <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                               <tbody>
-                                <t t-foreach="record.purchase_line_ids" t-as="purchase_line">
+                                <t t-foreach="lines" t-as="mo_line">
                                   <tr>
-                                    <td t-esc="purchase_line.product_id.name"/>
+                                    <td t-esc="mo.name"/>
                                   </tr>
                                 </t>
                               </tbody>
