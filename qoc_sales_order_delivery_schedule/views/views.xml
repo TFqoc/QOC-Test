@@ -36,6 +36,9 @@
       <field name="model">sale.order</field>
       <field name="arch" type="xml">
         <qweb>
+          <script>
+
+          </script>
           <div class="o_list_view">
             <div class="table-responsive">
               <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
@@ -57,6 +60,7 @@
                     <tr>
                       <!-- <td t-esc="record.id" /> -->
                       <strong>
+                        <span class="fa fa-carat-right" style="padding-left: 2px; padding-right: 5px;"></span>
                         <td t-esc="record.name" />
                       </strong>
                       <t t-foreach="record.order_line" t-as="so_line">
