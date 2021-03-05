@@ -70,7 +70,7 @@
                     <tr>
                       <!-- <td t-esc="record.id" /> -->
                       <td>
-                        <span><span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" /></span>
+                        <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                         <span>
                           <t t-esc="record.name" />
                         </span>
@@ -91,7 +91,7 @@
                                 <tr>
                                   <!-- <td t-esc="so_line.name" /> -->
                                   <td>
-                                    <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                                    <span><span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" /></span>
                                     <span>
                                       <t t-esc="so_line.name" />
                                     </span>
