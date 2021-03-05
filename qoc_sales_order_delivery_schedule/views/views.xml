@@ -63,7 +63,7 @@
                         
                         <td>
                           <span class="fa fa-caret-right" style="padding-left: 2px; padding-right: 5px;"/>
-                          <t t-esc="record.name"/>
+                          <span><t t-esc="record.name"/></span>
                         </td>
                       </strong>
                       <t t-foreach="record.order_line" t-as="so_line">
