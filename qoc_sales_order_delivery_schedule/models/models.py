@@ -20,7 +20,7 @@ class SaleLine(models.Model):
     _inherit = 'sale.order.line'
 
     def get_mo_records(self):
-        return self.env['mrp.production'].search([('product.id','=',self.product_id.id)])
+        return self.env['mrp.production'].search([('product.id','=',self.product_id)])
 
 # class View(models.Model):
 #     _inherit = 'ir.ui.view'
