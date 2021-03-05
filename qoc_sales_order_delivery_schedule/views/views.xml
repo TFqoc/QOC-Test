@@ -91,7 +91,9 @@
                                 <tr>
                                   <!-- <td t-esc="so_line.name" /> -->
                                   <td>
-                                    <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                                    <t t-if="len(so_line.get_mo_records()) > 0">
+                                      <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                                    </t>
                                     <span>
                                       <t t-esc="so_line.name" />
                                     </span>
