@@ -56,7 +56,8 @@
                     <tr>
                       <td t-esc="record.id" />
                       <td t-esc="record.name" />
-                      <t t-if="record.purchase_line_ids">
+                      <!-- <t t-if="record.purchase_line_ids"> -->
+                      <t>
                         <tr>
                           <td colspan="2">
                             <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
