@@ -53,57 +53,80 @@
                 </thead>
                 <tbody>
                   <t t-foreach="records" t-as="record">
+                    <!-- Record is a Sales Order -->
                     <tr>
                       <!-- <td t-esc="record.id" /> -->
-                      <strong><td t-esc="record.name" /></strong>
+                      <strong>
+                        <td t-esc="record.name" />
+                      </strong>
                       <t t-foreach="record.order_line" t-as="so_line">
-                        <!-- Manufacturing Orders -->
-                        <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
-                        <t t-if="mo_lines">
-                          <tr>
-                            <td colspan="2" style="padding-left: 10px;">
-                              <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                                <thead>
+                        <!-- SO Lines -->
+                        <tr>
+                          <td colspan="2" style="padding-left: 10px;">
+                            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                              <thead>
+                                <tr>
+                                  <th>
+                                    Product Name
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td t-esc="so_line.name" />
+                                </tr>
+                                <!-- Manufacturing Orders -->
+                                <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
+                                <t t-if="mo_lines">
                                   <tr>
-                                    <th>
-                                      MO Name
-                                    </th>
+                                    <td colspan="2" style="padding-left: 20px;">
+                                      <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                                        <thead>
+                                          <tr>
+                                            <th>
+                                              MO Name
+                                            </th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <t t-foreach="mo_lines" t-as="mo_line">
+                                            <tr>
+                                              <td t-esc="mo_line.name" />
+                                            </tr>
+                                          </t>
+                                        </tbody>
+                                      </table>
+                                    </td>
                                   </tr>
-                                </thead>
-                                <tbody>
-                                  <t t-foreach="mo_lines" t-as="mo_line">
-                                    <tr>
-                                      <td t-esc="mo_line.name" />
-                                    </tr>
-                                  </t>
-                                </tbody>
-                              </table>
-                            </td>
-                          </tr>
-                        </t>
-                        <!-- Purchase Orders -->
-                        <t t-if="so_line.purchase_line_ids">
-                          <tr>
-                            <td colspan="2">
-                              <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                                <thead>
+                                </t>
+                                <!-- Purchase Orders -->
+                                <t t-if="so_line.purchase_line_ids">
                                   <tr>
-                                    <th>
-                                      PO Name
-                                    </th>
+                                    <td colspan="2" style="padding-left: 20px;">
+                                      <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                                        <thead>
+                                          <tr>
+                                            <th>
+                                              PO Name
+                                            </th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <t t-foreach="so_line.purchase_line_ids" t-as="purchase_line">
+                                            <tr>
+                                              <td t-esc="purchase_line.name" />
+                                            </tr>
+                                          </t>
+                                        </tbody>
+                                      </table>
+                                    </td>
                                   </tr>
-                                </thead>
-                                <tbody>
-                                  <t t-foreach="so_line.purchase_line_ids" t-as="purchase_line">
-                                    <tr>
-                                      <td t-esc="purchase_line.name" />
-                                    </tr>
-                                  </t>
-                                </tbody>
-                              </table>
-                            </td>
-                          </tr>
-                        </t>
+                                </t>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+
                       </t>
                     </tr>
                   </t>
