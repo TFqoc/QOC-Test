@@ -38,7 +38,7 @@
         <qweb>
           <script>
             function toggle_dropdown(el){
-              var target = el.parentElement.parentElement.nextSibling;
+              var target = el.parentElement.parentElement.nextElementSibling;
               if (target === undefined){
                 console.log("Object is Undefined");
               }
