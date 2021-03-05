@@ -62,7 +62,7 @@
                       <strong>
                         
                         <td>
-                          <span class="fa fa-caret-right" style="padding-left: 2px; padding-right: 5px;">&#62;</span>
+                          <span class="fa fa-caret-right" style="padding-left: 2px; padding-right: 5px;"/>
                           <t t-esc="record.name"/>
                         </td>
                       </strong>
