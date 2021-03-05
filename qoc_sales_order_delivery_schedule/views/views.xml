@@ -33,7 +33,7 @@
 
     <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.qweb">
       <field name="name">Sales Order Delivery Schedule qweb</field>
-      <field name="model">sale.order.line</field>
+      <field name="model">sale.order</field>
       <field name="arch" type="xml">
         <qweb>
           <div class="o_list_view">
@@ -56,38 +56,54 @@
                     <tr>
                       <td t-esc="record.id" />
                       <td t-esc="record.name" />
-                      <!-- Manufacturing Orders -->
-                      <t t-set="lines" t-value="record.get_mo_records()"/>
-                      <t t-if="lines">
-                        <tr>
-                          <td colspan="2">
-                            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                              <tbody>
-                                <t t-foreach="lines" t-as="mo_line">
+                      <t t-foreach="record.order_line" t-as="so_line">
+                        <!-- Manufacturing Orders -->
+                        <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
+                        <t t-if="mo_lines">
+                          <tr>
+                            <td colspan="2">
+                              <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                                <thead>
                                   <tr>
-                                    <td t-esc="mo_line.name"/>
+                                    <th>
+                                      MO Name
+                                    </th>
                                   </tr>
-                                </t>
-                              </tbody>
-                            </table>
-                          </td>
-                        </tr>
-                      </t>
-                      <!-- Purchase Orders -->
-                      <t t-if="record.purchase_line_ids">
-                        <tr>
-                          <td colspan="2">
-                            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                              <tbody>
-                                <t t-foreach="record.purchase_line_ids" t-as="purchase_line">
+                                </thead>
+                                <tbody>
+                                  <t t-foreach="mo_lines" t-as="mo_line">
+                                    <tr>
+                                      <td t-esc="mo_line.name" />
+                                    </tr>
+                                  </t>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </t>
+                        <!-- Purchase Orders -->
+                        <t t-if="so_line.purchase_line_ids">
+                          <tr>
+                            <td colspan="2">
+                              <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                                <thead>
                                   <tr>
-                                    <td t-esc="purchase_line.name"/>
+                                    <th>
+                                      PO Name
+                                    </th>
                                   </tr>
-                                </t>
-                              </tbody>
-                            </table>
-                          </td>
-                        </tr>
+                                </thead>
+                                <tbody>
+                                  <t t-foreach="so_line.purchase_line_ids" t-as="purchase_line">
+                                    <tr>
+                                      <td t-esc="purchase_line.name" />
+                                    </tr>
+                                  </t>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </t>
                       </t>
                     </tr>
                   </t>
