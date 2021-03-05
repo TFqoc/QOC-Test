@@ -19,7 +19,6 @@ class ResPartner(models.Model):
 class SaleLine(models.Model):
     _inherit = 'sale.order.line'
 
-    @api.model
     def get_mo_records(self):
         return self.env['mrp.production'].search([('product.id','=',self.product_id.id)])
 

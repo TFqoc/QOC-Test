@@ -57,7 +57,7 @@
                       <td t-esc="record.id" />
                       <td t-esc="record.name" />
                       <!-- Manufacturing Orders -->
-                      <t t-set="lines" t-value="model.get_mo_records()"/>
+                      <t t-set="lines" t-value="record.get_mo_records()"/>
                       <!-- <t t-if="lines"> -->
                       <t>
                         <tr>
