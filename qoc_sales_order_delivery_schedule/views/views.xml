@@ -120,7 +120,7 @@
 
     <record model="ir.actions.act_window" id="qoc_sales_order_delivery_schedule.action_window">
       <field name="name">Sales Order Delivery Schedule</field>
-      <field name="res_model">sale.order.line</field>
+      <field name="res_model">sale.order</field>
       <field name="view_mode">qweb,tree,form,dashboard</field>
     </record>
 
