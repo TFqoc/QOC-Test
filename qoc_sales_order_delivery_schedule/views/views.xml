@@ -41,11 +41,11 @@
               <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                 <thead>
                   <tr>
-                    <th class="o_column_sortable">
+                    <th class="o_column_sortable q-list-head">
                       ID
                       <span class="o_resize" />
                     </th>
-                    <th class="o_column_sortable">
+                    <th class="o_column_sortable q-list-head">
                       Name
                       <span class="o_resize" />
                     </th>

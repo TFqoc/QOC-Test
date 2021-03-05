@@ -4,7 +4,7 @@
     <template id="assets_backend" name="delivery schedule assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/qoc_sales_order_delivery_schedule/js/delivery_schedule.js"/>
-            <link rel="stylesheet" type="text/scss" href="/qoc_sales_order_delivery_schedule/css/delivery_schedule.scss"/>
+            <link rel="stylesheet" type="text/css" href="/qoc_sales_order_delivery_schedule/css/delivery_schedule.css"/>
         </xpath>
     </template>
 </odoo>
