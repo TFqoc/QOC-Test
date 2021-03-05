@@ -61,8 +61,9 @@
                       <!-- <td t-esc="record.id" /> -->
                       <strong>
                         
-                        <td t-esc="record.name">
+                        <td>
                           <span class="fa fa-carat-right" style="padding-left: 2px; padding-right: 5px;"/>
+                          <t t-esc="record.name"/>
                         </td>
                       </strong>
                       <t t-foreach="record.order_line" t-as="so_line">
