@@ -58,7 +58,8 @@
                       <td t-esc="record.name" />
                       <!-- Manufacturing Orders -->
                       <t t-set="lines" t-value="model.get_mo_records()"/>
-                      <t t-if="lines">
+                      <!-- <t t-if="lines"> -->
+                      <t>
                         <tr>
                           <td colspan="2">
                             <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
@@ -74,7 +75,8 @@
                         </tr>
                       </t>
                       <!-- Purchase Orders -->
-                      <t t-if="record.purchase_line_ids">
+                      <!-- <t t-if="record.purchase_line_ids"> -->
+                      <t>
                         <tr>
                           <td colspan="2">
                             <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
