@@ -103,7 +103,7 @@
                                 <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
                                 <t t-if="mo_lines">
                                   <tr class="dropdown-content">
-                                    <td colspan="2" style="padding-left: 20px;">
+                                    <td colspan="2" style="padding-left: 10px;">
                                       <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                                         <thead>
                                           <tr>
@@ -126,7 +126,7 @@
                                 <!-- Purchase Orders -->
                                 <t t-if="so_line.purchase_line_ids">
                                   <tr class="dropdown-content">
-                                    <td colspan="2" style="padding-left: 20px;">
+                                    <td colspan="2" style="padding-left: 10px;">
                                       <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                                         <thead>
                                           <tr>
