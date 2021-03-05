@@ -47,6 +47,7 @@
               }
               if (target.style.display === undefined){
                 console.log("Display is Undefined");
+              }
               if (target.style.display == ''){
                 target.style.display = 'none';
                 el.className = 'fa fa-caret-right dropdown-content';
