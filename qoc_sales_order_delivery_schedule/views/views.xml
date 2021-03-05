@@ -41,12 +41,12 @@
               <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                 <thead>
                   <tr>
-                    <th class="o_column_sortable">
+                    <!-- <th class="o_column_sortable">
                       ID
                       <span class="o_resize" />
-                    </th>
+                    </th> -->
                     <th class="o_column_sortable">
-                      Name
+                      <strong>Name</strong>
                       <span class="o_resize" />
                     </th>
                   </tr>
@@ -55,7 +55,7 @@
                   <t t-foreach="records" t-as="record">
                     <tr>
                       <!-- <td t-esc="record.id" /> -->
-                      <td t-esc="record.name" />
+                      <strong><td t-esc="record.name" /></strong>
                       <t t-foreach="record.order_line" t-as="so_line">
                         <!-- Manufacturing Orders -->
                         <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
