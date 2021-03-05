@@ -60,8 +60,10 @@
                     <tr>
                       <!-- <td t-esc="record.id" /> -->
                       <strong>
-                        <span class="fa fa-carat-right" style="padding-left: 2px; padding-right: 5px;"></span>
-                        <td t-esc="record.name" />
+                        
+                        <td t-esc="record.name">
+                          <span class="fa fa-carat-right" style="padding-left: 2px; padding-right: 5px;"/>
+                        </td>
                       </strong>
                       <t t-foreach="record.order_line" t-as="so_line">
                         <!-- SO Lines -->
