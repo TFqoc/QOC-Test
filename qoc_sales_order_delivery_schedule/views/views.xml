@@ -37,7 +37,17 @@
       <field name="arch" type="xml">
         <qweb>
           <script>
-
+            function toggle_dropdown(el){
+              var target = el.parentElement.parentElement.nextSibling;
+              if (target.style.display == ''){
+                target.style.display = 'none';
+                el.className = 'fa fa-caret-right dropdown-content';
+              }
+              else{
+                target.style.display = '';
+                el.className = 'fa fa-caret-down dropdown-content';
+              }
+            }
           </script>
           <div class="o_list_view">
             <div class="table-responsive">
@@ -59,13 +69,12 @@
                     <!-- Record is a Sales Order -->
                     <tr>
                       <!-- <td t-esc="record.id" /> -->
-                      <strong>
-                        
-                        <td>
-                          <span class="fa fa-caret-right" style="padding-left: 2px; padding-right: 5px;"/>
-                          <span><t t-esc="record.name"/></span>
-                        </td>
-                      </strong>
+                      <td>
+                        <span class="fa fa-caret-right dropdown-content" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                        <span>
+                          <t t-esc="record.name" />
+                        </span>
+                      </td>
                       <t t-foreach="record.order_line" t-as="so_line">
                         <!-- SO Lines -->
                         <tr>
@@ -80,7 +89,13 @@
                               </thead>
                               <tbody>
                                 <tr>
-                                  <td t-esc="so_line.name" />
+                                  <!-- <td t-esc="so_line.name" /> -->
+                                  <td>
+                                    <span class="fa fa-caret-right dropdown-content" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                                    <span>
+                                      <t t-esc="so_line.name" />
+                                    </span>
+                                  </td>
                                 </tr>
                                 <!-- Manufacturing Orders -->
                                 <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
@@ -121,7 +136,13 @@
                                         <tbody>
                                           <t t-foreach="so_line.purchase_line_ids" t-as="purchase_line">
                                             <tr>
-                                              <td t-esc="purchase_line.name" />
+                                              <!-- <td t-esc="purchase_line.name" /> -->
+                                              <td>
+                                                <span class="fa fa-caret-right dropdown-content" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                                                <span>
+                                                  <t t-esc="purchase_line.name" />
+                                                </span>
+                                              </td>
                                             </tr>
                                           </t>
                                         </tbody>
@@ -141,6 +162,11 @@
               </table>
             </div>
           </div>
+          <!-- Collapse all dropdowns -->
+          <script>
+            // class target is .dropdown-content
+            $(".dropdown-content").hide();
+          </script>
         </qweb>
       </field>
     </record>
