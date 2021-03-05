@@ -21,7 +21,7 @@ class SaleLine(models.Model):
 
     @api.model
     def get_mo_records(self):
-        return self.env['mrp.production'].search([('move_raw_ids.move_line_ids.product_id','=',self.product_id)])
+        return self.env['mrp.production'].search([('move_raw_ids.move_line_ids.product_id','=',self.product_id.id)])
 
 # class View(models.Model):
 #     _inherit = 'ir.ui.view'
