@@ -39,6 +39,14 @@
           <script>
             function toggle_dropdown(el){
               var target = el.parentElement.parentElement.nextSibling;
+              if (target === undefined){
+                console.log("Object is Undefined");
+              }
+              if (target.style === undefined){
+                console.log("Style is Undefined");
+              }
+              if (target.style.display === undefined){
+                console.log("Display is Undefined");
               if (target.style.display == ''){
                 target.style.display = 'none';
                 el.className = 'fa fa-caret-right dropdown-content';
