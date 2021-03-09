@@ -17,9 +17,10 @@
                       el.className = 'fa fa-caret-down dropdown-content';
                     }
                   }
-                  function get_mo_data(){
+                  function get_mo_data(el){
+                    id = el.getAttribute("model_id");
                     $.ajax({
-                        url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/objects/",
+                        url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/objects/${id}",
                         data: {
                           zipcode: 97201
                         },
