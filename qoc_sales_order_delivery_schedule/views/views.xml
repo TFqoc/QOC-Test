@@ -51,9 +51,10 @@
           </script>
           <style>
             .ds-card{
-              border-color: #ced4da;
+              border: 2px solid #ced4da;
               min-width: 150px;
               background-color: #ffffff;
+              margin: 5px;
           }
           </style>
           <div class="container">
