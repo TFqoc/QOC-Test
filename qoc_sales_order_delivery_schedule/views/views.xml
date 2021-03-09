@@ -50,7 +50,7 @@
             }
           </script>
           <style>
-            .ds-card{
+            .ds_card{
               border: 2px solid #ced4da;
               min-width: 150px;
               background-color: #ffffff;
@@ -64,8 +64,8 @@
           <div class="container ds-thin">
             <div class="row">
               <!-- Box 1 -->
-              <div class="col-6 ds-card">
-                <div class="o_list_view">
+              <div class="col-6">
+                <div class="o_list_view ds_card">
                   <div class="table-responsive">
                     <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                       <thead>
@@ -193,19 +193,25 @@
                 <!-- End Column -->
               </div>
               <!-- Box 2 -->
-              <div class="col-6 ds-card">
-                <span>Content</span>
+              <div class="col-6">
+                <div class="ds_card">
+                  <span>Content</span>
+                </div>
               </div>
               <!-- End Row -->
             </div>
             <div class="row">
               <!-- Box 3 -->
-              <div class="col-6 ds-card">
-                <span>Content</span>
+              <div class="col-6">
+                <div class="ds_card">
+                  <span>Content</span>
+                </div>
               </div>
               <!-- Box 4 -->
-              <div class="col-6 ds-card">
-                <span>Content</span>
+              <div class="col-6">
+                <div class="ds_card">
+                  <span>Content</span>
+                </div>
               </div>
             </div>
             <!-- End container -->
