@@ -36,7 +36,7 @@
       <field name="model">sale.order</field>
       <field name="arch" type="xml">
         <qweb>
-          <script src="../js/delivery_qweb.js"></script>
+          <script src="/qoc_sales_order_delivery_schedule/js/delivery_qweb.js" type="text/javascript"></script>
           <!-- <script>
             function toggle_dropdown(el){
               var target = el.parentElement.parentElement.nextElementSibling;
