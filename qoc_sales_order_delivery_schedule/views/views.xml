@@ -65,7 +65,7 @@
           <div class="container">
             <div class="row justify-content-around">
               <!-- Box 1 -->
-              <div class="col-6">
+              <div class="col">
                 <div class="o_list_view ds_card">
                   <div class="table-responsive">
                     <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
@@ -194,7 +194,7 @@
                 <!-- End Column -->
               </div>
               <!-- Box 2 -->
-              <div class="col-6">
+              <div class="col">
                 <div class="ds_card">
                   <span>Content</span>
                 </div>
@@ -203,13 +203,13 @@
             </div>
             <div class="row justify-content-around">
               <!-- Box 3 -->
-              <div class="col-6">
+              <div class="col">
                 <div class="ds_card">
                   <span>Content</span>
                 </div>
               </div>
               <!-- Box 4 -->
-              <div class="col-6">
+              <div class="col">
                 <div class="ds_card">
                   <span>Content</span>
                 </div>
