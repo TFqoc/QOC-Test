@@ -49,6 +49,7 @@
               }
             }
           </script>
+          <group>
           <div class="o_list_view">
             <div class="table-responsive">
               <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
@@ -174,6 +175,10 @@
               </table>
             </div>
           </div>
+        </group>
+        <group>
+          <span>Content</span>
+        </group>
           <!-- Collapse all dropdowns -->
           <script>
             // class target is .dropdown-content
