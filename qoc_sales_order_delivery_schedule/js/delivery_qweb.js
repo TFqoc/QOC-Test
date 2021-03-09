@@ -10,9 +10,10 @@ function toggle_dropdown(el){
     }
   }
 
-function get_mo_data(){
+function get_mo_data(el){
+    id = el.getAttribute("model_id");
     $.ajax({
-        url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/objects/",
+        url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/objects/"+String(id),
         data: {
           zipcode: 97201
         },

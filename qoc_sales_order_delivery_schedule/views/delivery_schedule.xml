@@ -60,7 +60,7 @@
                             <tbody>
                               <t t-foreach="records" t-as="record">
                                 <!-- Record is a Sales Order -->
-                                <tr onclick="get_mo_data()">
+                                <tr onclick="get_mo_data(this)" t-attf-model_id="{{record.id}}">
                                   <!-- <td t-esc="record.id" /> -->
                                   <td>
                                     <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
