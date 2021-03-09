@@ -7,10 +7,4 @@
             <!-- <link rel="stylesheet" type="text/css" href="/qoc_sales_order_delivery_schedule/css/delivery_schedule.css"/> -->
         </xpath>
     </template>
-    <template id="assets_common" name="delivery schedule assets" inherit_id="web.assets_common">
-        <xpath expr="." position="inside">
-            <script type="text/javascript" src="/qoc_sales_order_delivery_schedule/js/delivery_qweb.js"/>
-            <link rel="stylesheet" type="text/css" href="/qoc_sales_order_delivery_schedule/css/delivery_schedule.css"/>
-        </xpath>
-    </template>
 </odoo>
