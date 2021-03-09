@@ -96,7 +96,7 @@
                                       <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                                     </t>
                                     <span>
-                                      <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product">
+                                      <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product" class="o_form_uri">
                                         <t t-esc="so_line.name" />
                                       </a>
                                     </span>
