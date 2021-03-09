@@ -54,14 +54,14 @@
               border: 2px solid #ced4da;
               min-width: 150px;
               background-color: #ffffff;
-              /* margin: 4px; */
+              margin: 4px;
           }
             .ds-thin{
               margin-left: 8px;
               margin-right: 8px;
             }
           </style>
-          <div class="container ds-thin">
+          <div class="container">
             <div class="row">
               <!-- Box 1 -->
               <div class="col-6">
