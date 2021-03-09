@@ -72,11 +72,12 @@
                       <td>
                         <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                         <span>
-                          <t t-esc="record.name" />
+                          <a t-attf-href="#id={{record.id}}&amp;model=sale.order">
+                            <t t-esc="record.name" />
+                          </a>
                         </span>
                       </td>
                       <!-- New Stuff -->
-                      <!--  -->
                       <tr class="dropdown-content">
                         <td colspan="2" style="padding-left: 10px;">
                           <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
@@ -96,7 +97,7 @@
                                       <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                                     </t>
                                     <span>
-                                      <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product" class="o_form_uri">
+                                      <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product">
                                         <t t-esc="so_line.name" />
                                       </a>
                                     </span>
@@ -118,7 +119,11 @@
                                         <tbody>
                                           <t t-foreach="mo_lines" t-as="mo_line">
                                             <tr>
-                                              <td t-esc="mo_line.name" />
+                                              <td>
+                                                <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production">
+                                                <t t-esc="mo_line.name"/>
+                                                </a>
+                                              </td>
                                             </tr>
                                           </t>
                                         </tbody>
