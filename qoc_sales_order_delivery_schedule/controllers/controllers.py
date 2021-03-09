@@ -14,7 +14,7 @@ class DeliveryScheduleManager(http.Controller):
             'objects': http.request.env['sale.order'].search([]),
         })
 
-    @http.route('/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/objects/<model("qoc_sales_order_delivery_schedule.qoc_sales_order_delivery_schedule"):obj>/', auth='public')
+    @http.route('/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/objects/<model("sale.order"):obj>/', auth='public')
     def object(self, obj, **kw):
         return http.request.render('qoc_sales_order_delivery_schedule.object', {
             'object': obj
