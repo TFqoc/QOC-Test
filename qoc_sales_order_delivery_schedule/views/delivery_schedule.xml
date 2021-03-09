@@ -42,7 +42,7 @@
                 }
                 </style>
                 <div class="container">
-                  <div class="row justify-content-around mb-5">
+                  <div class="row justify-content-around mb-4">
                     <!-- Box 1 -->
                     <div class="col">
                       <div class="o_list_view ds_card" id="box_1">
@@ -63,7 +63,7 @@
                             <tbody>
                               <t t-foreach="records" t-as="record">
                                 <!-- Record is a Sales Order -->
-                                <tr onclick="get_mo_data(this)" t-attf-model_id="{{record.id}}">
+                                <tr>
                                   <!-- <td t-esc="record.id" /> -->
                                   <td>
                                     <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
@@ -89,18 +89,19 @@
                                             <tr>
                                               <!-- <td t-esc="so_line.name" /> -->
                                               <td>
-                                                <t t-if="len(so_line.get_mo_records()) > 0">
+                                                <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
+                                                <t t-if="len(mo_lines) > 0">
                                                   <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                                                 </t>
                                                 <span>
-                                                  <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product">
+                                                  <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product" onclick="get_mo_data(this)" t-attf-model_id="{{so_line.id}}">
                                                     <t t-esc="so_line.name" />
                                                   </a>
                                                 </span>
                                               </td>
                                             </tr>
                                             <!-- Manufacturing Orders -->
-                                            <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
+                                            
                                             <t t-if="mo_lines">
                                               <tr class="dropdown-content">
                                                 <td colspan="2" style="padding-left: 10px;">
@@ -180,7 +181,7 @@
                     </div>
                     <!-- End Row -->
                   </div>
-                  <div class="row justify-content-around mb-5">
+                  <div class="row justify-content-around mb-4">
                     <!-- Box 3 -->
                     <div class="col">
                       <div class="ds_card" id="box_3">

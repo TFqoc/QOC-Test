@@ -19,6 +19,12 @@ class DeliveryScheduleManager(http.Controller):
         return http.request.render('qoc_sales_order_delivery_schedule.object', {
             'object': obj
         })
+    
+    @http.route('/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/mo_data/<model("sale.order.line"):obj>/', auth='public')
+    def mo_data(self, obj, **kw):
+        return http.request.render('qoc_sales_order_delivery_schedule.object', {
+            'object': obj
+        })
 
     @http.route('/ds/mo_data/', auth='public')
     def mo_data(self, **kw):
