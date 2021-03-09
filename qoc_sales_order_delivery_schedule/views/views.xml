@@ -63,7 +63,7 @@
             }
           </style>
           <div class="container">
-            <div class="row justify-content-around mb-2">
+            <div class="row justify-content-around mb-5">
               <!-- Box 1 -->
               <div class="col">
                 <div class="o_list_view ds_card">
@@ -201,7 +201,7 @@
               </div>
               <!-- End Row -->
             </div>
-            <div class="row justify-content-around mb-2">
+            <div class="row justify-content-around mb-5">
               <!-- Box 3 -->
               <div class="col">
                 <div class="ds_card">
