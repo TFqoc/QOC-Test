@@ -36,8 +36,7 @@
       <field name="model">sale.order</field>
       <field name="arch" type="xml">
         <qweb>
-          <script src="/qoc_sales_order_delivery_schedule/js/delivery_qweb.js" type="text/javascript"></script>
-          <!-- <script>
+          <script>
             function toggle_dropdown(el){
               var target = el.parentElement.parentElement.nextElementSibling;
               if (target.style.display == ''){
@@ -49,7 +48,12 @@
                 el.className = 'fa fa-caret-down dropdown-content';
               }
             }
-          </script> -->
+          </script>
+          <style>
+            .test-class{
+              background-color: green;
+          }
+          </style>
           <div class="container">
             <div class="row test-class">
               <!-- Box 1 -->
