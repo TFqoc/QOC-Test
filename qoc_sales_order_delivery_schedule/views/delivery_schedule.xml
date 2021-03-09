@@ -86,7 +86,7 @@
                                         </thead>
                                         <tbody>
                                           <t t-foreach="record.order_line" t-as="so_line">
-                                            <tr>
+                                            <tr onclick="get_mo_data(this)" t-attf-model_id="{{so_line.id}}">
                                               <!-- <td t-esc="so_line.name" /> -->
                                               <td>
                                                 <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
@@ -94,7 +94,7 @@
                                                   <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                                                 </t>
                                                 <span>
-                                                  <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product" onclick="get_mo_data(this)" t-attf-model_id="{{so_line.id}}">
+                                                  <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product">
                                                     <t t-esc="so_line.name" />
                                                   </a>
                                                 </span>
