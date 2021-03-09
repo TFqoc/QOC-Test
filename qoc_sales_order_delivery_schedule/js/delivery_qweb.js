@@ -9,3 +9,15 @@ function toggle_dropdown(el){
       el.className = 'fa fa-caret-down dropdown-content';
     }
   }
+
+function get_mo_data(){
+    $.ajax({
+        url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/objects/",
+        data: {
+          zipcode: 97201
+        },
+        success: function( result ) {
+          $( "#box_2" ).html( "<strong>" + result + "</strong>" );
+        }
+      });
+}
