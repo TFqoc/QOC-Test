@@ -37,6 +37,8 @@
                     background-color: #ffffff;
                     margin: 4px;
                     padding: 4px;
+                    overflow: auto;/* Scroll Bars for long table data */
+                    max-height: 300px;
                 }
                 </style>
                 <div class="container">
