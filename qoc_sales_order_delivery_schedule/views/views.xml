@@ -2,36 +2,22 @@
   <data>
     <!-- explicit list view definition -->
 
-    <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.list">
+    <!-- <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.list">
       <field name="name">Sales Order Delivery Schedule list</field>
       <field name="model">sale.order.line</field>
       <field name="arch" type="xml">
         <tree>
           <field name="id" />
           <field name="name" />
-          <!-- <groupby name="partner_id">
+          <!- <groupby name="partner_id">
             <field name="name"/>
               <button type="edit" name="edit" string="Edit"/>
               <button type="object" name="my_method" string="Button1"
                 attrs="{'invisible': [('name', '=', 'Georges')]}"/>
-          </groupby> -->
+          </groupby> ->
         </tree>
       </field>
-    </record>
-
-    <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.dash">
-      <field name="name">Sales Order Delivery Schedule dashboard</field>
-      <field name="model">sale.order.line</field>
-      <field name="arch" type="xml">
-        <dashboard>
-          <group string="Test">
-            <view type="list" />
-          </group>
-        </dashboard>
-      </field>
-    </record>
-
-
+    </record> -->
 
 
     <!-- actions opening views on models -->
@@ -39,7 +25,7 @@
     <record model="ir.actions.act_window" id="qoc_sales_order_delivery_schedule.action_window">
       <field name="name">Sales Order Delivery Schedule</field>
       <field name="res_model">sale.order</field>
-      <field name="view_mode">qweb,tree,form,dashboard</field>
+      <field name="view_mode">qweb</field>
     </record>
 
 
