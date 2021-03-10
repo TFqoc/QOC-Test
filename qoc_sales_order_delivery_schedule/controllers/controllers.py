@@ -26,7 +26,3 @@ class DeliveryScheduleManager(http.Controller):
         return http.request.render('qoc_sales_order_delivery_schedule.mo_lines', {
             'objects': http.request.env['mrp.production'].search([('product_id','=',obj.product_id.id)]),
         })
-
-    @http.route('/ds/mo_data/', auth='public')
-    def mo_data(self, **kw):
-        return http.request.env['mrp.production'].search([])
