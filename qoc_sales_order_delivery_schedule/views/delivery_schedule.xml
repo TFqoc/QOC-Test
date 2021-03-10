@@ -21,11 +21,8 @@
                     id = el.getAttribute("model_id");
                     $.ajax({
                         url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/mo_data/"+String(id),
-                        data: {
-                          zipcode: 97201
-                        },
                         success: function( result ) {
-                          $( "#box_2" ).html( "<strong>" + result + "</strong>" );
+                          $( "#box_2" ).html(result);
                         }
                       });
                 }
@@ -50,16 +47,16 @@
                           <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                             <thead>
                               <tr>
-                                <!-- <th class="o_column_sortable">
-                            ID
-                            <span class="o_resize" />
-                          </th> -->
                                 <th class="o_column_sortable">
                                   <strong>Name</strong>
                                   <span class="o_resize" />
                                 </th>
                                 <th class="o_column_sortable">
                                   <strong>Customer</strong>
+                                  <span class="o_resize" />
+                                </th>
+                                <th class="o_column_sortable">
+                                  <strong>Date</strong>
                                   <span class="o_resize" />
                                 </th>
                               </tr>
@@ -85,23 +82,19 @@
                                       <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                                         <thead>
                                           <tr>
-                                            <th>
-                                              Product
-                                            </th>
-                                            <th>
-                                              Qty
-                                            </th>
+                                            <th>Product</th>
+                                            <th>Qty</th>
+                                            <th>On Hand</th>
                                           </tr>
                                         </thead>
                                         <tbody>
                                           <t t-foreach="record.order_line" t-as="so_line">
                                             <tr onclick="get_mo_data(this)" t-attf-model_id="{{so_line.id}}">
-                                              <!-- <td t-esc="so_line.name" /> -->
                                               <td>
-                                                <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
+                                                <!-- <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
                                                 <t t-if="len(mo_lines) > 0">
                                                   <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
-                                                </t>
+                                                </t> -->
                                                 <span>
                                                   <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product">
                                                     <t t-esc="so_line.name" />
@@ -111,9 +104,12 @@
                                               <td>
                                                 <t t-esc="so_line.product_uom_qty"/>
                                               </td>
+                                              <td>
+                                                <t t-esc="so_line.product_id.qty-available"/>
+                                              </td>
                                             </tr>
                                             <!-- Manufacturing Orders -->
-                                            
+<!--                                             
                                             <t t-if="mo_lines">
                                               <tr class="dropdown-content">
                                                 <td colspan="2" style="padding-left: 10px;">
@@ -140,7 +136,7 @@
                                                 </td>
                                               </tr>
                                             </t>
-                                            <!-- Purchase Orders -->
+                                            <!- Purchase Orders ->
                                             <t t-if="so_line.purchase_line_ids">
                                               <tr class="dropdown-content">
                                                 <td colspan="2" style="padding-left: 10px;">
@@ -155,7 +151,7 @@
                                                     <tbody>
                                                       <t t-foreach="so_line.purchase_line_ids" t-as="purchase_line">
                                                         <tr>
-                                                          <!-- <td t-esc="purchase_line.name" /> -->
+                                                          <!- <td t-esc="purchase_line.name" /> ->
                                                           <td>
                                                             <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                                                             <span>
@@ -168,14 +164,16 @@
                                                   </table>
                                                 </td>
                                               </tr>
-                                            </t>
+                                            </t> -->
       
                                           </t>
                                         </tbody>
                                       </table>
                                     </td>
                                   </tr>
-                                  <!-- Old Stuff -->
+                                  <td>
+                                    <t t-esc="record.date_order"/>
+                                  </td>
       
                                 </tr>
                               </t>
