@@ -33,16 +33,16 @@
               <thead>
                 <tr>
                   <th>Order Name</th>
-                  <th>Part #</th>
+                  <!-- <th>Part #</th> -->
                   <th>Qty</th>
                   <th>Start Date</th>
-                  <th>Deadline</th>
+                  <!-- <th>Deadline</th> -->
                 </tr>
               </thead>
               <tbody>
                 <t t-foreach="objects" t-as="mo_line">
                   <t t-set="components" t-value="mo_line.move_raw_ids" />
-                  <tr>
+                  <tr onclick="get_wo_data(this)" t-attf-model_id="{{mo_line.id}}">
                     <td>
                       <t t-if="len(components) > 0">
                         <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
@@ -53,17 +53,17 @@
                         </a>
                       </span>
                     </td>
-                    <td>
+                    <!-- <td>
                       <t t-esc="mo_line.product_id.default_code" />
-                    </td>
+                    </td> -->
                     <td>
                       <t t-esc="mo_line.product_qty" />
                     </td>
+                    <!-- <td>
+                      <t t-esc="mo_line.date_planned_start.strftime('%m/%d/%Y') if mo_line.date_planned_start else ''" />
+                    </td> -->
                     <td>
-                      <t t-esc="mo_line.date_planned_start.strftime('%m/%d/%Y')" />
-                    </td>
-                    <td>
-                      <t t-esc="mo_line.date_deadline.strftime('%m/%d/%Y')" />
+                      <t t-esc="mo_line.date_deadline.strftime('%m/%d/%Y') if mo_line.date_deadline else ''" />
                     </td>
                   </tr>
                   <t t-if="len(components) > 0">
@@ -107,6 +107,43 @@
       <script>
         $(".dropdown-content.mo-content").hide();
       </script>
+    </template>
+
+    <template id="wo_lines">
+      <t t-if="len(objects) > 0">
+        <div class="o_list_view">
+          <div class="table-responsive">
+            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+              <thead>
+                <tr>
+                  <th>Operation</th>
+                  <th>Start Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-foreach="objects" t-as="wo_line">
+                  <tr>
+                    <td>
+                      <span>
+                        <a t-attf-href="#id={{wo_line.id}}&amp;model=mrp.workorder">
+                          <t t-esc="wo_line.name" />
+                        </a>
+                      </span>
+                    </td>
+                    <td>
+                      <t t-esc="wo_line.date_planned_start.strftime('%m/%d/%Y') if mo_line.date_planned_start else ''" />
+                    </td>
+                    <td>
+                      <t t-esc="mo_line.state" />
+                    </td>
+                  </tr>
+                </t>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </t>
     </template>
 
   </data>

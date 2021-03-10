@@ -27,6 +27,16 @@
                       });
                     select(el, 1);
                   }
+                  function get_wo_data(el){
+                    id = el.getAttribute("model_id");
+                    $.ajax({
+                      url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/wo_data/"+String(id),
+                      success: function( result ) {
+                        $( "#box_3" ).html(result);
+                      }
+                    });
+                    select(el,2);
+                  }
                   // Get unselect previous selected element if any (scope of this box)
                   // Add selection to this row
                   function select(el, box){
@@ -90,7 +100,7 @@
                                     <t t-esc="record.partner_id.name"/>
                                   </td>
                                   <td>
-                                    <t t-esc="record.date_order.strftime('%m/%d/%Y')"/>
+                                    <t t-esc="record.date_order.strftime('%m/%d/%Y') if record.date_order else ''"/>
                                   </td>
                                   <!-- New Stuff -->
                                   <tr class="dropdown-content">
