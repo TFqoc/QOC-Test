@@ -26,7 +26,7 @@ class Production(models.Model):
     _inherit = 'mrp.production'
 
     def get_wo_records(self):
-        return self.env['mrp.workorder'].search([('production_id','=',self.id)],limit=80,order="id desc")
+        return self.env['mrp.workorder'].search([('production_id','=',self.id)],limit=80)
 # class View(models.Model):
 #     _inherit = 'ir.ui.view'
 

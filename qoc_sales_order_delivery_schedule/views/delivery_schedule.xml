@@ -87,7 +87,7 @@
                             <tbody>
                               <t t-foreach="records" t-as="record">
                                 <!-- Record is a Sales Order -->
-                                <tr>
+                                <tr t-if="record_index &lt; 3">
                                   <td>
                                     <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                                     <span>
