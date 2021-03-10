@@ -58,13 +58,16 @@
                                   <strong>Name</strong>
                                   <span class="o_resize" />
                                 </th>
+                                <th class="o_column_sortable">
+                                  <strong>Customer</strong>
+                                  <span class="o_resize" />
+                                </th>
                               </tr>
                             </thead>
                             <tbody>
                               <t t-foreach="records" t-as="record">
                                 <!-- Record is a Sales Order -->
                                 <tr>
-                                  <!-- <td t-esc="record.id" /> -->
                                   <td>
                                     <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                                     <span>
@@ -73,6 +76,9 @@
                                       </a>
                                     </span>
                                   </td>
+                                  <td>
+                                    <t t-esc="record.parter_id.name"/>
+                                  </td>
                                   <!-- New Stuff -->
                                   <tr class="dropdown-content">
                                     <td colspan="2" style="padding-left: 10px;">
@@ -80,8 +86,11 @@
                                         <thead>
                                           <tr>
                                             <th>
-                                        Product Name
-                                      </th>
+                                              Product
+                                            </th>
+                                            <th>
+                                              Qty
+                                            </th>
                                           </tr>
                                         </thead>
                                         <tbody>
@@ -98,6 +107,9 @@
                                                     <t t-esc="so_line.name" />
                                                   </a>
                                                 </span>
+                                              </td>
+                                              <td>
+                                                <t t-esc="so_line.product_uom_qty"/>
                                               </td>
                                             </tr>
                                             <!-- Manufacturing Orders -->
