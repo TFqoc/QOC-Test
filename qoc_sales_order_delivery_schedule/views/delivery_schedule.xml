@@ -76,6 +76,9 @@
                                   <td>
                                     <t t-esc="record.partner_id.name"/>
                                   </td>
+                                  <td>
+                                    <t t-esc="str(record.date_order).split(' ')[0]"/>
+                                  </td>
                                   <!-- New Stuff -->
                                   <tr class="dropdown-content">
                                     <td colspan="2" style="padding-left: 10px;">
@@ -171,10 +174,7 @@
                                       </table>
                                     </td>
                                   </tr>
-                                  <td>
-                                    <t t-esc="str(record.date_order).split(' ')[0]"/>
-                                  </td>
-      <!--  -->
+
                                 </tr>
                               </t>
                             </tbody>
