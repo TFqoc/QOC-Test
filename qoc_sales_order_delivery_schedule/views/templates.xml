@@ -34,7 +34,7 @@
                 <tr>
                   <th>Order Name</th>
                   <th>Part #</th>
-                  <th>Quantity</th>
+                  <th>Qty</th>
                   <th>Start Date</th>
                   <th>Deadline</th>
                 </tr>
@@ -100,7 +100,6 @@
           </div>
         </div>
       </t>
-      <!--  -->
       <t t-else="">
         <h3>No current manufacturing orders were found for this product.</h3>
       </t>
