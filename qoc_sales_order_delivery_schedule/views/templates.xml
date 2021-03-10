@@ -29,6 +29,7 @@
               </tr>
             </thead>
             <tbody>
+              <t t-if="len(objects) > 0">
               <t t-foreach="objects" t-as="mo_line">
                 <tr>
                   <td>
@@ -38,8 +39,13 @@
                   </td>
                 </tr>
               </t>
+            </t>
+            <t t-else="">
+              <h3>No current manufacturing orders were found for this product.</h3>
+            </t>
             </tbody>
           </table>
+        
         </template>
 
     </data>
