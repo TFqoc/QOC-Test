@@ -25,7 +25,7 @@
                           $( "#box_2" ).html(result);
                         }
                       });
-                    select(el);
+                    select(el, 1);
                   }
                   // Get unselect previous selected element if any (scope of this box)
                   // Add selection to this row
@@ -45,7 +45,10 @@
                     max-height: 300px;
                 }
                   .selected{
-                    background-color: lightblue;
+                    background-color: powderblue !important;
+                  }
+                  .selected:hover{
+                    background-color: lightblue !important;
                   }
                 </style>
                 <div class="container">
