@@ -27,74 +27,78 @@
     </template>
     <template id="mo_lines">
       <t t-if="len(objects) > 0">
-        <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-          <thead>
-            <tr>
-              <th>Order Name</th>
-              <th>Part #</th>
-              <th>Quantity</th>
-              <th>Start Date</th>
-              <th>Deadline</th>
-            </tr>
-          </thead>
-          <tbody>
-            <t t-foreach="objects" t-as="mo_line">
-              <t t-set="components" t-value="mo_line.move_raw_ids" />
-              <tr>
-                <td>
-                  <t t-if="len(components) > 0">
-                    <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
-                  </t>
-                  <span>
-                    <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production">
-                      <t t-esc="mo_line.name" />
-                    </a>
-                  </span>
-                </td>
-                <td>
-                  <t t-esc="mo_line.product_id.default_code" />
-                </td>
-                <td>
-                  <t t-esc="mo_line.product_qty"/>
-                </td>
-                <td>
-                  <t t-esc="mo_line.date_planned_start.strftime('%m/%d/%Y')" />
-                </td>
-                <td>
-                  <t t-esc="mo_line.date_deadline.strftime('%m/%d/%Y')" />
-                </td>
-              </tr>
-              <t t-if="len(components) > 0">
-                <tr class="dropdown-content mo-content">
-                  <td colspan="5" style="padding-left: 10px;">
-                    <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                      <thead>
-                        <tr>
-                          <th>Component</th>
-                          <th>Quantity to Consume</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <t t-foreach="components" t-as="component">
-                          <tr>
-                            <td>
-                              <a t-attf-href="#id={component.product_id.id}}&amp;model=product.product">
-                                <t t-esc="component.product_id.name" />
-                              </a>
-                            </td>
-                            <td>
-                              <t t-esc="component.product_uom_qty"/>
-                            </td>
-                          </tr>
-                        </t>
-                      </tbody>
-                    </table>
-                  </td>
+        <div class="o_list_view">
+          <div class="table-responsive">
+            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+              <thead>
+                <tr>
+                  <th>Order Name</th>
+                  <th>Part #</th>
+                  <th>Quantity</th>
+                  <th>Start Date</th>
+                  <th>Deadline</th>
                 </tr>
-              </t>
-            </t>
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                <t t-foreach="objects" t-as="mo_line">
+                  <t t-set="components" t-value="mo_line.move_raw_ids" />
+                  <tr>
+                    <td>
+                      <t t-if="len(components) > 0">
+                        <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                      </t>
+                      <span>
+                        <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production">
+                          <t t-esc="mo_line.name" />
+                        </a>
+                      </span>
+                    </td>
+                    <td>
+                      <t t-esc="mo_line.product_id.default_code" />
+                    </td>
+                    <td>
+                      <t t-esc="mo_line.product_qty" />
+                    </td>
+                    <td>
+                      <t t-esc="mo_line.date_planned_start.strftime('%m/%d/%Y')" />
+                    </td>
+                    <td>
+                      <t t-esc="mo_line.date_deadline.strftime('%m/%d/%Y')" />
+                    </td>
+                  </tr>
+                  <t t-if="len(components) > 0">
+                    <tr class="dropdown-content mo-content">
+                      <td colspan="5" style="padding-left: 10px;">
+                        <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                          <thead>
+                            <tr>
+                              <th>Component</th>
+                              <th>Quantity to Consume</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <t t-foreach="components" t-as="component">
+                              <tr>
+                                <td>
+                                  <a t-attf-href="#id={component.product_id.id}}&amp;model=product.product">
+                                    <t t-esc="component.product_id.name" />
+                                  </a>
+                                </td>
+                                <td>
+                                  <t t-esc="component.product_uom_qty" />
+                                </td>
+                              </tr>
+                            </t>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </t>
+                </t>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </t>
       <t t-else="">
         <h3>No current manufacturing orders were found for this product.</h3>
