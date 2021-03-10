@@ -31,7 +31,7 @@
                   // Add selection to this row
                   function select(el){
                     if ($(".selected")){
-                      $(".selected").remove_class("selected");
+                      $(".selected").removeClass("selected");
                     }
                     el.classList.add("selected");
                   }
