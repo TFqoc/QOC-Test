@@ -77,7 +77,7 @@
                                     <t t-esc="record.partner_id.name"/>
                                   </td>
                                   <td>
-                                    <t t-esc="str(record.date_order).split(' ')[0]"/>
+                                    <t t-esc="record.date_order.strftime('%m/%d/%Y')"/>
                                   </td>
                                   <!-- New Stuff -->
                                   <tr class="dropdown-content">
