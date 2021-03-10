@@ -108,7 +108,7 @@
                                                 <t t-esc="so_line.product_uom_qty"/>
                                               </td>
                                               <td>
-                                                <t t-esc="so_line.product_id.qty_available"/>
+                                                <t t-esc="so_line.product_id._compute_quantities() or so_line.product_id.qty_available"/>
                                               </td>
                                             </tr>
                                             <!-- Manufacturing Orders -->
