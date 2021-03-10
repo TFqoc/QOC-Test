@@ -172,7 +172,7 @@
                                     </td>
                                   </tr>
                                   <td>
-                                    <t t-esc="record.date_order"/>
+                                    <t t-esc="str(record.date_order).split(' ')[0]"/>
                                   </td>
       
                                 </tr>
