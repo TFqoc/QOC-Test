@@ -132,10 +132,10 @@
                       </span>
                     </td>
                     <td>
-                      <t t-esc="wo_line.date_planned_start.strftime('%m/%d/%Y') if mo_line.date_planned_start else ''" />
+                      <t t-esc="wo_line.date_planned_start.strftime('%m/%d/%Y') if wo_line.date_planned_start else ''" />
                     </td>
                     <td>
-                      <t t-esc="mo_line.state" />
+                      <t t-esc="wo_line.state" />
                     </td>
                   </tr>
                 </t>
@@ -143,6 +143,9 @@
             </table>
           </div>
         </div>
+      </t>
+      <t t-else="">
+        <h3>No current work orders were found for this manufacturing order.</h3>
       </t>
     </template>
 
