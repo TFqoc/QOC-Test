@@ -32,6 +32,7 @@
             <tr>
               <th>Order Name</th>
               <th>Part #</th>
+              <th>Quantity</th>
               <th>Start Date</th>
               <th>Deadline</th>
             </tr>
@@ -54,19 +55,23 @@
                   <t t-esc="mo_line.product_id.default_code" />
                 </td>
                 <td>
-                  <t t-esc="str(mo_line.date_planned_start).split(' ')[0]" />
+                  <t t-esc="mo_line.product_qty"/>
                 </td>
                 <td>
-                  <t t-esc="str(mo_line.date_deadline).split(' ')[0]" />
+                  <t t-esc="mo_line.date_planned_start.strftime('%m/%d/%Y')" />
+                </td>
+                <td>
+                  <t t-esc="mo_line.date_deadline.strftime('%m/%d/%Y')" />
                 </td>
               </tr>
               <t t-if="len(components) > 0">
-                <tr class="dropdown-content">
+                <tr class="dropdown-content mo-content">
                   <td colspan="2" style="padding-left: 10px;">
                     <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                       <thead>
                         <tr>
                           <th>Component</th>
+                          <th>Quantity to Consume</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -96,7 +101,7 @@
       </t>
       <!-- Collapse all dropdowns -->
       <script>
-        $(".dropdown-content").hide();
+        $(".dropdown-content.mo-content").hide();
       </script>
     </template>
 
