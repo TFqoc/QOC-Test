@@ -19,6 +19,28 @@
             </t>
           </dl>
         </template>
+        <template id="mo_lines">
+          <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+            <thead>
+              <tr>
+                <th>
+                  Order Name
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="mo_lines" t-as="mo_line">
+                <tr>
+                  <td>
+                    <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production">
+                      <t t-esc="mo_line.name" />
+                    </a>
+                  </td>
+                </tr>
+              </t>
+            </tbody>
+          </table>
+        </template>
 
     </data>
 </odoo>
