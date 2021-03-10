@@ -94,6 +94,10 @@
       <t t-else="">
         <h3>No current manufacturing orders were found for this product.</h3>
       </t>
+      <!-- Collapse all dropdowns -->
+      <script>
+        $(".dropdown-content").hide();
+      </script>
     </template>
 
   </data>
