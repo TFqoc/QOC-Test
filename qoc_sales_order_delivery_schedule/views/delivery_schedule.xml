@@ -29,10 +29,8 @@
                   }
                   // Get unselect previous selected element if any (scope of this box)
                   // Add selection to this row
-                  function select(el){
-                    if ($(".selected")){
-                      $(".selected").removeClass("selected");
-                    }
+                  function select(el, box){
+                    $("#box_"+String(box)).find(".selected").removeClass("selected");
                     el.classList.add("selected");
                   }
                 </script>
@@ -47,7 +45,7 @@
                     max-height: 300px;
                 }
                   .selected{
-                    bacground-color: lightblue;
+                    background-color: lightblue;
                   }
                 </style>
                 <div class="container">
