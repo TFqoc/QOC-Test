@@ -22,6 +22,11 @@ class SaleLine(models.Model):
     def get_mo_records(self):
         return self.env['mrp.production'].search([('product_id','=',self.product_id.id)])
 
+class Production(models.Model):
+    _inherit = 'mrp.production'
+
+    def get_wo_records(self):
+        return self.env['mrp.workorder'].search([('production_id','=',self.id)])
 # class View(models.Model):
 #     _inherit = 'ir.ui.view'
 
