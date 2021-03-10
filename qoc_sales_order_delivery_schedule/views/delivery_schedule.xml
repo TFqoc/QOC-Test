@@ -25,7 +25,16 @@
                           $( "#box_2" ).html(result);
                         }
                       });
-                }
+                    select(el);
+                  }
+                  // Get unselect previous selected element if any (scope of this box)
+                  // Add selection to this row
+                  function select(el){
+                    if ($(".selected")){
+                      $(".selected").remove_class("selected");
+                    }
+                    el.classList.add("selected");
+                  }
                 </script>
                 <style>
                   .ds_card{
@@ -37,6 +46,9 @@
                     overflow: auto;/* Scroll Bars for long table data */
                     max-height: 300px;
                 }
+                  .selected{
+                    bacground-color: lightblue;
+                  }
                 </style>
                 <div class="container">
                   <div class="row justify-content-around mb-4">
