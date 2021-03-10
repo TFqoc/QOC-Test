@@ -1,52 +1,57 @@
 <odoo>
-    <data>
+  <data>
 
-        <template id="listing">
-          <ul>
-            <li t-foreach="objects" t-as="object">
-              <a t-attf-href="#{ root }/objects/#{ object.id }">
-                <t t-esc="object.display_name"/>
-              </a>
-            </li>
-          </ul>
-        </template>
-        <template id="object">
-          <h1><t t-esc="object.display_name"/></h1>
-          <dl>
-            <t t-foreach="object._fields" t-as="field">
-              <dt><t t-esc="field"/></dt>
-              <dd><t t-esc="object[field]"/></dd>
-            </t>
-          </dl>
-        </template>
-        <template id="mo_lines">
-          <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-            <thead>
-              <tr>
-                <th>
+    <template id="listing">
+      <ul>
+        <li t-foreach="objects" t-as="object">
+          <a t-attf-href="#{ root }/objects/#{ object.id }">
+            <t t-esc="object.display_name" />
+          </a>
+        </li>
+      </ul>
+    </template>
+    <template id="object">
+      <h1>
+        <t t-esc="object.display_name" />
+      </h1>
+      <dl>
+        <t t-foreach="object._fields" t-as="field">
+          <dt>
+            <t t-esc="field" />
+          </dt>
+          <dd>
+            <t t-esc="object[field]" />
+          </dd>
+        </t>
+      </dl>
+    </template>
+    <template id="mo_lines">
+      <t t-if="len(objects) > 0">
+        <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+          <thead>
+            <tr>
+              <th>
                   Order Name
                 </th>
+            </tr>
+          </thead>
+          <tbody>
+            <t t-foreach="objects" t-as="mo_line">
+              <tr>
+                <td>
+                  <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production">
+                    <t t-esc="mo_line.name" />
+                  </a>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              <t t-if="len(objects) > 0">
-              <t t-foreach="objects" t-as="mo_line">
-                <tr>
-                  <td>
-                    <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production">
-                      <t t-esc="mo_line.name" />
-                    </a>
-                  </td>
-                </tr>
-              </t>
             </t>
-            <t t-else="">
-              <h3>No current manufacturing orders were found for this product.</h3>
-            </t>
-            </tbody>
-          </table>
-        
-        </template>
+          </tbody>
+        </table>
+      </t>
+      <t t-else="">
+        <h3>No current manufacturing orders were found for this product.</h3>
+      </t>
+    </template>
 
-    </data>
+  </data>
 </odoo>
