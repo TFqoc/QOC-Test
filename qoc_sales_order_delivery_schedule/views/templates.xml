@@ -30,20 +30,63 @@
         <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
           <thead>
             <tr>
-              <th>
-                  Order Name
-                </th>
+              <th>Order Name</th>
+              <th>Part #</th>
+              <th>Start Date</th>
+              <th>Deadline</th>
             </tr>
           </thead>
           <tbody>
             <t t-foreach="objects" t-as="mo_line">
+              <t t-set="components" t-value="mo_line.move_raw_ids" />
               <tr>
                 <td>
-                  <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production">
-                    <t t-esc="mo_line.name" />
-                  </a>
+                  <t t-if="len(components) > 0">
+                    <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                  </t>
+                  <span>
+                    <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production">
+                      <t t-esc="mo_line.name" />
+                    </a>
+                  </span>
+                </td>
+                <td>
+                  <t t-esc="mo_line.product_id.default_code" />
+                </td>
+                <td>
+                  <t t-esc="str(mo_line.date_planned_start).split(' ')[0]" />
+                </td>
+                <td>
+                  <t t-esc="str(mo_line.date_deadline).split(' ')[0]" />
                 </td>
               </tr>
+              <t t-if="len(components) > 0">
+                <tr class="dropdown-content">
+                  <td colspan="2" style="padding-left: 10px;">
+                    <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                      <thead>
+                        <tr>
+                          <th>Component</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <t t-foreach="components" t-as="component">
+                          <tr>
+                            <td>
+                              <a t-attf-href="#id={component.product_id.id}}&amp;model=product.product">
+                                <t t-esc="component.product_id.name" />
+                              </a>
+                            </td>
+                            <td>
+                              <t t-esc="component.product_uom_qty"/>
+                            </td>
+                          </tr>
+                        </t>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </t>
             </t>
           </tbody>
         </table>
