@@ -14,19 +14,19 @@ class DeliveryScheduleManager(http.Controller):
             'objects': http.request.env['sale.order'].search([]),
         })
 
-    @http.route('/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/objects/<model("sale.order"):obj>/', auth='public')
+    @http.route('/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/objects/<model("sale.order"):obj>/', auth='user')
     def object(self, obj, **kw):
         return http.request.render('qoc_sales_order_delivery_schedule.object', {
             'object': obj
         })
     
-    @http.route('/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/mo_data/<model("sale.order.line"):obj>/', auth='public')
+    @http.route('/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/mo_data/<model("sale.order.line"):obj>/', auth='user')
     def mo_data(self, obj, **kw):
         data = obj.get_mo_records()
         return http.request.render('qoc_sales_order_delivery_schedule.mo_lines', {
             'objects': data,
         })
-    @http.route('/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/wo_data/<model("mrp.production"):obj>/', auth='public')
+    @http.route('/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/wo_data/<model("mrp.production"):obj>/', auth='user')
     def wo_data(self, obj, **kw):
         data = obj.get_wo_records()
         return http.request.render('qoc_sales_order_delivery_schedule.wo_lines', {
