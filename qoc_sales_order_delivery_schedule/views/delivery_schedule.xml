@@ -117,10 +117,6 @@
                                           <t t-foreach="record.order_line" t-as="so_line">
                                             <tr onclick="get_mo_data(this)" t-attf-model_id="{{so_line.id}}">
                                               <td>
-                                                <!-- <t t-set="mo_lines" t-value="so_line.get_mo_records()" />
-                                                <t t-if="len(mo_lines) > 0">
-                                                  <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
-                                                </t> -->
                                                 <span>
                                                   <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product">
                                                     <t t-esc="so_line.name" />
@@ -134,64 +130,6 @@
                                                 <t t-esc="so_line.product_id._compute_quantities() or so_line.product_id.qty_available"/>
                                               </td>
                                             </tr>
-                                            <!-- Manufacturing Orders -->
-<!--                                             
-                                            <t t-if="mo_lines">
-                                              <tr class="dropdown-content">
-                                                <td colspan="2" style="padding-left: 10px;">
-                                                  <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                                                    <thead>
-                                                      <tr>
-                                                        <th>
-                                                    MO Name
-                                                  </th>
-                                                      </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                      <t t-foreach="mo_lines" t-as="mo_line">
-                                                        <tr>
-                                                          <td>
-                                                            <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production">
-                                                              <t t-esc="mo_line.name" />
-                                                            </a>
-                                                          </td>
-                                                        </tr>
-                                                      </t>
-                                                    </tbody>
-                                                  </table>
-                                                </td>
-                                              </tr>
-                                            </t>
-                                            <!- Purchase Orders ->
-                                            <t t-if="so_line.purchase_line_ids">
-                                              <tr class="dropdown-content">
-                                                <td colspan="2" style="padding-left: 10px;">
-                                                  <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                                                    <thead>
-                                                      <tr>
-                                                        <th>
-                                                    PO Name
-                                                  </th>
-                                                      </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                      <t t-foreach="so_line.purchase_line_ids" t-as="purchase_line">
-                                                        <tr>
-                                                          <!- <td t-esc="purchase_line.name" /> ->
-                                                          <td>
-                                                            <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
-                                                            <span>
-                                                              <t t-esc="purchase_line.name" />
-                                                            </span>
-                                                          </td>
-                                                        </tr>
-                                                      </t>
-                                                    </tbody>
-                                                  </table>
-                                                </td>
-                                              </tr>
-                                            </t> -->
-      
                                           </t>
                                         </tbody>
                                       </table>
