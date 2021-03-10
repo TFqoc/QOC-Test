@@ -30,7 +30,7 @@
                 <style>
                   .ds_card{
                     border: 2px solid #ced4da;
-                    min-width: 150px;
+                    min-width: 170px;
                     background-color: #ffffff;
                     margin: 4px;
                     padding: 4px;
@@ -41,7 +41,7 @@
                 <div class="container">
                   <div class="row justify-content-around mb-4">
                     <!-- Box 1 -->
-                    <div class="col-5">
+                    <div class="col">
                       <div class="o_list_view ds_card" id="box_1">
                         <div class="table-responsive">
                           <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
@@ -184,7 +184,7 @@
                       <!-- End Column -->
                     </div>
                     <!-- Box 2 -->
-                    <div class="col-5">
+                    <div class="col">
                       <div class="ds_card" id="box_2">
                         <span>Content</span>
                       </div>
@@ -193,13 +193,13 @@
                   </div>
                   <div class="row justify-content-around mb-4">
                     <!-- Box 3 -->
-                    <div class="col-5">
+                    <div class="col">
                       <div class="ds_card" id="box_3">
                         <span>Content</span>
                       </div>
                     </div>
                     <!-- Box 4 -->
-                    <div class="col-5">
+                    <div class="col">
                       <div class="ds_card" id="box_4">
                         <span>Content</span>
                       </div>
