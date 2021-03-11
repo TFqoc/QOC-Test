@@ -182,6 +182,7 @@
                                                     <t t-if="delivery.product_id == so_line.product_id">
                                                       <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability"/>
                                                       <t t-set="reserved" t-value="reserved + res"/>
+                                                      <t t-field="delivery.forecast_availability" t-widget="forecast_widget"/>
                                                     </t>
                                                   </t>
                                                 </t>
