@@ -28,17 +28,23 @@
                         }
                       });
                       console.log("Next: "+next_box+"\nCurrent: "+current_box);
+                      if (next_box % 2 == 1){
+                        // Create new row
+                        $("#").append('<div class="row justify-content-around mb-4"><div class="col"><div class="ds_card" id="box_'+(next_box+1)+'"><span>Content</span></div></div><div class="col"><div class="ds_card" id="box_'+(next_box+2)+'"><span>Content</span></div></div></div>');
+                      }
                     select(el,current_box);
                   }
                   function get_wo_data(el){
                     id = el.getAttribute("model_id");
+                    next_box = String(next_box_id(el));
+                    current_box = get_box_id(el);
                     $.ajax({
                       url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/wo_data/"+String(id),
                       success: function( result ) {
-                        $( "#box_"+String(next_box_id(el)) ).html(result);
+                        $( "#box_"+next_box).html(result);
                       }
                     });
-                    select(el,get_box_id(el));
+                    select(el,current_box);
                   }
                   function select(el, box){
                     $("#box_"+String(box)).find(".selected").removeClass("selected");
@@ -68,7 +74,7 @@
                     background-color: lightblue !important;
                   }
                 </style>
-                <div class="container">
+                <div class="container" id="page_container">
                   <div class="row justify-content-around mb-4">
                     <!-- Box 1 -->
                     <div class="col">
@@ -159,20 +165,20 @@
                     </div>
                     <!-- End Row -->
                   </div>
-                  <div class="row justify-content-around mb-4">
-                    <!-- Box 3 -->
+                  <!-- <div class="row justify-content-around mb-4">
+                    <!- Box 3 ->
                     <div class="col">
                       <div class="ds_card" id="box_3">
                         <span>Content</span>
                       </div>
                     </div>
-                    <!-- Box 4 -->
+                    <!- Box 4 ->
                     <div class="col">
                       <div class="ds_card" id="box_4">
                         <span>Content</span>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <!-- End container -->
                 </div>
                 
