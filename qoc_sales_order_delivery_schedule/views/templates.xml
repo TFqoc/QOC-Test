@@ -139,7 +139,7 @@
       <!-- Collapse all dropdowns -->
       <script>
         // TODO only close dropdowns on the current box
-        $(this).closest(".ds_card").(".dropdown-content.mo-content").hide();
+        $(this).closest(".ds_card").find(".dropdown-content.mo-content").hide();
         //$(".dropdown-content.mo-content").hide();
       </script>
     </template>
