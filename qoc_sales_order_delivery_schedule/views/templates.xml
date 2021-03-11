@@ -43,7 +43,7 @@
                 <t t-foreach="objects" t-as="mo_line">
                   <!-- <t t-set="components" t-value="mo_line.move_raw_ids" /> -->
                   <t t-set="workorders" t-value="mo_line.workorder_ids"/>
-                  <tr onclick="get_data(this,'wo_data')" t-attf-model_id="{{mo_line.id}}">
+                  <tr>
                     <td>
                       <t t-if="len(workorders) > 0">
                         <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
@@ -95,9 +95,28 @@
                                   <t t-esc="workorder.state" />
                                 </td>
                               </tr>
-                              <tr style="padding-left: 20px;">
-                                <td>
-                                  <t t-esc="workorder.component_id.name"/>
+                              <tr class="dropdown-content">
+                                <td colspan="3" style="padding-left: 20px;">
+                                  <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                                    <thead>
+                                      <tr>
+                                        <th>Component Name</th>
+                                        <th>Quantity to Consume</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr onclick="get_data(this,'mo_data_product')" t-attf-model_id="{{workorder_component_id.id}}">
+                                        <td>
+                                          <a t-attf-href="#id={{workorder.component_id.id}}&amp;model=product.product">
+                                            <t t-esc="workorder.component_id.name"/>
+                                          </a>
+                                        </td>
+                                        <td>
+                                          <t t-esc="workorder.component_remaining_qty"/> / <t t-esc="workorder.component_qty_to_do"/>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
                                 </td>
                               </tr>
                             </t>
