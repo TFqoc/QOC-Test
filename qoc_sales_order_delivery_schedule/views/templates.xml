@@ -139,6 +139,9 @@
       <!-- Collapse all dropdowns -->
       <script>
         // TODO only close dropdowns on the current box
+        console.log($('script').last());
+        console.log($('script').last().closest(".ds_card"));
+        console.log($('script').last().closest(".ds_card").find(".dropdown-content.mo-content"));
         $('script').last().closest(".ds_card").find(".dropdown-content.mo-content").hide();
         //$(".dropdown-content.mo-content").hide();
       </script>
