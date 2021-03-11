@@ -50,7 +50,6 @@
                         $( "#box_"+next_box).html(result);
                       }
                     });
-                    $( "#box_"+next_box).html(data);
                     console.log("Next: "+next_box+"\nCurrent: "+current_box);
                     select(el,current_box);
                   }
