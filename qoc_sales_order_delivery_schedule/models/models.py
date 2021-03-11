@@ -21,6 +21,8 @@ class SaleLine(models.Model):
 
     def get_mo_records(self):
         return self.env['mrp.production'].search([('product_id','=',self.product_id.id)],limit=80,order="id desc")
+    def get_delivery_records(self):
+        return self.env['stock.picking'].search([('sale_id','=',self.order_id.id)],limit=80,order="id desc")
 
 class Production(models.Model):
     _inherit = 'mrp.production'

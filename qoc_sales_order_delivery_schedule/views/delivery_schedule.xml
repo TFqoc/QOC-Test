@@ -156,6 +156,7 @@
                                             <th>Product</th>
                                             <th>Qty</th>
                                             <th>On Hand</th>
+                                            <th>Reserved</th>
                                           </tr>
                                         </thead>
                                         <tbody>
@@ -173,6 +174,15 @@
                                               </td>
                                               <td>
                                                 <t t-esc="so_line.product_id._compute_quantities() or so_line.product_id.qty_available"/>
+                                              </td>
+                                              <td>
+                                                <t t-set="reserved" t-value="0"/>
+                                                <t t-foreach="so_line.get_delivery_records()" t-as="deliveries">
+                                                  <t t-foreach="deliveries.move_ids_without_package" t-as="delivery">
+                                                    <t t-set="reserved" t-value="reserved + delivery.forcast_availability"/>
+                                                  </t>
+                                                </t>
+                                                <t t-esc="reserved"/>
                                               </td>
                                             </tr>
                                           </t>
