@@ -22,26 +22,30 @@
                     $.ajax({
                         url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/mo_data/"+String(id),
                         success: function( result ) {
-                          $( "#box_2" ).html(result);
+                          $( "#box_"+String(next_box_id(el)) ).html(result);
                         }
                       });
-                    select(el, 1);
+                    select(el,get_box_id(el));
                   }
                   function get_wo_data(el){
                     id = el.getAttribute("model_id");
                     $.ajax({
                       url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/wo_data/"+String(id),
                       success: function( result ) {
-                        $( "#box_3" ).html(result);
+                        $( "#box_"+String(next_box_id(el)) ).html(result);
                       }
                     });
-                    select(el,2);
+                    select(el,get_box_id(el));
                   }
-                  // Get unselect previous selected element if any (scope of this box)
-                  // Add selection to this row
                   function select(el, box){
                     $("#box_"+String(box)).find(".selected").removeClass("selected");
                     el.classList.add("selected");
+                  }
+                  function get_box_id(el){
+                    return $(el).closest(".ds_card").attr('id') + 0;// so it evaluates to an int
+                  }
+                  function next_box_id(el){
+                    return $(el).closest(".ds_card").attr('id') + 1;
                   }
                 </script>
                 <style>
