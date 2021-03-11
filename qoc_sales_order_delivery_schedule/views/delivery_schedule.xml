@@ -1,0 +1,181 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.qweb">
+            <field name="name">Sales Order Delivery Schedule qweb</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+              <qweb>
+                <script>
+                  function toggle_dropdown(el){
+                    var target = el.parentElement.parentElement.nextElementSibling;
+                    if (target.style.display == ''){
+                      target.style.display = 'none';
+                      el.className = 'fa fa-caret-right dropdown-content';
+                    }
+                    else{
+                      target.style.display = '';
+                      el.className = 'fa fa-caret-down dropdown-content';
+                    }
+                  }
+                  function get_mo_data(el){
+                    id = el.getAttribute("model_id");
+                    $.ajax({
+                        url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/mo_data/"+String(id),
+                        success: function( result ) {
+                          $( "#box_2" ).html(result);
+                        }
+                      });
+                    select(el, 1);
+                  }
+                  function get_wo_data(el){
+                    id = el.getAttribute("model_id");
+                    $.ajax({
+                      url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/wo_data/"+String(id),
+                      success: function( result ) {
+                        $( "#box_3" ).html(result);
+                      }
+                    });
+                    select(el,2);
+                  }
+                  // Get unselect previous selected element if any (scope of this box)
+                  // Add selection to this row
+                  function select(el, box){
+                    $("#box_"+String(box)).find(".selected").removeClass("selected");
+                    el.classList.add("selected");
+                  }
+                </script>
+                <style>
+                  .ds_card{
+                    border: 2px solid #ced4da;
+                    min-width: 170px;
+                    background-color: #ffffff;
+                    margin: 4px;
+                    padding: 4px;
+                    overflow: auto;/* Scroll Bars for long table data */
+                    max-height: 300px;
+                }
+                  .selected{
+                    background-color: powderblue !important;
+                  }
+                  .selected:hover{
+                    background-color: lightblue !important;
+                  }
+                </style>
+                <div class="container">
+                  <div class="row justify-content-around mb-4">
+                    <!-- Box 1 -->
+                    <div class="col">
+                      <div class="o_list_view ds_card" id="box_1">
+                        <div class="table-responsive">
+                          <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                            <thead>
+                              <tr>
+                                <th class="o_column_sortable">
+                                  <strong>Name</strong>
+                                  <span class="o_resize" />
+                                </th>
+                                <th class="o_column_sortable">
+                                  <strong>Customer</strong>
+                                  <span class="o_resize" />
+                                </th>
+                                <th class="o_column_sortable">
+                                  <strong>Date</strong>
+                                  <span class="o_resize" />
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <t t-foreach="records" t-as="record">
+                                <!-- Record is a Sales Order -->
+                                <tr t-if="record_index &lt; 80">
+                                  <td>
+                                    <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                                    <span>
+                                      <a t-attf-href="#id={{record.id}}&amp;model=sale.order">
+                                        <t t-esc="record.name" />
+                                      </a>
+                                    </span>
+                                  </td>
+                                  <td>
+                                    <t t-esc="record.partner_id.name"/>
+                                  </td>
+                                  <td>
+                                    <t t-esc="record.date_order.strftime('%m/%d/%Y') if record.date_order else ''"/>
+                                  </td>
+                                  <!-- New Stuff -->
+                                  <tr class="dropdown-content">
+                                    <td colspan="3" style="padding-left: 10px;">
+                                      <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                                        <thead>
+                                          <tr>
+                                            <th>Product</th>
+                                            <th>Qty</th>
+                                            <th>On Hand</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <t t-foreach="record.order_line" t-as="so_line">
+                                            <tr onclick="get_mo_data(this)" t-attf-model_id="{{so_line.id}}">
+                                              <td>
+                                                <span>
+                                                  <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product">
+                                                    <t t-esc="so_line.name" />
+                                                  </a>
+                                                </span>
+                                              </td>
+                                              <td>
+                                                <t t-esc="so_line.product_uom_qty"/>
+                                              </td>
+                                              <td>
+                                                <t t-esc="so_line.product_id._compute_quantities() or so_line.product_id.qty_available"/>
+                                              </td>
+                                            </tr>
+                                          </t>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+
+                                </tr>
+                              </t>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <!-- End Column -->
+                    </div>
+                    <!-- Box 2 -->
+                    <div class="col">
+                      <div class="ds_card" id="box_2">
+                        <span>Content</span>
+                      </div>
+                    </div>
+                    <!-- End Row -->
+                  </div>
+                  <div class="row justify-content-around mb-4">
+                    <!-- Box 3 -->
+                    <div class="col">
+                      <div class="ds_card" id="box_3">
+                        <span>Content</span>
+                      </div>
+                    </div>
+                    <!-- Box 4 -->
+                    <div class="col">
+                      <div class="ds_card" id="box_4">
+                        <span>Content</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End container -->
+                </div>
+                
+                <!-- Collapse all dropdowns -->
+                <script>
+                  // class target is .dropdown-content
+                  $(".dropdown-content").hide();
+                </script>
+              </qweb>
+            </field>
+          </record>
+    </data>
+</odoo>
