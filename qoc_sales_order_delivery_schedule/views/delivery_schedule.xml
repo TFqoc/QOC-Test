@@ -45,10 +45,10 @@
                     el.classList.add("selected");
                   }
                   function get_box_id(el){
-                    return $(el).closest(".ds_card").attr('id') + 0;// so it evaluates to an int
+                    return $(el).closest(".ds_card").attr('id').substring(4);
                   }
                   function next_box_id(el){
-                    return $(el).closest(".ds_card").attr('id') + 1;
+                    return eval($(el).closest(".ds_card").attr('id').substring(4)+" + 1");
                   }
                 </script>
                 <style>
