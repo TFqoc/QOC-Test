@@ -68,7 +68,7 @@
                     </td>
                   </tr>
                   <t t-if="len(workorders) > 0">
-                    <tr class="dropdown-content mo-content">
+                    <tr class="dropdown-content">
                       <td colspan="3" style="padding-left: 10px;">
                         <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                           <thead>
@@ -96,7 +96,7 @@
                                 </td>
                               </tr>
                               <t t-if="workorder.component_id">
-                                <tr class="dropdown-content">
+                                <tr class="dropdown-content-no-arrow">
                                   <td colspan="3" style="padding-left: 10px;">
                                     <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                                       <thead>
@@ -137,14 +137,16 @@
         <h3>No current manufacturing orders were found for this product.</h3>
       </t>
       <!-- Collapse all dropdowns -->
-      <script>
+      <!-- <script>
+        $(document).ready( function(){
         // TODO only close dropdowns on the current box
         console.log($('script:nth-last-child(2)'));
         console.log($('script:nth-last-child(2)').closest(".ds_card"));
         console.log($('script:nth-last-child(2)').closest(".ds_card").find(".dropdown-content.mo-content"));
         $('script:nth-last-child(2)').closest(".ds_card").find(".dropdown-content.mo-content").hide();
         //$(".dropdown-content.mo-content").hide();
-      </script>
+        });
+      </script> -->
     </template>
 
     <template id="wo_lines">

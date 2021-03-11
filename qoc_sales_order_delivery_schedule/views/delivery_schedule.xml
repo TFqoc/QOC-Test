@@ -33,6 +33,7 @@
                             $("#page_container").append('<div class="row justify-content-around mb-4"><div class="col"><div class="ds_card" id="box_'+id1+'"><span>Content</span></div></div><div class="col"><div class="ds_card" id="box_'+id2+'"><span>Content</span></div></div></div>');
                           }
                           $("#box_" + next_box).html(result);
+                          $("#box_" + next_box).find(".dropdown-content").hide();
                         }
                       });
                     select(el,current_box);
