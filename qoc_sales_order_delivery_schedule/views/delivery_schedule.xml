@@ -19,7 +19,7 @@
                   }
                   function get_mo_data(el){
                     id = el.getAttribute("model_id");
-                    next_box = String(next_box_id(el);
+                    next_box = String(next_box_id(el));
                     current_box = get_box_id(el);
                     $.ajax({
                         url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/mo_data/"+String(id),
