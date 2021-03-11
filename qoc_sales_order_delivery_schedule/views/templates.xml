@@ -41,10 +41,11 @@
               </thead>
               <tbody>
                 <t t-foreach="objects" t-as="mo_line">
-                  <t t-set="components" t-value="mo_line.move_raw_ids" />
+                  <!-- <t t-set="components" t-value="mo_line.move_raw_ids" /> -->
+                  <t t-set="workorders" t-value="mo_line.workorder_ids"/>
                   <tr onclick="get_data(this,'wo_data')" t-attf-model_id="{{mo_line.id}}">
                     <td>
-                      <t t-if="len(components) > 0">
+                      <t t-if="len(workorders) > 0">
                         <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                       </t>
                       <span>
@@ -66,26 +67,37 @@
                       <t t-esc="mo_line.date_deadline.strftime('%m/%d/%Y') if mo_line.date_deadline else ''" />
                     </td>
                   </tr>
-                  <t t-if="len(components) > 0">
+                  <t t-if="len(workorders) > 0">
                     <tr class="dropdown-content mo-content">
                       <td colspan="3" style="padding-left: 10px;">
                         <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
                           <thead>
                             <tr>
-                              <th>Component</th>
-                              <th>Quantity to Consume</th>
+                              <!-- <th>Component</th>
+                              <th>Quantity to Consume</th> -->
+                              <th>Operation</th>
+                              <th>Start Date</th>
+                              <th>Status</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <t t-foreach="components" t-as="component">
+                            <t t-foreach="workorders" t-as="workorder">
                               <tr>
                                 <td>
-                                  <a t-attf-href="#id={component.product_id.id}}&amp;model=product.product">
-                                    <t t-esc="component.product_id.name" />
+                                  <a t-attf-href="#id={{wo_line.id}}&amp;model=mrp.workorder">
+                                    <t t-esc="workorder.name" />
                                   </a>
                                 </td>
                                 <td>
-                                  <t t-esc="component.product_uom_qty" />
+                                  <t t-esc="workorder.date_planned_start.strftime('%m/%d/%Y') if workorder.date_planned_start else ''" />
+                                </td>
+                                <td>
+                                  <t t-esc="workorder.state" />
+                                </td>
+                              </tr>
+                              <tr style="padding-left: 20px;">
+                                <td>
+                                  <t t-esc="workorder.component_id.name"/>
                                 </td>
                               </tr>
                             </t>
