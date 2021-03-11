@@ -5,7 +5,7 @@
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
               <qweb>
-                <script src="../js/delivery_qweb.js"/>
+                <!-- <script src="../js/delivery_qweb.js"/> -->
                 <script>
                   function toggle_dropdown(el){
                     var target = el.parentElement.parentElement.nextElementSibling;
