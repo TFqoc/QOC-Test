@@ -112,7 +112,7 @@
                                           </a>
                                         </td>
                                         <td>
-                                          <t t-esc="workorder.component_remaining_qty"/> / <t t-esc="workorder.component_qty_to_do"/>
+                                          <!-- <t t-esc="workorder.component_remaining_qty"/> / <t t-esc="workorder.component_qty_to_do"/> -->
                                         </td>
                                       </tr>
                                     </tbody>
