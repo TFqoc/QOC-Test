@@ -38,6 +38,26 @@
                       console.log("Next: "+next_box+"\nCurrent: "+current_box);
                     select(el,current_box);
                   }
+                  function get_mo_data(el){
+                    id = el.getAttribute("model_id");
+                    next_box = String(next_box_id(el));
+                    current_box = get_box_id(el);
+                  
+                    $.ajax({
+                        url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/mo_data/"+String(id),
+                        success: function( result ) {
+                          id1 = parseInt(current_box)+1;
+                          id2 = id1+1;
+                          if (next_box % 2 == 1 &amp;&amp; $('#box_'+id1).length == 0){
+                            // Create new row
+                            $("#page_container").append('<div class="row justify-content-around mb-4"><div class="col"><div class="ds_card" id="box_'+id1+'"><span>Content</span></div></div><div class="col"><div class="ds_card" id="box_'+id2+'"><span>Content</span></div></div></div>');
+                          }
+                          $( "#box_"+next_box).html(result);
+                        }
+                      });
+                      console.log("Next: "+next_box+"\nCurrent: "+current_box);
+                    select(el,current_box);
+                  }
                   function get_wo_data(el){
                     id = el.getAttribute("model_id");
                     next_box = String(next_box_id(el));
@@ -140,7 +160,7 @@
                                         </thead>
                                         <tbody>
                                           <t t-foreach="record.order_line" t-as="so_line">
-                                            <tr onclick="get_mo_data(this)" t-attf-model_id="{{so_line.id}}">
+                                            <tr onclick="get_data(this,'mo_data')" t-attf-model_id="{{so_line.id}}">
                                               <td>
                                                 <span>
                                                   <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product">

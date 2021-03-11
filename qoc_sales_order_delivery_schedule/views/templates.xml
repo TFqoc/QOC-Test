@@ -42,7 +42,7 @@
               <tbody>
                 <t t-foreach="objects" t-as="mo_line">
                   <t t-set="components" t-value="mo_line.move_raw_ids" />
-                  <tr onclick="get_wo_data(this)" t-attf-model_id="{{mo_line.id}}">
+                  <tr onclick="get_data(this,'wo_data')" t-attf-model_id="{{mo_line.id}}">
                     <td>
                       <t t-if="len(components) > 0">
                         <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
