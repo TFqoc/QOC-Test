@@ -42,7 +42,7 @@
               <tbody>
                 <t t-foreach="objects" t-as="mo_line">
                   <!-- <t t-set="components" t-value="mo_line.move_raw_ids" /> -->
-                  <t t-set="workorders" t-value="mo_line.workorder_ids"/>
+                  <t t-set="workorders" t-value="mo_line.workorder_ids" />
                   <tr>
                     <td>
                       <t t-if="len(workorders) > 0">
@@ -95,30 +95,32 @@
                                   <t t-esc="workorder.state" />
                                 </td>
                               </tr>
-                              <tr class="dropdown-content">
-                                <td colspan="3" style="padding-left: 10px;">
-                                  <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                                    <thead>
-                                      <tr>
-                                        <th>Component Name</th>
-                                        <th>Quantity to Consume</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr onclick="get_data(this,'mo_data_product')" t-attf-model_id="{{workorder.component_id.id}}">
-                                        <td>
-                                          <a t-attf-href="#id={{workorder.component_id.id}}&amp;model=product.product">
-                                            <t t-esc="workorder.component_id.name"/>
-                                          </a>
-                                        </td>
-                                        <td>
-                                          <!-- <t t-esc="workorder.component_remaining_qty"/> / <t t-esc="workorder.component_qty_to_do"/> -->
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </td>
-                              </tr>
+                              <t t-if="workorder.component_id">
+                                <tr class="dropdown-content">
+                                  <td colspan="3" style="padding-left: 10px;">
+                                    <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                                      <thead>
+                                        <tr>
+                                          <th>Component Name</th>
+                                          <th>Quantity to Consume</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr onclick="get_data(this,'mo_data_product')" t-attf-model_id="{{workorder.component_id.id}}">
+                                          <td>
+                                            <a t-attf-href="#id={{workorder.component_id.id}}&amp;model=product.product">
+                                              <t t-esc="workorder.component_id.name" />
+                                            </a>
+                                          </td>
+                                          <td>
+                                            <!-- <t t-esc="workorder.component_remaining_qty"/> / <t t-esc="workorder.component_qty_to_do"/> -->
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </t>
                             </t>
                           </tbody>
                         </table>
@@ -136,7 +138,9 @@
       </t>
       <!-- Collapse all dropdowns -->
       <script>
-        $(".dropdown-content.mo-content").hide();
+        // TODO only close dropdowns on the current box
+        $(this).closest(".ds_card").(".dropdown-content.mo-content").hide();
+        //$(".dropdown-content.mo-content").hide();
       </script>
     </template>
 
