@@ -179,7 +179,10 @@
                                                 <t t-set="reserved" t-value="0"/>
                                                 <t t-foreach="so_line.get_delivery_records()" t-as="deliveries">
                                                   <t t-foreach="deliveries.move_ids_without_package" t-as="delivery">
-                                                    <t t-set="reserved" t-value="reserved + delivery.forcast_availability"/>
+                                                    <t t-if="delivery.product_id == so_line.product_id">
+                                                      <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forcast_availability"/>
+                                                      <t t-set="reserved" t-value="reserved + delivery.forcast_availability"/>
+                                                    </t>
                                                   </t>
                                                 </t>
                                                 <t t-esc="reserved"/>
