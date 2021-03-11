@@ -105,7 +105,7 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr onclick="get_data(this,'mo_data_product')" t-attf-model_id="{{workorder_component_id.id}}">
+                                      <tr onclick="get_data(this,'mo_data_product')" t-attf-model_id="{{workorder.component_id.id}}">
                                         <td>
                                           <a t-attf-href="#id={{workorder.component_id.id}}&amp;model=product.product">
                                             <t t-esc="workorder.component_id.name"/>
