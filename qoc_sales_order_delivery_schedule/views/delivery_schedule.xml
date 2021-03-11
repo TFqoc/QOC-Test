@@ -42,7 +42,7 @@
                   function select(el, box){
                     $("#box_"+String(box)).find(".selected").removeClass("selected");
                     el.classList.add("selected");
-                  }
+                  }//
                 </script>
                 <style>
                   .ds_card{
