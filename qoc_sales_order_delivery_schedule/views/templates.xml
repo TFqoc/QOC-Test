@@ -84,7 +84,7 @@
                             <t t-foreach="workorders" t-as="workorder">
                               <tr>
                                 <td>
-                                  <a t-attf-href="#id={{wo_line.id}}&amp;model=mrp.workorder">
+                                  <a t-attf-href="#id={{workorder.id}}&amp;model=mrp.workorder">
                                     <t t-esc="workorder.name" />
                                   </a>
                                 </td>
