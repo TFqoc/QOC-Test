@@ -44,6 +44,11 @@
                         $( "#box_"+next_box).html(result);
                       }
                     });
+                    console.log("Next: "+next_box+"\nCurrent: "+current_box);
+                    if (next_box % 2 == 1){
+                      // Create new row
+                      $("#").append('<div class="row justify-content-around mb-4"><div class="col"><div class="ds_card" id="box_'+(next_box+1)+'"><span>Content</span></div></div><div class="col"><div class="ds_card" id="box_'+(next_box+2)+'"><span>Content</span></div></div></div>');
+                    }
                     select(el,current_box);
                   }
                   function select(el, box){
