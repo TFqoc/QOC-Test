@@ -114,7 +114,7 @@
                             </td>
                             <td>
                               <t t-if="record.partner_id.parent_id">
-                                <t t-esc="record.partner_id.parent_id"></t>
+                                <span t-field="record.partner_id.parent_id"/>
                               </t>
                               <t t-else="">
                                 <t t-esc="record.partner_id.name" />
