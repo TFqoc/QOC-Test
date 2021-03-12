@@ -97,6 +97,9 @@
                     <t t-if="len(components) > 0">
                       <span class="fa fa-caret-down" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                     </t>
+                    <t t-else="">
+                      <span>Nothing</span>
+                    </t>
                     <a t-attf-href="#id={{workorder.id}}&amp;model=mrp.workorder" target="_blank">
                       <t t-esc="workorder.name" />
                     </a>
