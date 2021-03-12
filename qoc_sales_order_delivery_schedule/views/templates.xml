@@ -119,7 +119,7 @@
                                           <td>
                                             <t t-set="reserved" t-value="0"/> <!-- TODO Fix first loop to get right data -->
                                                   <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
-                                                    <t t-if="delivery.product_id == so_line.product_id">
+                                                    <t t-if="delivery.product_id == workorder.component_id">
                                                       <t t-if="delivery.state == 'assigned'">
                                                         <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability"/>
                                                         <t t-set="reserved" t-value="reserved + res"/>
