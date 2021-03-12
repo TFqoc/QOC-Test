@@ -29,15 +29,27 @@ class Production(models.Model):
 
     def get_wo_records(self):
         return self.env['mrp.workorder'].search([('production_id','=',self.id)],limit=80)
+    def get_product_lines(self):
+        # Get product lines that match the bill of material and don't have an operation_id
+        lines = []
+        for move in self.move_raw_ids:
+            for bom_line in self.bom_id.bom_line_ids:
+                if bom_line.product_id == move.product_id:
+                    if not bom_line.operation_id:
+                        lines.append(move)
+        return lines
 
 class WorkOrder(models.Model):
     _inherit = 'mrp.workorder'
 
     def get_consumed_components(self):
-        res = {}
-        for op in self.production_bom_id.operation_ids:
-            res[op.name] = []
+        res = []
+        products = []
+        for p in self.check_ids:
+            products.append(p.product_id)
+        # for op in self.production_bom_id.operation_ids:
+        #     res[op.name] = []
         for line in self.production_id.move_raw_ids:
-            if line.operation_id:
-                res[line.operation_id.name].append()
+            if line.product_id in products:
+                res.append(line)
         return res

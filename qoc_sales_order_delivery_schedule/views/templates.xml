@@ -38,32 +38,38 @@
               </tr>
             </thead>
             <tbody>
-              <tr onclick="get_data(this,'mo_data_product')" t-attf-model_id="{{workorder.component_id.id}}">
-                <td>
-                  <a t-attf-href="#id={{workorder.component_id.id}}&amp;model=product.product" target="_blank">
-                    <t t-if="workorder.component_id.default_code">
-                      [<t t-esc="workorder.component_id.default_code"/>]&#160;
-                    </t>
-                    <t t-esc="workorder.component_id.name" />
-                  </a>
-                </td>
-                <td>
-                  <t t-esc="workorder._compute_component_data() or workorder.component_remaining_qty"/> / <t t-esc="workorder._compute_component_qty_to_do() or workorder.component_qty_to_do"/>
-                </td>
-                <td>
-                  <t t-set="reserved" t-value="0"/>
-                        <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
-                          <t t-if="delivery.product_id == workorder.component_id">
-                            <t t-if="delivery.state == 'assigned'">
-                              <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability"/>
-                              <t t-set="reserved" t-value="reserved + res"/>
-                              <!-- <div t-field="delivery.forecast_availability" t-widget="forecast_widget"/> -->
-                            </t>
-                          </t>
+              <t t-foreach="components" t-as="component">
+                <tr onclick="get_data(this,'mo_data_product')" t-attf-model_id="{{component.product_id.id}}">
+                  <td>
+                    <a t-attf-href="#id={{component.product_id.id}}&amp;model=product.product" target="_blank">
+                      <t t-if="component.product_id.default_code">
+                        [
+                        <t t-esc="component.product_id.default_code" />
+                        ]&#160;
+                      </t>
+                      <t t-esc="component.product_id.name" />
+                    </a>
+                  </td>
+                  <td>
+                    <t t-esc="component.product_qty" />
+                    /
+                    <t t-esc="component.product_uom_qty" />
+                  </td>
+                  <td>
+                    <t t-set="reserved" t-value="0" />
+                    <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
+                      <t t-if="delivery.product_id == workorder.component_id">
+                        <t t-if="delivery.state == 'assigned'">
+                          <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability" />
+                          <t t-set="reserved" t-value="reserved + res" />
+                          <!-- <div t-field="delivery.forecast_availability" t-widget="forecast_widget"/> -->
                         </t>
-                      <t t-esc="reserved"/>
-                </td>
-              </tr>
+                      </t>
+                    </t>
+                    <t t-esc="reserved" />
+                  </td>
+                </tr>
+              </t>
             </tbody>
           </table>
         </td>
@@ -85,9 +91,10 @@
             </thead>
             <tbody>
               <t t-foreach="workorders" t-as="workorder">
+                <t t-set="components" t-value="workorder.get_consumed_components()" />
                 <tr>
                   <td>
-                    <t t-if="workorder.component_id">
+                    <t t-if="len(components) > 0">
                       <span class="fa fa-caret-down" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                     </t>
                     <a t-attf-href="#id={{workorder.id}}&amp;model=mrp.workorder" target="_blank">
@@ -100,10 +107,10 @@
                   <td>
                     <!-- <t t-esc="workorder.state" /> -->
                     <!-- <div t-field="workorder.state" t-options='{"widget": "selection_badge"}'/> -->
-                    <div t-field="workorder.state"/>
+                    <div t-field="workorder.state" />
                   </td>
                 </tr>
-                <t t-if="workorder.component_id">
+                <t t-if="len(components) > 0">
                   <t t-call="qoc_sales_order_delivery_schedule.component_lines"></t>
                 </t>
               </t>
