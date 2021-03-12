@@ -113,7 +113,12 @@
                               </span>
                             </td>
                             <td>
-                              <t t-esc="record.partner_id.name" />
+                              <t t-if="record.partner_id.parent_id">
+                                <t t-esc="record.partner_id.parent_id"></t>
+                              </t>
+                              <t t-else="">
+                                <t t-esc="record.partner_id.name" />
+                              </t>
                             </td>
                             <td>
                               <t t-if="record.commitment_date">
