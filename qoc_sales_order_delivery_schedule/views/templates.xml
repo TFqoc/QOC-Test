@@ -162,6 +162,12 @@
                       <t t-esc="mo_line.date_deadline.strftime('%m/%d/%Y') if mo_line.date_deadline else ''" />
                     </td> -->
                   </tr>
+                  <t t-set="extra_products" t-value="mo_line.get_product_lines()"/>
+                  <t t-if="len(extra_products) > 0">
+                    <t t-call="qoc_sales_order_delivery_schedule.component_lines">
+                      <t t-set="components" t-value="extra_products"></t>
+                    </t>
+                  </t>
                   <t t-if="len(workorders) > 0">
                     <t t-call="qoc_sales_order_delivery_schedule.wo_lines"></t>
                   </t>
