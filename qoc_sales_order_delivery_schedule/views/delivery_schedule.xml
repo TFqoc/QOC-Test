@@ -191,7 +191,7 @@
                                                       <t t-if="delivery.state == 'assigned'">
                                                         <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability"/>
                                                         <t t-set="reserved" t-value="reserved + res"/>
-                                                        <div t-field="delivery.forecast_availability" t-widget="forecast_widget"/>
+                                                        <!-- <div t-field="delivery.forecast_availability" t-widget="forecast_widget"/> -->
                                                       </t>
                                                     </t>
                                                   </t>
