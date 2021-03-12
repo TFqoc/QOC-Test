@@ -99,8 +99,8 @@
                   </td>
                   <td>
                     <!-- <t t-esc="workorder.state" /> -->
-                    <!-- <div t-field="workorder.state" t-options='{"widget": "badge"}'/> -->
-                    <div t-field="workorder.state"/>
+                    <div t-field="workorder.state" t-options='{"widget": "selection_badge"}'/>
+                    <!-- <div t-field="workorder.state"/> -->
                   </td>
                 </tr>
                 <t t-if="workorder.component_id">
