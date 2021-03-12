@@ -58,7 +58,7 @@
 
     <!-- Top menu item -->
 
-    <menuitem name="Sales Order Delivery Schedule" 
+    <menuitem name="Shop Flow" 
     id="qoc_sales_order_delivery_schedule.menu_root" 
     action="qoc_sales_order_delivery_schedule.action_window" 
     web_icon="qoc_sales_order_delivery_schedule,static/description/icon.png"/>
