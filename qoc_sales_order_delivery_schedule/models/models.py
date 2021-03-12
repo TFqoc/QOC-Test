@@ -30,14 +30,14 @@ class Production(models.Model):
     def get_wo_records(self):
         return self.env['mrp.workorder'].search([('production_id','=',self.id)],limit=80)
 
-# class WorkOrder(models.Model):
-#     _inherit = 'mrp.workorder'
+class WorkOrder(models.Model):
+    _inherit = 'mrp.workorder'
 
-#     def get_consumed_components(self):
-#         res = {}
-#         for op in self.production_bom_id.operation_ids:
-#             res[op.name] = []
-#         for line in self.production_id.move_raw_ids:
-#             if line.operation_id:
-#                 res[line.operation_id.name].append()
-#         return res
+    def get_consumed_components(self):
+        res = {}
+        for op in self.production_bom_id.operation_ids:
+            res[op.name] = []
+        for line in self.production_id.move_raw_ids:
+            if line.operation_id:
+                res[line.operation_id.name].append()
+        return res
