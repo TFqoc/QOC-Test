@@ -170,7 +170,9 @@
                                               <td>
                                                 <span>
                                                   <a t-attf-href="#id={{so_line.product_id.id}}&amp;model=product.product" target="_blank">
-                                                    [<t t-esc="so_line.product_id.default_code"/>]&#160;
+                                                    <t t-if="so_line.product_id.default_code">
+                                                      [<t t-esc="so_line.product_id.default_code"/>]&#160;
+                                                    </t>
                                                     <t t-esc="so_line.name" />
                                                   </a>
                                                 </span>
@@ -189,7 +191,7 @@
                                                       <t t-if="delivery.state == 'assigned'">
                                                         <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability"/>
                                                         <t t-set="reserved" t-value="reserved + res"/>
-                                                        <span t-field="delivery.forecast_availability" t-widget="forecast_widget"/>
+                                                        <div t-field="delivery.forecast_availability" t-widget="forecast_widget"/>
                                                       </t>
                                                     </t>
                                                   </t>
