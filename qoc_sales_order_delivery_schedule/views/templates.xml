@@ -4,7 +4,7 @@
     <template id="listing">
       <ul>
         <li t-foreach="objects" t-as="object">
-          <a t-attf-href="#{ root }/objects/#{ object.id }">
+          <a t-attf-href="#{ root }/objects/#{ object.id }" target="_blank">
             <t t-esc="object.display_name" />
           </a>
         </li>
@@ -49,7 +49,7 @@
                         <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                       </t>
                       <span>
-                        <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production">
+                        <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production" target="_blank">
                           <t t-esc="mo_line.name" />
                         </a>
                       </span>
@@ -84,7 +84,7 @@
                             <t t-foreach="workorders" t-as="workorder">
                               <tr>
                                 <td>
-                                  <a t-attf-href="#id={{workorder.id}}&amp;model=mrp.workorder">
+                                  <a t-attf-href="#id={{workorder.id}}&amp;model=mrp.workorder" target="_blank">
                                     <t t-esc="workorder.name" />
                                   </a>
                                 </td>
@@ -108,7 +108,7 @@
                                       <tbody>
                                         <tr onclick="get_data(this,'mo_data_product')" t-attf-model_id="{{workorder.component_id.id}}">
                                           <td>
-                                            <a t-attf-href="#id={{workorder.component_id.id}}&amp;model=product.product">
+                                            <a t-attf-href="#id={{workorder.component_id.id}}&amp;model=product.product" target="_blank">
                                               <t t-esc="workorder.component_id.name" />
                                             </a>
                                           </td>
@@ -166,7 +166,7 @@
                   <tr>
                     <td>
                       <span>
-                        <a t-attf-href="#id={{wo_line.id}}&amp;model=mrp.workorder">
+                        <a t-attf-href="#id={{wo_line.id}}&amp;model=mrp.workorder" target="_blank">
                           <t t-esc="wo_line.name" />
                         </a>
                       </span>
