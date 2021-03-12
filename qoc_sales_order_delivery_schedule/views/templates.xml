@@ -154,7 +154,7 @@
                     </td> -->
                   </tr>
                   <t t-if="len(workorders) > 0">
-                    <t t-call="wo_lines"></t>
+                    <t t-call="test"></t>
                   </t>
                 </t>
               </tbody>
