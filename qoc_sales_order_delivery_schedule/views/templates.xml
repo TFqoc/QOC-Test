@@ -157,7 +157,7 @@
               <thead>
                 <tr>
                   <th>Operation</th>
-                  <th>Start Date</th>
+                  <th>Scheduled Date</th>
                   <th>Status</th>
                 </tr>
               </thead>
