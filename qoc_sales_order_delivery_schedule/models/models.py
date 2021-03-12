@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+import logging
+_logger = logging.getLogger(__name__)
+
 
 
 class qoc_sales_order_delivery_schedule(models.Model):
@@ -47,6 +50,7 @@ class WorkOrder(models.Model):
         products = []
         for p in self.check_ids:
             products.append(p.product_id)
+        _logger.info("LENGTH: " + str(len(products)))
         for line in self.production_id.move_raw_ids:
             # if line.product_id in products:
             res.append(line)
