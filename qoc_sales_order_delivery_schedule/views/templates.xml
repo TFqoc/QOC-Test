@@ -98,7 +98,8 @@
                     <t t-esc="workorder.date_planned_start.strftime('%m/%d/%Y') if workorder.date_planned_start else ''" />
                   </td>
                   <td>
-                    <t t-esc="workorder.state" />
+                    <!-- <t t-esc="workorder.state" /> -->
+                    <div t-field="workorder.state" t-widget="badge"/>
                   </td>
                 </tr>
                 <t t-if="workorder.component_id">
