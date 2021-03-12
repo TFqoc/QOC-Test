@@ -157,6 +157,7 @@
                                                     <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability" />
                                                     <t t-set="reserved" t-value="reserved + res" />
                                                     <div t-field="delivery.forecast_availability" t-options='{"widget": "forecast_widget"}'/>
+                                                  <!--  -->
                                                   </t>
                                                 </t>
                                               </t>
