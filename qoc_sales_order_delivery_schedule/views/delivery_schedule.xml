@@ -9,6 +9,7 @@
           <script>
             function toggle_dropdown(el){
                     var target = el.parentElement.parentElement.nextElementSibling;
+                    var t2 = target.nextElementSibling;
                     if (target.style.display == ''){
                       target.style.display = 'none';
                       el.className = 'fa fa-caret-right dropdown-content';
@@ -16,6 +17,14 @@
                     else{
                       target.style.display = '';
                       el.className = 'fa fa-caret-down dropdown-content';
+                    }
+                    if ($(t2).hasClass("dropdown-content") &amp;&amp; !$(t2).hasClass("no-hide")){
+                      if (t2.style.display == ''){
+                        t2.style.display = 'none';
+                      }
+                      else{
+                        t2.style.display = '';
+                      }
                     }
                   }
                   function get_data(el,path){

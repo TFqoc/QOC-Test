@@ -97,9 +97,6 @@
                     <t t-if="len(components) > 0">
                       <span class="fa fa-caret-down" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                     </t>
-                    <t t-else="">
-                      <span>Nothing</span>
-                    </t>
                     <a t-attf-href="#id={{workorder.id}}&amp;model=mrp.workorder" target="_blank">
                       <t t-esc="workorder.name" />
                     </a>
@@ -168,15 +165,12 @@
                     </td> -->
                   </tr>
                   <t t-set="extra_products" t-value="mo_line.get_product_lines()"/>
-                  <span t-esc="len(extra_products)"></span>
                   <t t-if="len(extra_products) > 0">
                     <t t-call="qoc_sales_order_delivery_schedule.component_lines">
                       <t t-set="components" t-value="extra_products"></t>
                       <t t-set="should_hide" t-value="False"></t>
                     </t>
                   </t>
-                  <br/>
-                  <span t-esc="len(workorders)"></span>
                   <t t-if="len(workorders) > 0">
                     <t t-call="qoc_sales_order_delivery_schedule.wo_lines"></t>
                   </t>
