@@ -29,12 +29,15 @@ class Production(models.Model):
 
     def get_wo_records(self):
         return self.env['mrp.workorder'].search([('production_id','=',self.id)],limit=80)
-# class View(models.Model):
-#     _inherit = 'ir.ui.view'
 
-#     type = fields.Selection(selection_add=[('delivery_schedule','Delivery Schedule')])
+class WorkOrder(models.Model):
+    _inherit = 'mrp.workorder'
 
-# class ActWindowView(models.Model):
-#     _inherit = 'ir.actions.act_window.view'
-
-#     view_mode = fields.Selection(selection_add=[('delivery_schedule','Delivery Schedule')])
+    def get_consumed_components(self):
+        res = {}
+        for op in self.production_bom_id.operation_ids:
+            res[op.name] = []
+        for line in self.production_id.raw_move_ids:
+            if line.operation_id:
+                res[line.operation_id.name].append()
+        return res

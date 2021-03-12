@@ -68,84 +68,7 @@
                     </td> -->
                   </tr>
                   <t t-if="len(workorders) > 0">
-                    <tr class="dropdown-content">
-                      <td colspan="3" style="padding-left: 10px;">
-                        <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                          <thead>
-                            <tr>
-                              <!-- <th>Component</th>
-                              <th>Quantity to Consume</th> -->
-                              <th>Operation</th>
-                              <th>Start Date</th>
-                              <th>Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <t t-foreach="workorders" t-as="workorder">
-                              <tr>
-                                <td>
-                                  <t t-if="workorder.component_id">
-                                    <span class="fa fa-caret-down" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
-                                  </t>
-                                  <a t-attf-href="#id={{workorder.id}}&amp;model=mrp.workorder" target="_blank">
-                                    <t t-esc="workorder.name" />
-                                  </a>
-                                </td>
-                                <td>
-                                  <t t-esc="workorder.date_planned_start.strftime('%m/%d/%Y') if workorder.date_planned_start else ''" />
-                                </td>
-                                <td>
-                                  <t t-esc="workorder.state" />
-                                </td>
-                              </tr>
-                              <t t-if="workorder.component_id">
-                                <tr class="dropdown-content no-hide">
-                                  <td colspan="3" style="padding-left: 10px;">
-                                    <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-                                      <thead>
-                                        <tr>
-                                          <th>Component Name</th>
-                                          <th>Quantity to Consume</th>
-                                          <th>Reserved</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr onclick="get_data(this,'mo_data_product')" t-attf-model_id="{{workorder.component_id.id}}">
-                                          <td>
-                                            <a t-attf-href="#id={{workorder.component_id.id}}&amp;model=product.product" target="_blank">
-                                              <t t-if="workorder.component_id.default_code">
-                                                [<t t-esc="workorder.component_id.default_code"/>]&#160;
-                                              </t>
-                                              <t t-esc="workorder.component_id.name" />
-                                            </a>
-                                          </td>
-                                          <td>
-                                            <t t-esc="workorder._compute_component_data() or workorder.component_remaining_qty"/> / <t t-esc="workorder._compute_component_qty_to_do() or workorder.component_qty_to_do"/>
-                                          </td>
-                                          <td>
-                                            <t t-set="reserved" t-value="0"/>
-                                                  <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
-                                                    <t t-if="delivery.product_id == workorder.component_id">
-                                                      <t t-if="delivery.state == 'assigned'">
-                                                        <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability"/>
-                                                        <t t-set="reserved" t-value="reserved + res"/>
-                                                        <!-- <div t-field="delivery.forecast_availability" t-widget="forecast_widget"/> -->
-                                                      </t>
-                                                    </t>
-                                                  </t>
-                                                <t t-esc="reserved"/>
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  </td>
-                                </tr>
-                              </t>
-                            </t>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
+                    <t t-call="wo_lines"></t>
                   </t>
                 </t>
               </tbody>
@@ -156,57 +79,91 @@
       <t t-else="">
         <h3>No current manufacturing orders were found for this product.</h3>
       </t>
-      <!-- Collapse all dropdowns -->
-      <!-- <script>
-        $(document).ready( function(){
-        // TODO only close dropdowns on the current box
-        console.log($('script:nth-last-child(2)'));
-        console.log($('script:nth-last-child(2)').closest(".ds_card"));
-        console.log($('script:nth-last-child(2)').closest(".ds_card").find(".dropdown-content.mo-content"));
-        $('script:nth-last-child(2)').closest(".ds_card").find(".dropdown-content.mo-content").hide();
-        //$(".dropdown-content.mo-content").hide();
-        });
-      </script> -->
     </template>
 
     <template id="wo_lines">
-      <t t-if="len(objects) > 0">
-        <div class="o_list_view">
-          <div class="table-responsive">
-            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-              <thead>
+      <tr class="dropdown-content">
+        <td colspan="3" style="padding-left: 10px;">
+          <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+            <thead>
+              <tr>
+                <!-- <th>Component</th>
+                <th>Quantity to Consume</th> -->
+                <th>Operation</th>
+                <th>Start Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="workorders" t-as="workorder">
                 <tr>
-                  <th>Operation</th>
-                  <th>Start Date</th>
-                  <th>Status</th>
+                  <td>
+                    <t t-if="workorder.component_id">
+                      <span class="fa fa-caret-down" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                    </t>
+                    <a t-attf-href="#id={{workorder.id}}&amp;model=mrp.workorder" target="_blank">
+                      <t t-esc="workorder.name" />
+                    </a>
+                  </td>
+                  <td>
+                    <t t-esc="workorder.date_planned_start.strftime('%m/%d/%Y') if workorder.date_planned_start else ''" />
+                  </td>
+                  <td>
+                    <t t-esc="workorder.state" />
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                <t t-foreach="objects" t-as="wo_line">
-                  <tr>
-                    <td>
-                      <span>
-                        <a t-attf-href="#id={{wo_line.id}}&amp;model=mrp.workorder" target="_blank">
-                          <t t-esc="wo_line.name" />
-                        </a>
-                      </span>
-                    </td>
-                    <td>
-                      <t t-esc="wo_line.date_planned_start.strftime('%m/%d/%Y') if wo_line.date_planned_start else ''" />
-                    </td>
-                    <td>
-                      <t t-esc="wo_line.state" />
-                    </td>
-                  </tr>
+                <t t-if="workorder.component_id">
+                  <t t-call="component_lines"></t>
                 </t>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </t>
-      <t t-else="">
-        <h3>No current work orders were found for this manufacturing order.</h3>
-      </t>
+              </t>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </template>
+
+    <template id="component_lines">
+      <tr class="dropdown-content no-hide">
+        <td colspan="3" style="padding-left: 10px;">
+          <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+            <thead>
+              <tr>
+                <th>Component Name</th>
+                <th>Quantity to Consume</th>
+                <th>Reserved</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr onclick="get_data(this,'mo_data_product')" t-attf-model_id="{{workorder.component_id.id}}">
+                <td>
+                  <a t-attf-href="#id={{workorder.component_id.id}}&amp;model=product.product" target="_blank">
+                    <t t-if="workorder.component_id.default_code">
+                      [<t t-esc="workorder.component_id.default_code"/>]&#160;
+                    </t>
+                    <t t-esc="workorder.component_id.name" />
+                  </a>
+                </td>
+                <td>
+                  <t t-esc="workorder._compute_component_data() or workorder.component_remaining_qty"/> / <t t-esc="workorder._compute_component_qty_to_do() or workorder.component_qty_to_do"/>
+                </td>
+                <td>
+                  <t t-set="reserved" t-value="0"/>
+                        <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
+                          <t t-if="delivery.product_id == workorder.component_id">
+                            <t t-if="delivery.state == 'assigned'">
+                              <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability"/>
+                              <t t-set="reserved" t-value="reserved + res"/>
+                              <!-- <div t-field="delivery.forecast_availability" t-widget="forecast_widget"/> -->
+                            </t>
+                          </t>
+                        </t>
+                      <t t-esc="reserved"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
     </template>
 
   </data>
