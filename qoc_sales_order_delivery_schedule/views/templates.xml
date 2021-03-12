@@ -25,102 +25,6 @@
         </t>
       </dl>
     </template>
-    <template id="mo_lines">
-      <t t-if="len(objects) > 0">
-        <div class="o_list_view">
-          <div class="table-responsive">
-            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-              <thead>
-                <tr>
-                  <th>Order Name</th>
-                  <!-- <th>Part #</th> -->
-                  <th>Qty</th>
-                  <th>Scheduled Date</th>
-                  <!-- <th>Deadline</th> -->
-                </tr>
-              </thead>
-              <tbody>
-                <t t-foreach="objects" t-as="mo_line">
-                  <!-- <t t-set="components" t-value="mo_line.move_raw_ids" /> -->
-                  <t t-set="workorders" t-value="mo_line.workorder_ids" />
-                  <tr>
-                    <td>
-                      <t t-if="len(workorders) > 0">
-                        <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
-                      </t>
-                      <span>
-                        <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production" target="_blank">
-                          <t t-esc="mo_line.name" />
-                        </a>
-                      </span>
-                    </td>
-                    <!-- <td>
-                      <t t-esc="mo_line.product_id.default_code" />
-                    </td> -->
-                    <td>
-                      <t t-esc="mo_line.product_qty" />
-                    </td>
-                    <td>
-                      <t t-esc="mo_line.date_planned_start.strftime('%m/%d/%Y') if mo_line.date_planned_start else ''" />
-                    </td>
-                    <!-- <td>
-                      <t t-esc="mo_line.date_deadline.strftime('%m/%d/%Y') if mo_line.date_deadline else ''" />
-                    </td> -->
-                  </tr>
-                  <t t-if="len(workorders) > 0">
-                    <t t-call="wo-lines"></t>
-                  </t>
-                </t>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </t>
-      <t t-else="">
-        <h3>No current manufacturing orders were found for this product.</h3>
-      </t>
-    </template>
-
-    <template id="wo-lines">
-      <tr class="dropdown-content">
-        <td colspan="3" style="padding-left: 10px;">
-          <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
-            <thead>
-              <tr>
-                <!-- <th>Component</th>
-                <th>Quantity to Consume</th> -->
-                <th>Operation</th>
-                <th>Start Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <t t-foreach="workorders" t-as="workorder">
-                <tr>
-                  <td>
-                    <t t-if="workorder.component_id">
-                      <span class="fa fa-caret-down" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
-                    </t>
-                    <a t-attf-href="#id={{workorder.id}}&amp;model=mrp.workorder" target="_blank">
-                      <t t-esc="workorder.name" />
-                    </a>
-                  </td>
-                  <td>
-                    <t t-esc="workorder.date_planned_start.strftime('%m/%d/%Y') if workorder.date_planned_start else ''" />
-                  </td>
-                  <td>
-                    <t t-esc="workorder.state" />
-                  </td>
-                </tr>
-                <t t-if="workorder.component_id">
-                  <t t-call="component_lines"></t>
-                </t>
-              </t>
-            </tbody>
-          </table>
-        </td>
-      </tr>
-    </template>
 
     <template id="component_lines">
       <tr class="dropdown-content no-hide">
@@ -164,6 +68,103 @@
           </table>
         </td>
       </tr>
+    </template>
+
+    <template id="wo_lines">
+      <tr class="dropdown-content">
+        <td colspan="3" style="padding-left: 10px;">
+          <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+            <thead>
+              <tr>
+                <!-- <th>Component</th>
+                <th>Quantity to Consume</th> -->
+                <th>Operation</th>
+                <th>Start Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="workorders" t-as="workorder">
+                <tr>
+                  <td>
+                    <t t-if="workorder.component_id">
+                      <span class="fa fa-caret-down" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                    </t>
+                    <a t-attf-href="#id={{workorder.id}}&amp;model=mrp.workorder" target="_blank">
+                      <t t-esc="workorder.name" />
+                    </a>
+                  </td>
+                  <td>
+                    <t t-esc="workorder.date_planned_start.strftime('%m/%d/%Y') if workorder.date_planned_start else ''" />
+                  </td>
+                  <td>
+                    <t t-esc="workorder.state" />
+                  </td>
+                </tr>
+                <t t-if="workorder.component_id">
+                  <t t-call="component_lines"></t>
+                </t>
+              </t>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </template>
+
+    <template id="mo_lines">
+      <t t-if="len(objects) > 0">
+        <div class="o_list_view">
+          <div class="table-responsive">
+            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+              <thead>
+                <tr>
+                  <th>Order Name</th>
+                  <!-- <th>Part #</th> -->
+                  <th>Qty</th>
+                  <th>Scheduled Date</th>
+                  <!-- <th>Deadline</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <t t-foreach="objects" t-as="mo_line">
+                  <!-- <t t-set="components" t-value="mo_line.move_raw_ids" /> -->
+                  <t t-set="workorders" t-value="mo_line.workorder_ids" />
+                  <tr>
+                    <td>
+                      <t t-if="len(workorders) > 0">
+                        <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                      </t>
+                      <span>
+                        <a t-attf-href="#id={{mo_line.id}}&amp;model=mrp.production" target="_blank">
+                          <t t-esc="mo_line.name" />
+                        </a>
+                      </span>
+                    </td>
+                    <!-- <td>
+                      <t t-esc="mo_line.product_id.default_code" />
+                    </td> -->
+                    <td>
+                      <t t-esc="mo_line.product_qty" />
+                    </td>
+                    <td>
+                      <t t-esc="mo_line.date_planned_start.strftime('%m/%d/%Y') if mo_line.date_planned_start else ''" />
+                    </td>
+                    <!-- <td>
+                      <t t-esc="mo_line.date_deadline.strftime('%m/%d/%Y') if mo_line.date_deadline else ''" />
+                    </td> -->
+                  </tr>
+                  <t t-if="len(workorders) > 0">
+                    <t t-call="wo_lines"></t>
+                  </t>
+                </t>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </t>
+      <t t-else="">
+        <h3>No current manufacturing orders were found for this product.</h3>
+      </t>
     </template>
 
   </data>
