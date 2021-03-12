@@ -35,7 +35,7 @@
                   <th>Order Name</th>
                   <!-- <th>Part #</th> -->
                   <th>Qty</th>
-                  <th>Start Date</th>
+                  <th>Scheduled Date</th>
                   <!-- <th>Deadline</th> -->
                 </tr>
               </thead>
@@ -103,6 +103,7 @@
                                         <tr>
                                           <th>Component Name</th>
                                           <th>Quantity to Consume</th>
+                                          <th>Reserved</th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -114,6 +115,21 @@
                                           </td>
                                           <td>
                                             <t t-esc="workorder._compute_component_data() or workorder.component_remaining_qty"/> / <t t-esc="workorder._compute_component_qty_to_do() or workorder.component_qty_to_do"/>
+                                          </td>
+                                          <td>
+                                            <t t-set="reserved" t-value="0"/> <!-- TODO Fix first loop to get right data -->
+                                                <t t-foreach="mo_line.move_raw_ids" t-as="deliveries">
+                                                  <t t-foreach="deliveries.move_ids_without_package" t-as="delivery">
+                                                    <t t-if="delivery.product_id == so_line.product_id">
+                                                      <t t-if="delivery.state == 'assigned'">
+                                                        <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability"/>
+                                                        <t t-set="reserved" t-value="reserved + res"/>
+                                                        <!-- <div t-field="delivery.forecast_availability" t-widget="forecast_widget"/> -->
+                                                      </t>
+                                                    </t>
+                                                  </t>
+                                                </t>
+                                                <t t-esc="reserved"/>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -157,7 +173,7 @@
               <thead>
                 <tr>
                   <th>Operation</th>
-                  <th>Scheduled Date</th>
+                  <th>Start Date</th>
                   <th>Status</th>
                 </tr>
               </thead>
