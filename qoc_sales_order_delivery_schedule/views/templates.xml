@@ -51,7 +51,7 @@
                     </a>
                   </td>
                   <td>
-                    <t t-esc="component.product_qty" />
+                    <t t-field="component.should_consume_qty" />
                     /
                     <t t-esc="component.product_uom_qty" />
                   </td>
