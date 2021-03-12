@@ -27,7 +27,7 @@
     </template>
 
     <template id="component_lines">
-      <tr class="dropdown-content no-hide">
+      <tr t-attf-class="dropdown-content {{'no-hide' if should_hide else ''}}">
         <td colspan="3" style="padding-left: 10px;">
           <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
             <thead>
@@ -114,7 +114,9 @@
                   </td>
                 </tr>
                 <t t-if="len(components) > 0">
-                  <t t-call="qoc_sales_order_delivery_schedule.component_lines"></t>
+                  <t t-call="qoc_sales_order_delivery_schedule.component_lines">
+                    <t t-set="should_hide" t-value="False"></t>
+                  </t>
                 </t>
               </t>
             </tbody>
@@ -170,6 +172,7 @@
                   <t t-if="len(extra_products) > 0">
                     <t t-call="qoc_sales_order_delivery_schedule.component_lines">
                       <t t-set="components" t-value="extra_products"></t>
+                      <t t-set="should_hide" t-value="True"></t>
                     </t>
                   </t>
                   <br/>
