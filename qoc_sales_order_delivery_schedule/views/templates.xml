@@ -68,7 +68,7 @@
                     </td> -->
                   </tr>
                   <t t-if="len(workorders) > 0">
-                    <t t-call="wo_lines"></t>
+                    <t t-call="wo-lines"></t>
                   </t>
                 </t>
               </tbody>
@@ -81,7 +81,7 @@
       </t>
     </template>
 
-    <template id="wo_lines">
+    <template id="wo-lines">
       <tr class="dropdown-content">
         <td colspan="3" style="padding-left: 10px;">
           <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
