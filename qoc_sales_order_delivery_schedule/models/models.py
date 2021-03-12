@@ -47,8 +47,6 @@ class WorkOrder(models.Model):
         products = []
         for p in self.check_ids:
             products.append(p.product_id)
-        # for op in self.production_bom_id.operation_ids:
-        #     res[op.name] = []
         for line in self.production_id.move_raw_ids:
             if line.product_id in products:
                 res.append(line)
