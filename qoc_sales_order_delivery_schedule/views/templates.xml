@@ -163,11 +163,14 @@
                     </td> -->
                   </tr>
                   <t t-set="extra_products" t-value="mo_line.get_product_lines()"/>
+                  <span t-esc="len(extra_products)"></span>
                   <t t-if="len(extra_products) > 0">
                     <t t-call="qoc_sales_order_delivery_schedule.component_lines">
                       <t t-set="components" t-value="extra_products"></t>
                     </t>
                   </t>
+                  <br/>
+                  <span t-esc="len(workorders)"></span>
                   <t t-if="len(workorders) > 0">
                     <t t-call="qoc_sales_order_delivery_schedule.wo_lines"></t>
                   </t>
