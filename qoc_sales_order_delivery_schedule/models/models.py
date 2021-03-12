@@ -50,8 +50,9 @@ class WorkOrder(models.Model):
         products = []
         for p in self.check_ids:
             products.append(p.product_id)
-        _logger.info("\nLENGTH: " + str(len(products)))
+        _logger.info("\nLENGTH: " + str(products))
         for line in self.production_id.move_raw_ids:
+            _logger.info("\COMPARE: "+ str(line.product_id) + " IN " + str(products))
             if line.product_id in products:
                 res.append(line)
         return res
