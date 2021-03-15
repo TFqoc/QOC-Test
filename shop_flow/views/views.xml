@@ -28,6 +28,10 @@
       <field name="view_mode">qweb</field>
     </record>
 
+    <!-- Permission Group for our model -->
+    <record id="shop_flow_user" model="res.groups">
+      <field name="name">ShopFlow / User</field>
+    </record>
 
     <!-- <record model="ir.ui.view" id="hello_world_view_1">
         <field name="model">res.partner</field>
