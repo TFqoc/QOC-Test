@@ -23,9 +23,34 @@ class SaleLine(models.Model):
     _inherit = 'sale.order.line'
 
     def get_mo_records(self):
-        return self.env['mrp.production'].search([('product_id','=',self.product_id.id),('state','in',['confirmed','progress','to_close'])],limit=80,order="id desc")
+        mto = False
+        for route in self.product_id.route_ids:
+            if route.name == 'Replenish on Order (MTO)': # Default name for Odoo's MTO rule
+                mto = True
+                break
+        if not mto:
+            return self.product_id.get_mo_records()
+        else:
+            mrp_production_ids = self.order_id.procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids.ids
+            return mrp_production_ids
+
     def get_delivery_records(self):
         return self.env['stock.picking'].search([('sale_id','=',self.order_id.id)],limit=80,order="id desc")
+
+    def get_reserved(self):
+        res = 0
+        for deliveries in self.get_delivery_records():
+            for delivery in deliveries.move_ids_without_package:
+                if delivery.product_id == self.product_id and delivery.state == 'assigned':
+                    res += delivery._compute_forecast_information() or delivery.forecast_availability
+        return res
+
+class Product(models.Model):
+    _inherit = 'product.product'
+
+    def get_mo_records(self):
+        # self.route_ids
+        return self.env['mrp.production'].search([('product_id','=',self.id),('state','in',['confirmed','progress','to_close'])],limit=80,order="id desc")
 
 class Production(models.Model):
     _inherit = 'mrp.production'
