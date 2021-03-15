@@ -11,10 +11,20 @@ class ShopFlow(models.Model):
     _description = 'Shop Flow'
 
     name = fields.Char()
-    order_id = fields.One2many(comodel='sale.order', required=True)
+    order_id = fields.Many2one(comodel='sale.order', required=True)
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+
+    is_delivered = fields.Boolean(compute='_compute_delivered')
+
+    def _compute_delivered(self):
+        res = True
+        for delivery in self.env['stock.picking'].search([('sale_id','=',self.id)],order="id desc"):
+            for line in delivery.move_ids_without_package:
+                if delivery.state != 'done':
+                    res = False
+        self.is_delivered = res
 
     @api.model
     def create(self, vals):
