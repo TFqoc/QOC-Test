@@ -184,9 +184,84 @@
           </div>
         </div>
       </t>
-      <t t-else="">
+      <t t-elif="len(po_data) == 0">
         <h3>No current manufacturing orders were found for this product.</h3>
       </t>
+      <t t-if="len(po_data) > 0">
+        <div class="o_list_view">
+          <div class="table-responsive">
+            <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+              <thead>
+                <tr>
+                  <th>PO Name</th>
+                  <th>Vendor</th>
+                  <th>Order Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-foreach="po_data" t-as="po">
+                  <tr>
+                    <td>
+                      <t t-if="len(po.order_line) > 0">
+                        <span class="fa fa-caret-down" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                      </t>
+                      <a t-attf-href="#id={{po.id}}&amp;model=purchase.order" target="_blank">
+                        <t t-esc="po.name" />
+                      </a>
+                    </td>
+                    <td>
+                      <t t-esc="po.partner_id.name"/>
+                    </td>
+                    <td>
+                      <t t-esc="po.date_order.strftime('%m/%d/%Y') if po.order else ''" />
+                    </td>
+                    <!-- Products -->
+                    <tr class="dropdown-content">
+                      <td colspan="3" style="padding-left: 10px;">
+                        <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                          <thead>
+                            <tr>
+                              <th>Product</th>
+                              <th>Qty</th>
+                              <th>Received</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <t t-foreach="po.order_line" t-as="po_line">
+                              <t t-if="po_line.product_id.type != 'service' and po_line.display_type is False">
+                                <tr onclick="" t-attf-model_id="{{po_line.id}}">
+                                  <td>
+                                    <span>
+                                      <a t-attf-href="#id={{po_line.product_id.id}}&amp;model=product.product" target="_blank">
+                                        <t t-if="po_line.product_id.default_code">
+                                          [
+                                          <t t-esc="po_line.product_id.default_code" />
+                                          ]&#160;
+                                        </t>
+                                        <t t-esc="po_line.name" />
+                                      </a>
+                                    </span>
+                                  </td>
+                                  <td>
+                                    <t t-esc="po_line.product_qty" />
+                                  </td>
+                                  <td>
+                                    <t t-esc="po._compute_qty_received() or po.qty_received" />
+                                  </td>
+                                </tr>
+                              </t>
+                            </t>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tr>
+                </t>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </t>
     </template>
 
   </data>

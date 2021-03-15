@@ -77,6 +77,9 @@ class Product(models.Model):
         # self.route_ids
         return self.env['mrp.production'].search([('product_id','=',self.id),('state','in',['confirmed','progress','to_close'])],limit=80,order="id desc")
 
+    def get_po_records(self):
+        return self.env['purchase.order'].search([('order_line.product_id.id','=',self.id),('state','not in',['done','cancel'])])
+
 class Production(models.Model):
     _inherit = 'mrp.production'
 
