@@ -203,7 +203,7 @@
                   <tr>
                     <td>
                       <t t-if="len(po.order_line) > 0">
-                        <span class="fa fa-caret-down" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
+                        <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                       </t>
                       <a t-attf-href="#id={{po.id}}&amp;model=purchase.order" target="_blank">
                         <t t-esc="po.name" />
