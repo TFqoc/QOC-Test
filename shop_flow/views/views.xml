@@ -23,7 +23,7 @@
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="shop_flow.action_window">
-      <field name="name">Sales Order Delivery Schedule</field>
+      <field name="name">Shop Flow</field>
       <field name="res_model">sale.order</field>
       <field name="view_mode">qweb</field>
     </record>
