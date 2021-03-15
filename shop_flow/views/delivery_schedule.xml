@@ -164,7 +164,7 @@
                                             <t t-esc="so_line.product_id._compute_quantities() or so_line.product_id.qty_available" />
                                           </td>
                                           <td>
-                                            <t t-esc="so_line.get_delivered()"/>
+                                            <t t-esc="so_line._compute_qty_delivered() or so_line.qty_delivered"/>
                                           </td>
                                           <td>
                                             <t t-set="reserved" t-value="so_line.get_reserved()" />
