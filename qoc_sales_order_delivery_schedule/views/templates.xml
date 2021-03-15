@@ -34,6 +34,7 @@
               <tr>
                 <th>Component Name</th>
                 <th>Quantity to Consume</th>
+                <th>On Hand</th>
                 <th>Reserved</th>
               </tr>
             </thead>
@@ -54,6 +55,9 @@
                     <span t-field="component.should_consume_qty" />
                     /
                     <t t-esc="component.product_uom_qty" />
+                  </td>
+                  <td>
+                    <t t-esc="component.product_id._compute_quantities() or component.product_id.qty_available" />
                   </td>
                   <td>
                     <t t-set="reserved" t-value="0" />
