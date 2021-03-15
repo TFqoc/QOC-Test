@@ -11,6 +11,18 @@ class ShopFlow(models.Model):
     _description = 'Shop Flow'
 
     name = fields.Char()
+    order_id = fields.One2many(comodel='sale.order', required=True)
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    @api.model
+    def create(self, vals):
+        res = super(SaleOrder, self).create(vals)
+        self.env['shop_flow.shop_flow'].create({
+            'order_id': res.id
+        })
+        return res
 
 class SaleLine(models.Model):
     _inherit = 'sale.order.line'
@@ -37,14 +49,6 @@ class SaleLine(models.Model):
                 if delivery.product_id == self.product_id and delivery.state == 'assigned':
                     res += delivery._compute_forecast_information() or delivery.forecast_availability
         return res
-    
-    # def get_delivered(self):
-    #     res = 0
-    #     for deliveries in self.get_delivery_records():
-    #         for delivery in deliveries.move_ids_without_package:
-    #             if delivery.product_id == self.product_id and delivery.state == 'assigned':
-    #                 res += delivery._quantity_done_compute() or delivery.quantity_done
-    #     return res
 
 class Product(models.Model):
     _inherit = 'product.product'
