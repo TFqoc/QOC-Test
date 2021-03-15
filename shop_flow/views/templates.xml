@@ -213,7 +213,7 @@
                       <t t-esc="po.partner_id.name"/>
                     </td>
                     <td>
-                      <t t-esc="po.date_order.strftime('%m/%d/%Y') if po.order else ''" />
+                      <t t-esc="po.date_order.strftime('%m/%d/%Y') if po.date_order else ''" />
                     </td>
                     <!-- Products -->
                     <tr class="dropdown-content">
