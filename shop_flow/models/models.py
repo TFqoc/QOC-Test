@@ -11,7 +11,7 @@ class ShopFlow(models.Model):
     _description = 'Shop Flow'
 
     name = fields.Char()
-    order_id = fields.Many2one(comodel='sale.order', required=True, default=1)
+    order_id = fields.Many2one(comodel_name='sale.order', required=True)
 
     @api.model
     def connect_all_sale_orders(self):
@@ -37,7 +37,7 @@ class SaleOrder(models.Model):
         self.env['shop_flow.shop_flow'].create({
             'order_id': res.id
         })
-        _logger.info("\RESVAL: " + str(res))
+        _logger.info("\RESVAL: " + str(res) + "\n" + str(res.id))
         return res
 
 class SaleLine(models.Model):
