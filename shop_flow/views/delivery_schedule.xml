@@ -2,7 +2,7 @@
   <data>
     <record model="ir.ui.view" id="shop_flow.qweb">
       <field name="name">Shop Flow qweb</field>
-      <field name="model">sale.order</field>
+      <field name="model">shop_flow.shop_flow</field>
       <field name="arch" type="xml">
         <qweb>
           <!-- <script src="../js/delivery_qweb.js"/>  -->
@@ -100,7 +100,8 @@
                       </thead>
                       <tbody>
                         <t t-set="count_loaded" t-value="0" />
-                        <t t-foreach="records" t-as="record">
+                        <t t-foreach="records" t-as="recordflow">
+                          <t t-set="record" t-value="recordflow.order_id"/>
                           <!-- Record is a Sales Order -->
                           <tr t-if="count_loaded &lt; 80 and record.state == 'sale'">
                             <t t-set="count_loaded" t-value="count_loaded + 1" />
