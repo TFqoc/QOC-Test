@@ -34,7 +34,7 @@
 
                     // Close all previous boxes
                     $(".ds_card").each(function(){
-                      if (parseInt(this.id.substring(4)) &lt; parseInt(current_box)){
+                      if (parseInt(this.id.substring(4)) &gt; parseInt(current_box)){
                         this.innerHTML = '';
                       }
                     });
