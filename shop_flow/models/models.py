@@ -34,6 +34,7 @@ class SaleOrder(models.Model):
                 if delivery.state != 'done':
                     res = False
         self.is_delivered = res
+        return res
 
     @api.model
     def create(self, vals):
