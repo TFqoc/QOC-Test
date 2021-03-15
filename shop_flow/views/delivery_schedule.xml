@@ -1,7 +1,7 @@
 <odoo>
   <data>
     <record model="ir.ui.view" id="shop_flow.qweb">
-      <field name="name">Sales Order Delivery Schedule qweb</field>
+      <field name="name">Shop Flow qweb</field>
       <field name="model">sale.order</field>
       <field name="arch" type="xml">
         <qweb>
@@ -137,6 +137,7 @@
                                       <th>Product</th>
                                       <th>Qty</th>
                                       <th>On Hand</th>
+                                      <th>Delivered</th>
                                       <th>Reserved</th>
                                     </tr>
                                   </thead>
@@ -161,6 +162,9 @@
                                           </td>
                                           <td>
                                             <t t-esc="so_line.product_id._compute_quantities() or so_line.product_id.qty_available" />
+                                          </td>
+                                          <td>
+                                            <t t-esc="so_line.get_delivered()"/>
                                           </td>
                                           <td>
                                             <t t-set="reserved" t-value="so_line.get_reserved()" />
