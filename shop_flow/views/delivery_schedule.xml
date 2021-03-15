@@ -33,7 +33,7 @@
                     current_box = get_box_id(el);
 
                     // Close all previous boxes
-                    $(".ds-card").each(function(){
+                    $(".ds_card").each(function(){
                       if (parseInt(this.id.substring(4)) &lt; parseInt(current_box)){
                         this.innerHTML = '';
                       }
