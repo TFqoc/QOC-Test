@@ -28,7 +28,7 @@ class SaleLine(models.Model):
             return mrp_production_ids
 
     def get_delivery_records(self):
-        return self.env['stock.picking'].search([('sale_id','=',self.order_id.id)],limit=80,order="id desc")
+        return self.env['stock.picking'].search([('sale_id','=',self.order_id.id)],order="id desc")
 
     def get_reserved(self):
         res = 0
@@ -36,6 +36,14 @@ class SaleLine(models.Model):
             for delivery in deliveries.move_ids_without_package:
                 if delivery.product_id == self.product_id and delivery.state == 'assigned':
                     res += delivery._compute_forecast_information() or delivery.forecast_availability
+        return res
+    
+    def get_delivered(self):
+        res = 0
+        for deliveries in self.get_delivery_records():
+            for delivery in deliveries.move_ids_without_package:
+                if delivery.product_id == self.product_id and delivery.state == 'assigned':
+                    res += delivery._quantity_done_compute() or delivery.quantity_done
         return res
 
 class Product(models.Model):
