@@ -6,18 +6,11 @@ _logger = logging.getLogger(__name__)
 
 
 
-class qoc_sales_order_delivery_schedule(models.Model):
-    _name = 'qoc.sales_order_delivery_schedule'
-    _description = 'Sales Order Delivery Schedule'
+class ShopFlow(models.Model):
+    _name = 'shop_flow.shop_flow'
+    _description = 'Shop Flow'
 
     name = fields.Char()
-    partner_id = fields.Many2one('res.partner')
-
-class ResPartner(models.Model):
-    _inherit = 'res.partner'
-
-    def my_method(self):
-        pass
 
 class SaleLine(models.Model):
     _inherit = 'sale.order.line'
