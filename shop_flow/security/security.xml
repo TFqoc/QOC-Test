@@ -4,7 +4,7 @@
         <record id="shop_flow_category" model="ir.module.category">
             <field name="name">Shop Flow</field>
             <field name="description">Exposes the tree that fuels your sale orders</field>
-            <field name="sequence"></field>
+            <field name="sequence">10</field>
         </record>
         <!-- Permission Group for our model -->
         <record id="group_shop_flow_user" model="res.groups">
