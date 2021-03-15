@@ -246,7 +246,7 @@
                                     <t t-esc="po_line.product_qty" />
                                   </td>
                                   <td>
-                                    <t t-esc="po._compute_qty_received() or po.qty_received" />
+                                    <t t-esc="po_line._compute_qty_received() or po.qty_received" />
                                   </td>
                                 </tr>
                               </t>
