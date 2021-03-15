@@ -142,7 +142,7 @@
                                   </thead>
                                   <tbody>
                                     <t t-foreach="record.order_line" t-as="so_line">
-                                      <t t-if="so_line.product_id.type != 'service'">
+                                      <t t-if="so_line.product_id.type != 'service' and so_lines.display_type is False">
                                         <tr onclick="get_data(this,'mo_data')" t-attf-model_id="{{so_line.id}}">
                                           <td>
                                             <span>
