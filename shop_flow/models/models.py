@@ -13,10 +13,15 @@ class ShopFlow(models.Model):
     name = fields.Char()
     order_id = fields.Many2one(comodel='sale.order', required=True)
 
+    @api.model
+    def connect_all_sale_orders(self):
+        pass
+
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     is_delivered = fields.Boolean(compute='_compute_delivered')
+    # flow_record = fields.One2Many(comodel='shop_flow.shop_flow', inverse="order_id")
 
     def _compute_delivered(self):
         res = True
@@ -32,6 +37,7 @@ class SaleOrder(models.Model):
         self.env['shop_flow.shop_flow'].create({
             'order_id': res.id
         })
+        _logger.info("\RESVAL: " + str(res))
         return res
 
 class SaleLine(models.Model):
