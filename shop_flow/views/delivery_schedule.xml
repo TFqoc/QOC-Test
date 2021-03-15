@@ -31,6 +31,13 @@
                     id = el.getAttribute("model_id");
                     next_box = String(next_box_id(el));
                     current_box = get_box_id(el);
+
+                    // Close all previous boxes
+                    $(".ds-card").each(function(){
+                      if (parseInt(this.id.substring(4)) &lt; parseInt(current_box)){
+                        this.innerHTML = '';
+                      }
+                    });
                   
                     $.ajax({
                         url: "/shop_flow/"+path+"/"+String(id),
@@ -207,20 +214,6 @@
               </div>
               <!-- End Row -->
             </div>
-            <!-- <div class="row justify-content-around mb-4">
-                    <!- Box 3 ->
-                    <div class="col">
-                      <div class="ds_card" id="box_3">
-                        <span>Content</span>
-                      </div>
-                    </div>
-                    <!- Box 4 ->
-                    <div class="col">
-                      <div class="ds_card" id="box_4">
-                        <span>Content</span>
-                      </div>
-                    </div>
-                  </div> -->
             <!-- End container -->
           </div>
 
