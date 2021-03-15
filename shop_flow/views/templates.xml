@@ -115,7 +115,7 @@
                   </td>
                 </tr>
                 <t t-if="len(components) > 0">
-                  <t t-call="qoc_sales_order_delivery_schedule.component_lines">
+                  <t t-call="shop_flow.component_lines">
                     <t t-set="should_hide" t-value="True"></t>
                   </t>
                 </t>
@@ -170,13 +170,13 @@
                   </tr>
                   <t t-set="extra_products" t-value="mo_line.get_product_lines()"/>
                   <t t-if="len(extra_products) > 0">
-                    <t t-call="qoc_sales_order_delivery_schedule.component_lines">
+                    <t t-call="shop_flow.component_lines">
                       <t t-set="components" t-value="extra_products"></t>
                       <t t-set="should_hide" t-value="False"></t>
                     </t>
                   </t>
                   <t t-if="len(workorders) > 0">
-                    <t t-call="qoc_sales_order_delivery_schedule.wo_lines"></t>
+                    <t t-call="shop_flow.wo_lines"></t>
                   </t>
                 </t>
               </tbody>

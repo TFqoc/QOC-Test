@@ -1,6 +1,6 @@
 <odoo>
   <data>
-    <record model="ir.ui.view" id="qoc_sales_order_delivery_schedule.qweb">
+    <record model="ir.ui.view" id="shop_flow.qweb">
       <field name="name">Sales Order Delivery Schedule qweb</field>
       <field name="model">sale.order</field>
       <field name="arch" type="xml">
@@ -33,7 +33,7 @@
                     current_box = get_box_id(el);
                   
                     $.ajax({
-                        url: "/qoc_sales_order_delivery_schedule/qoc_sales_order_delivery_schedule/"+path+"/"+String(id),
+                        url: "/shop_flow/"+path+"/"+String(id),
                         success: function( result ) {
                           id1 = parseInt(current_box) + 1;
                           id2 = id1 + 1;

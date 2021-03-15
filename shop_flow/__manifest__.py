@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "qoc_sales_order_delivery_schedule",
+    'name': "Shop Flow",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
