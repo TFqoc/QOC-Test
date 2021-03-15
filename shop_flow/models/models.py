@@ -17,6 +17,10 @@ class ShopFlow(models.Model):
     def connect_all_sale_orders(self):
         pass
 
+    @api.model
+    def get_all_sale_orders(self):
+        return self.env['sale.order'].search([])
+
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
