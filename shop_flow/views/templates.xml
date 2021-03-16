@@ -61,7 +61,7 @@
                     <t t-esc="component.product_id._compute_quantities() or component.product_id.qty_available" />
                   </td>
                   <td>
-                    <div t-field="forecast_availability" t-options="{'widget':'forecast_widget',}"></div>
+                    <div t-field="component.forecast_availability" t-options="{'widget':'forecast_widget',}"></div>
                     <t t-set="reserved" t-value="0" />
                     <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
                       <t t-if="delivery.product_id == component.product_id">
