@@ -84,7 +84,10 @@
                   caption {
                     padding-top: 0rem;
                     padding-bottom: 0rem;
-                    color: #000000;
+                    color: #666666;
+                    font-size: 1.08333333rem;
+                    font-weight: 400;
+                    font-size: medium;
                     text-align: left;
                     caption-side: top;
                   }
