@@ -234,9 +234,28 @@
 
           <!-- Collapse all dropdowns -->
           <script>
-                  // class target is .dropdown-content
-                  $(".dropdown-content").hide();
-                </script>
+            // class target is .dropdown-content
+            $(".dropdown-content").hide();
+          </script>
+          <script>
+            function open_forecast(el, id){
+              el.preventDefault();
+              el.stopPropagation();
+
+              var model = 'product.product';
+              rpc.query({
+                  model: model,
+                  method: 'action_product_forecast_report',
+                  args: [id],
+              }).then(action => {
+                action.context = Object.assign(action.context || {}, {
+                    active_model: 'product.product',
+                    active_id: id,
+                });
+                this.do_action(action);
+            });
+          }
+          </script>
         </qweb>
       </field>
     </record>
