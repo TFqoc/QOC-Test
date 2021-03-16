@@ -82,8 +82,8 @@
                     background-color: lightblue !important;
                   }
                   caption {
-                    /*padding-top: 0.75rem;
-                    padding-bottom: 0.75rem;*/
+                    padding-top: 0rem;
+                    padding-bottom: 0rem;
                     color: #000000;
                     text-align: left;
                     caption-side: top;
