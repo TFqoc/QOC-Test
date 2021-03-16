@@ -44,10 +44,10 @@
                         success: function( result ) {
                           id1 = parseInt(current_box) + 1;
                           id2 = id1 + 1;
-                          //if (next_box % 2 == 1 &amp;&amp; $('#box_'+id1).length == 0){
+                          if (next_box % 2 == 1 &amp;&amp; $('#box_'+id1).length == 0){
                             // Create new row
-                            $("#page_container").append('<div class="row justify-content-around mt-4"><div class="col"><div class="ds_card" id="box_'+id1+'"><span></span></div></div></div>');
-                          //}
+                            $("#page_container").append('<div class="row justify-content-around mt-4"><div class="col"><div class="ds_card" id="box_'+id1+'"><span></span></div></div><div class="col"><div class="ds_card" id="box_'+id2+'"><span></span></div></div></div>');
+                          }
                           $("#box_" + next_box).html(result);
                           $("#box_" + next_box).find(".dropdown-content:not(.no-hide)").hide();
                         }
@@ -81,6 +81,13 @@
                   .selected:hover{
                     background-color: lightblue !important;
                   }
+                  caption {
+                    padding-top: 0.75rem;
+                    padding-bottom: 0.75rem;
+                    color: #adb5bd;
+                    text-align: left;
+                    caption-side: top;
+                }
                 </style>
           <div class="container-fluid" id="page_container">
             <div class="row justify-content-around mt-4">
@@ -207,6 +214,12 @@
                   </div>
                 </div>
                 <!-- End Column -->
+              </div>
+              <!-- Box 2 -->
+              <div class="col">
+                <div class="ds_card" id="box_2">
+                  <span></span>
+                </div>
               </div>
               <!-- End Row -->
             </div>
