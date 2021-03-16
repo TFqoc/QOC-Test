@@ -75,7 +75,8 @@
                         <t t-set="forecast_is_late" t-value="False"/>
                       </t>
                       <t t-set="product_type" t-value="component.product_type"/>
-                      <t t-set="id" t-value="component.id"/>
+                      <t t-set="id" t-value="component.product_id"/>
+                      <t t-set="action_id" t-value="component.env['ir.actions.actions'].search([('name','=','Forecasted Report'),('type','=','ir.actions.client')], limit=1)[0].id"/>
                     </t>
                     <!-- <t t-set="reserved" t-value="0" />
                     <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
@@ -289,7 +290,8 @@
         <span t-elif="not forecast_expected_date_str and will_be_fulfilled" class="text-success">Available</span>
         <span t-elif="forecast_expected_date_str and will_be_fulfilled" t-attf-class="{{'text-danger' if forecast_is_late else 'text-warning'}}">Exp <t t-esc="forecast_expected_date_str"/></span>
         <span t-else="" class="text-danger">Not Available</span>
-        <button t-if="product_type == 'product'" t-attf="{{ {} if id else {'disabled': ''} }}" class="o_forecast_report_button btn btn-link o_icon_button ml-2" title="Forecasted Report">
+        <a href="#action={{action_id}}&amp;active_id={{id}}&amp;cids=1&amp;menu_id=&amp;active_model=product.product" target="_blank">Test</a>
+        <button t-if="product_type == 'product'" t-attf="{{ {} if id else {'disabled': ''} }}" class="o_forecast_report_button btn btn-link o_icon_button ml-2" title="Forecasted Report" onclick="open_forecast(this,{{id}})">
            <i t-attf-class="fa fa-fw fa-area-chart {{'text-danger' if state != 'draft' and (not will_be_fulfilled or forecast_is_late) else ''}}"/>
         </button>
     </template>
