@@ -62,7 +62,7 @@
                   </td>
                   <td>
                     <!-- <div t-field="component.forecast_availability" t-options="{'widget':'forecast_widget',}"></div> -->
-                    <t t-set="availability" t-value="component_compute_forecast_information() or component.forecast_availability"/>
+                    <t t-set="availability" t-value="component.compute_forecast_information() or component.forecast_availability"/>
                     <t t-call="shop_flow.forecast">
                       <t t-set="state" t-value="component.state"/>
                       <t t-set="reserved_availability_str" t-value="reserved_availability"/>
