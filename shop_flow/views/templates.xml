@@ -290,10 +290,11 @@
         <span t-elif="not forecast_expected_date_str and will_be_fulfilled" class="text-success">Available</span>
         <span t-elif="forecast_expected_date_str and will_be_fulfilled" t-attf-class="{{'text-danger' if forecast_is_late else 'text-warning'}}">Exp <t t-esc="forecast_expected_date_str"/></span>
         <span t-else="" class="text-danger">Not Available</span>
-        <a t-attf-href="#action={{action_id}}&amp;active_id={{id.id}}&amp;cids=1&amp;menu_id=&amp;active_model=product.product" target="_blank">Test</a>
-        <button t-if="product_type == 'product'" t-attf="{{ {} if id else {'disabled': ''} }}" class="o_forecast_report_button btn btn-link o_icon_button ml-2" title="Forecasted Report" onclick="open_forecast(this,{{id}})">
-           <i t-attf-class="fa fa-fw fa-area-chart {{'text-danger' if state != 'draft' and (not will_be_fulfilled or forecast_is_late) else ''}}"/>
-        </button>
+        <a t-attf-href="#action={{action_id}}&amp;active_id={{id.id}}&amp;cids=1&amp;menu_id=&amp;active_model=product.product" target="_blank">
+          <button t-if="product_type == 'product'" t-attf="{{ {} if id else {'disabled': ''} }}" class="o_forecast_report_button btn btn-link o_icon_button ml-2" title="Forecasted Report" onclick="open_forecast(this,{{id}})">
+            <i t-attf-class="fa fa-fw fa-area-chart {{'text-danger' if state != 'draft' and (not will_be_fulfilled or forecast_is_late) else ''}}"/>
+          </button>
+        </a>
     </template>
 
   </data>

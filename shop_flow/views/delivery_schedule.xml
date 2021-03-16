@@ -93,6 +93,7 @@
                   }
                   td,span,div,a{
                     overflow: visible;
+                    white-space: unset;
                   }
                 </style>
           <div class="container-fluid" id="page_container">
