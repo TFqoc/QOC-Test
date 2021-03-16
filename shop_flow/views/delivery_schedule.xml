@@ -93,7 +93,7 @@
                   }
                   td,span,div,a{
                     overflow: visible;
-                    white-space: unset;
+                    white-space: normal;
                   }
                 </style>
           <div class="container-fluid" id="page_container">
@@ -238,7 +238,7 @@
             // class target is .dropdown-content
             $(".dropdown-content").hide();
           </script>
-          <script>
+          <!-- <script>
             function open_forecast(el, id){
               el.preventDefault();
               el.stopPropagation();
@@ -256,7 +256,7 @@
                 this.do_action(action);
             });
           }
-          </script>
+          </script> -->
         </qweb>
       </field>
     </record>
