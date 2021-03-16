@@ -61,9 +61,9 @@
                     <t t-esc="component.product_id._compute_quantities() or component.product_id.qty_available" />
                   </td>
                   <td>
-                    <div t-field="component.forecast_availability" t-options="{'widget':'forecast_widget',}"></div>
-                    <!-- <t t-set="availability" t-value="component_compute_forecast_information() or component.forecast_availability"/>
-                    <t t-call="stock.forecastWidget">
+                    <!-- <div t-field="component.forecast_availability" t-options="{'widget':'forecast_widget',}"></div> -->
+                    <t t-set="availability" t-value="component_compute_forecast_information() or component.forecast_availability"/>
+                    <t t-call="shop_flow.forecast">
                       <t t-set="state" t-value="component.state"/>
                       <t t-set="reserved_availability_str" t-value="reserved_availability"/>
                       <t t-set="will_be_fulfilled" t-value="round(availability) >= round(component.product_qty)"/>
@@ -73,7 +73,7 @@
                       <t t-set="id" t-value="component.id"/>
                       <t t-set="state" t-value="component.state"/>
                       <t t-set="state" t-value="component.state"/>
-                    </t> -->
+                    </t>
                     <t t-set="reserved" t-value="0" />
                     <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
                       <t t-if="delivery.product_id == component.product_id">
@@ -280,6 +280,16 @@
             </div>
           </div>
         </t>
+    </template>
+
+    <template id="forecast">
+      <span t-if="['draft', 'partially_available', 'assigned', 'cancel', 'done'].includes(state)" t-esc="reserved_availability_str"/>
+        <span t-elif="!forecast_expected_date_str and will_be_fulfilled" class="text-success">Available</span>
+        <span t-elif="forecast_expected_date_str and will_be_fulfilled" t-att-class="forecast_is_late ? 'text-danger' : 'text-warning'">Exp <t t-esc="forecast_expected_date_str"/></span>
+        <span t-else="" class="text-danger">Not Available</span>
+        <button t-if="product_type == 'product'" t-att="id ? {} : {'disabled': ''}" class="o_forecast_report_button btn btn-link o_icon_button ml-2" title="Forecasted Report">
+           <i t-attf-class="fa fa-fw fa-area-chart {{ state != 'draft' and (!will_be_fulfilled or forecast_is_late) ? 'text-danger' : '' }}"/>
+        </button>
     </template>
 
   </data>
