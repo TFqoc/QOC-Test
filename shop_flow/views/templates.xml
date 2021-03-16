@@ -30,6 +30,7 @@
       <tr t-attf-class="dropdown-content{{' no-hide' if should_hide else ''}}">
         <td colspan="3" style="padding-left: 10px;">
           <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+            <caption>Components</caption>
             <thead>
               <tr>
                 <th>Component Name</th>
@@ -84,6 +85,7 @@
       <tr class="dropdown-content">
         <td colspan="3" style="padding-left: 10px;">
           <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+            <caption>Work Orders</caption>
             <thead>
               <tr>
                 <!-- <th>Component</th>
@@ -131,6 +133,7 @@
         <div class="o_list_view">
           <div class="table-responsive">
             <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+              <caption>Manufacturing Orders</caption>
               <thead>
                 <tr>
                   <th>Order Name</th>
@@ -191,6 +194,7 @@
         <div class="o_list_view">
           <div class="table-responsive">
             <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+              <caption>Purchase Orders</caption>
               <thead>
                 <tr>
                   <th>PO Name</th>
@@ -219,6 +223,7 @@
                     <tr class="dropdown-content">
                       <td colspan="3" style="padding-left: 10px;">
                         <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                          <caption>Products</caption>
                           <thead>
                             <tr>
                               <th>Product</th>

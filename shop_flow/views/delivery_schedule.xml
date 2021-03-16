@@ -89,6 +89,7 @@
                 <div class="o_list_view ds_card" id="box_1">
                   <div class="table-responsive">
                     <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                      <caption>Sale Orders</caption>
                       <thead>
                         <tr>
                           <th class="o_column_sortable">
@@ -141,6 +142,7 @@
                             <tr class="dropdown-content">
                               <td colspan="3" style="padding-left: 10px;">
                                 <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
+                                  <caption>Products</caption>
                                   <thead>
                                     <tr>
                                       <th>Product</th>
