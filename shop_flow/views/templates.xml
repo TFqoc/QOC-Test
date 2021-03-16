@@ -68,11 +68,14 @@
                       <t t-set="reserved_availability_str" t-value="reserved_availability"/>
                       <t t-set="will_be_fulfilled" t-value="round(availability) >= round(component.product_qty)"/>
                       <t t-set="forecast_expected_date_str" t-value="component.forecast_expected_date"/>
-                      <t t-set="forecast_is_late" t-value="component.forecast_expected_date > component.date_deadline"/>
+                      <t t-if="component.forecast_expected_date and component.date_deadline">
+                        <t t-set="forecast_is_late" t-value="component.forecast_expected_date > component.date_deadline"/>
+                      </t>
+                      <t t-else="">
+                        <t t-set="forecast_is_late" t-value="False"/>
+                      </t>
                       <t t-set="product_type" t-value="component.product_type"/>
                       <t t-set="id" t-value="component.id"/>
-                      <t t-set="state" t-value="component.state"/>
-                      <t t-set="state" t-value="component.state"/>
                     </t>
                     <t t-set="reserved" t-value="0" />
                     <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
