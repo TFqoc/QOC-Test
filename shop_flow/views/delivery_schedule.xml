@@ -90,6 +90,7 @@
                     font-size: medium;
                     text-align: left;
                     caption-side: top;
+                    background-color: white;
                   }
                   td,span,div,a{
                     overflow: visible;
