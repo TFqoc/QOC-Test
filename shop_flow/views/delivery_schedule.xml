@@ -44,10 +44,10 @@
                         success: function( result ) {
                           id1 = parseInt(current_box) + 1;
                           id2 = id1 + 1;
-                          if (next_box % 2 == 1 &amp;&amp; $('#box_'+id1).length == 0){
+                          //if (next_box % 2 == 1 &amp;&amp; $('#box_'+id1).length == 0){
                             // Create new row
                             $("#page_container").append('<div class="row justify-content-around mt-4"><div class="col"><div class="ds_card" id="box_'+id1+'"><span></span></div></div></div>');
-                          }
+                          //}
                           $("#box_" + next_box).html(result);
                           $("#box_" + next_box).find(".dropdown-content:not(.no-hide)").hide();
                         }
