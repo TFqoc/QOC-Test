@@ -61,7 +61,19 @@
                     <t t-esc="component.product_id._compute_quantities() or component.product_id.qty_available" />
                   </td>
                   <td>
-                    <div t-field="component.forecast_availability" t-options="{'widget':'forecast_widget',}"></div>
+                    <!-- <div t-field="component.forecast_availability" t-options="{'widget':'forecast_widget',}"></div> -->
+                    <t t-set="availability" t-value="component_compute_forecast_information() or component.forecast_availability"/>
+                    <t t-call="stock.template">
+                      <t t-set="state" t-value="component.state"/>
+                      <t t-set="reserved_availability_str" t-value="reserved_availability"/>
+                      <t t-set="will_be_fulfilled" t-value="round(availability) >= round(component.product_qty)"/>
+                      <t t-set="forecast_expected_date_str" t-value="component.forecast_expected_date"/>
+                      <t t-set="forecast_is_late" t-value="component.forecast_expected_date > component.date_deadline"/>
+                      <t t-set="product_type" t-value="component.product_type"/>
+                      <t t-set="id" t-value="component.id"/>
+                      <t t-set="state" t-value="component.state"/>
+                      <t t-set="state" t-value="component.state"/>
+                    </t>
                     <t t-set="reserved" t-value="0" />
                     <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
                       <t t-if="delivery.product_id == component.product_id">
