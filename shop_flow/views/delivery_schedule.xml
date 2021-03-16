@@ -74,7 +74,7 @@
                     padding: 4px;
                     overflow: auto;/* Scroll Bars for long table data */
                     max-height: 300px;
-                }
+                  }
                   .selected{
                     background-color: powderblue !important;
                   }
@@ -87,7 +87,10 @@
                     color: #000000;
                     text-align: left;
                     caption-side: top;
-                }
+                  }
+                  td {
+                    overflow: visible;
+                  }
                 </style>
           <div class="container-fluid" id="page_container">
             <div class="row justify-content-around mt-4">
