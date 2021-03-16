@@ -77,17 +77,16 @@
                       <t t-set="product_type" t-value="component.product_type"/>
                       <t t-set="id" t-value="component.id"/>
                     </t>
-                    <t t-set="reserved" t-value="0" />
+                    <!-- <t t-set="reserved" t-value="0" />
                     <t t-foreach="mo_line.move_raw_ids" t-as="delivery">
                       <t t-if="delivery.product_id == component.product_id">
                         <t t-if="delivery.state == 'assigned'">
                           <t t-set="res" t-value="delivery._compute_forecast_information() or delivery.forecast_availability" />
                           <t t-set="reserved" t-value="reserved + res" />
-                          <!-- <div t-field="delivery.forecast_availability" t-widget="forecast_widget"/> -->
                         </t>
                       </t>
                     </t>
-                    <t t-esc="reserved" />
+                    <t t-esc="reserved" /> -->
                   </td>
                 </tr>
               </t>
