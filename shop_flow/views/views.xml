@@ -26,12 +26,13 @@
       <field name="name">Shop Flow</field>
       <field name="res_model">sale.order</field>
       <field name="view_mode">qweb</field>
+      <field name="context">{"search_default_late_sales":1}</field>
     </record>
 
     <record id="view_shop_flow_search_inherit" model="ir.ui.view">
       <field name="name">shop_flow.inherit</field>
       <field name="model">sale.order</field>
-      <!-- <field name="inherit_id" ref="sale.view_sales_order_filter"/> -->
+      <field name="inherit_id" ref="sale.view_sales_order_filter"/>
       <field name="type">qweb</field>
       <field name="arch" type="xml">
         <xpath expr="//search/filter" position="before">
