@@ -30,7 +30,7 @@ class SaleOrder(models.Model):
     def _compute_delivered(self):
         for record in self:
             res = True
-            for delivery in record.env['stock.picking'].search([('sale_id','=',self.id)],order="id desc"):
+            for delivery in record.env['stock.picking'].search([('sale_id','=',record.id)]):
                 for line in delivery.move_ids_without_package:
                     if delivery.state != 'done':
                         res = False
