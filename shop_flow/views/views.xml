@@ -55,7 +55,7 @@
         </field>
     </record>
 
-    
+
      <menuitem id="main_hello_world_menu" name="Hello World App"/> -->
 
     <!-- server action to the one above -->
@@ -78,7 +78,7 @@
 
     <menuitem name="Shop Flow" 
     id="shop_flow.menu_root" 
-    action="shop_flow.action_window" 
+    action="shop_flow_action_window" 
     web_icon="shop_flow,static/description/icon.png"/>
 
     <!-- menu categories -->
