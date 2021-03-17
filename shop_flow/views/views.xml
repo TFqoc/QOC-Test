@@ -28,6 +28,24 @@
       <field name="view_mode">qweb</field>
     </record>
 
+    <record id="view_shop_flow_search_inherit" model="ir.ui.view">
+      <field name="name">shop_flow.inherit</field>
+      <field name="model">sale.order</field>
+      <!-- <field name="inherit_id" ref="sale.view_sales_order_filter"/> -->
+      <field name="type">qweb</field>
+      <field name="arch" type="xml">
+        <xpath expr="//search/filter" position="before">
+          <searchpanel view_types="qweb"></searchpanel>
+          <filter string="Late Sales" name="late_sales" domain="[('commitment_date','&lt;',((context_today()).strftime('%Y-%m-%d')))]"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="shoo_flow.view_shop_flow_search_inherit" model="ir.actions.act_window">
+      <!-- <field name="domain">['|',('store.user_ids.id','=',uid),('store','=',False)]</field> -->
+      <field name="context">{"search_default_late_sales":1}</field> <!-- Puts the filter on by default -->
+    </record>
+
     <!-- <record model="ir.ui.view" id="hello_world_view_1">
         <field name="model">res.partner</field>
         <field name="mode">primary</field>
