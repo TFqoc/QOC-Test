@@ -41,7 +41,7 @@
       </field>
     </record>
 
-    <record id="shoo_flow.view_shop_flow_search_inherit" model="ir.actions.act_window">
+    <record id="shop_flow.view_shop_flow_search_inherit" model="ir.actions.act_window">
       <!-- <field name="domain">['|',('store.user_ids.id','=',uid),('store','=',False)]</field> -->
       <field name="context">{"search_default_late_sales":1}</field> <!-- Puts the filter on by default -->
     </record>
