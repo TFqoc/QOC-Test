@@ -6,10 +6,10 @@
       <field name="name">early_invoice list</field>
       <field name="model">sale.order</field>
       <field name="arch" type="xml">
-        <xpath expr="(//header/button[@name='418'])[2]">
-          <!-- <attribute name="attrs">
+        <xpath expr="(//header/button[@name='418'])[2]" position="attributes">
+          <attribute name="attrs">
             {'invisible': [('invoice_status', '!=', 'no')]}
-          </attribute> -->
+          </attribute>
         </xpath>
       </field>
     </record>
