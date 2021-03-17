@@ -101,6 +101,9 @@
             <div class="row justify-content-around mt-4">
               <!-- Box 1 -->
               <div class="col">
+                <tree>
+                  <field name="name"/>
+                </tree>
                 <div class="o_list_view ds_card" id="box_1">
                   <div class="table-responsive">
                     <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped" style="table-layout: fixed;">
