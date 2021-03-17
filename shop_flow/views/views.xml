@@ -22,7 +22,7 @@
 
     <!-- actions opening views on models -->
 
-    <record model="ir.actions.act_window" id="shop_flow.action_window">
+    <record model="ir.actions.act_window" id="shop_flow_action_window">
       <field name="name">Shop Flow</field>
       <field name="res_model">sale.order</field>
       <field name="view_mode">qweb</field>
@@ -41,7 +41,7 @@
       </field>
     </record>
 
-    <record id="shop_flow.view_shop_flow_search_inherit" model="ir.actions.act_window">
+    <record id="shop_flow.shop_flow_action_window" model="ir.actions.act_window">
       <!-- <field name="domain">['|',('store.user_ids.id','=',uid),('store','=',False)]</field> -->
       <field name="context">{"search_default_late_sales":1}</field> <!-- Puts the filter on by default -->
     </record>
