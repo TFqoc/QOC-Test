@@ -19,12 +19,12 @@ class ShopFlow(models.Model):
 
     @api.model
     def get_all_sale_orders(self):
-        return self.env['sale.order'].search([],order="commitment_date desc, expected_date desc,id desc")
+        return self.env['sale.order'].search([('state', '=', 'sale'),('is_delivered','=',True)],order="commitment_date desc, expected_date desc,id desc")
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    is_delivered = fields.Boolean(compute='_compute_delivered')
+    is_delivered = fields.Boolean(compute='_compute_delivered', store=True)
     # flow_record = fields.One2Many(comodel='shop_flow.shop_flow', inverse="order_id")
 
     def _compute_delivered(self):
@@ -34,6 +34,11 @@ class SaleOrder(models.Model):
                 if delivery.state != 'done':
                     res = False
         self.is_delivered = res
+
+    @api.model
+    def get_all_sale_orders(self):
+        return self.env['sale.order'].search([('state', '=', 'sale'),('is_delivered','=',True)],order="commitment_date desc, expected_date desc,id desc")
+
 
     # @api.model
     # def create(self, vals):
