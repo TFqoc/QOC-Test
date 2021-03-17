@@ -125,7 +125,7 @@
                         <t t-set="count_loaded" t-value="0" />
                         <!-- <t t-set="orders" t-value="records.get_all_sale_orders()"/> -->
                         <t t-set="now" t-value="datetime.datetime.now()"/>
-                        <t t-set="sort_key" t-value="lambda x: x.commitment_date if type(x.commitment_date) is not bool else datetime.datetime.now()"/>
+                        <t t-set="sort_key" t-value="lambda x: 'commitment_date' if x.commitment_date else 'name'"/>
                         <t t-set="orders" t-value="records.sorted(key=sort_key)"/>
                         <t t-foreach="orders" t-as="record">
                           <!-- Record is a Sales Order -->
