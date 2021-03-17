@@ -28,12 +28,14 @@ class SaleOrder(models.Model):
     # flow_record = fields.One2Many(comodel='shop_flow.shop_flow', inverse="order_id")
 
     def _compute_delivered(self):
-        res = True
-        for delivery in self.env['stock.picking'].search([('sale_id','=',self.id)],order="id desc"):
-            for line in delivery.move_ids_without_package:
-                if delivery.state != 'done':
-                    res = False
-        self.is_delivered = res
+        for record in self:
+            res = True
+            for delivery in record.env['stock.picking'].search([('sale_id','=',self.id)],order="id desc"):
+                for line in delivery.move_ids_without_package:
+                    if delivery.state != 'done':
+                        res = False
+                        break
+            record.is_delivered = res
 
     @api.model
     def get_all_sale_orders(self):
