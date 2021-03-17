@@ -13,7 +13,10 @@
             {'invisible': [('invoice_status', '!=', 'no')]}
           </attribute>
         </xpath>
-      </field>
+        <xpath expr="//header/button[@name='action_cancel']" position="before">
+          <xpath expr="(//header/button[@name='418'])[2]" position="move"/>
+        </xpath>
+        </field>
     </record>
 
 
