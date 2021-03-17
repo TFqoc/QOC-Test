@@ -5,6 +5,7 @@
     <record model="ir.ui.view" id="early_invoice.list">
       <field name="name">early_invoice list</field>
       <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
       <field name="type">form</field>
       <field name="arch" type="xml">
         <xpath expr="(//header/button[@name='418'])[2]" position="attributes">
