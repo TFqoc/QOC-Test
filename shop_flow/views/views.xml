@@ -38,7 +38,7 @@
         <xpath expr="//search/filter" position="before">
           <!-- <searchpanel view_types="qweb"></searchpanel> -->
           <filter string="Late Sales" name="late_sales" domain="[('commitment_date','&lt;',((context_today()).strftime('%Y-%m-%d')))]"/>
-          <filter string="Active Sales" name="active_sales" domain="[('state', '=', 'sale'),('is_delivered','=',False)]" default_order="commitment_date desc"/>
+          <filter string="Active Sales" name="active_sales" domain="[('state', '=', 'sale'),('is_delivered','=',False)]" sort="commitment_date desc"/>
         </xpath>
       </field>
     </record>
