@@ -42,6 +42,7 @@
         </xpath>
       </field>
     </record>
+    <!--  -->
 
     <record id="shop_flow.shop_flow_action_window" model="ir.actions.act_window">
       <!-- <field name="domain">['|',('store.user_ids.id','=',uid),('store','=',False)]</field> -->
