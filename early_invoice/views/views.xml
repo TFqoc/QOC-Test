@@ -25,7 +25,7 @@
       <field name="type">tree</field>
       <field name="arch" type="xml">
         <xpath expr="//search/filter" position="before">
-          <filter string="Downpayment Sales" name="downpayment_sales" domain="[('has_invoice','=',True),('state','in',['draft','sent'])]"/>
+          <filter string="Downpayment Sales" name="downpayment_sales" domain="[('has_invoice','=',True)]"/>
         </xpath>
       </field>
     </record>
