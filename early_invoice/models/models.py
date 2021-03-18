@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# from odoo import models, fields, api
+from odoo import models, fields, api
 
 
-# class early_invoice(models.Model):
-#     _name = 'early_invoice.early_invoice'
-#     _description = 'early_invoice.early_invoice'
+class early_invoice(models.Model):
+    _inherit = 'sale.order'
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+    has_invoice = fields.Boolean(compute="_has_invoice_compute", store=True)
+
+    def _has_invoice_compute(self):
+        for record in self:
+            record.has_invoice = len(record.invoice_ids) > 0
