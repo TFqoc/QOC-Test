@@ -22,7 +22,7 @@
       <field name="name">sale.order.inherit</field>
       <field name="model">sale.order</field>
       <field name="inherit_id" ref="sale.view_sales_order_filter"/>
-      <field name="type">tree</field>
+      <field name="type">list</field>
       <field name="arch" type="xml">
         <xpath expr="//search/filter" position="before">
           <filter string="Downpayment Sales" name="downpayment_sales" domain="[('has_invoice','=',True)]"/>
