@@ -13,8 +13,8 @@ class early_invoice(models.Model):
 
     is_delivered = fields.Boolean(compute='_compute_delivered', store=True)
     # flow_record = fields.One2Many(comodel='shop_flow.shop_flow', inverse="order_id")
-    
-    @api.depends('delivery_count')
+
+    # @api.depends('delivery_count')
     def _compute_delivered(self):
         for record in self:
             res = True
