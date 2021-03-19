@@ -25,7 +25,9 @@
       <!-- <field name="type">list</field> -->
       <field name="arch" type="xml">
         <xpath expr="//search/filter" position="before">
-          <filter string="Downpayment Sales" name="downpayment_sales" domain="[('has_invoice','=',True)]"/>
+          <filter string="Downpayment Sales" name="downpayment_sales" domain="[('has_invoice','=',True),('invoice_status','!=','invoiced')]"/>
+          <filter string="To Confirm" name="to_confirm" domain="[('has_invoice','=',True),('state','in',['draft','sent'])]"/>
+          <filter string="Has Been Delivered" name="delivered" domain="[('has_invoice','=',True),('is_delivered','=',True),('invoice_status','!=','invoiced'),('state','=','sale')]"/>
         </xpath>
       </field>
     </record>

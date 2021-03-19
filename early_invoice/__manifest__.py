@@ -32,4 +32,5 @@
     'demo': [
         'demo/demo.xml',
     ],
+    'post_init_hook': 'post_init_hook',
 }
