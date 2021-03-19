@@ -25,11 +25,11 @@
       <!-- <field name="type">list</field> -->
       <field name="arch" type="xml">
         <xpath expr="//search/filter" position="after">
-          <seperator/>
+          <separator/>
           <filter string="Downpayment Sales" name="downpayment_sales" domain="[('has_invoice','=',True),('invoice_status','!=','invoiced')]"/>
           <filter string="To Confirm" name="to_confirm" domain="[('has_invoice','=',True),('state','in',['draft','sent'])]"/>
           <filter string="Has Been Delivered" name="delivered" domain="[('is_delivered','=',True),('invoice_status','!=','invoiced'),('state','=','sale')]"/>
-          <seperator/>
+          <separator/>
         </xpath>
       </field>
     </record>
