@@ -6,7 +6,7 @@
       <field name="arch" type="xml">
         <tree string="Repairs order" multi_edit="1" sample="1">
           <field name="name" />
-          <field name="product_id" readonly="1" optional="show" />
+          <field name="product_id"/> <!-- readonly="1" optional="show" /> -->
           <!-- <field name="product_qty" optional="hide" string="Quantity"/>
               <field name="product_uom" string="Unit of Measure" readonly="1" optional="hide"/>
               <field name="user_id" optional="hide" widget='many2one_avatar_user'/>
