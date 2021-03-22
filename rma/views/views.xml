@@ -253,6 +253,6 @@
       </field>
     </record>
 
-    <menuitem id="rma_menu" name="RMAs" parent="menu_mrp_manufacturing" action="action_repair_order_tree" />
+    <menuitem id="rma_menu" name="RMAs" parent="mrp.menu_mrp_manufacturing" action="action_repair_order_tree" />
   </data>
 </odoo>
