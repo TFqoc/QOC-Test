@@ -4,7 +4,7 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
-class Return(models.Model):
+class Return(models.TransientModel):
     _inherit ='stock.return.picking'
 
     def create_returns(self):
