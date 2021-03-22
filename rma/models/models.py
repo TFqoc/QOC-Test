@@ -237,7 +237,7 @@ class RMA(models.Model):
                 },
                 'target': 'new'
             }
-            
+
     def action_repair_confirm(self):
         """ Repair order state is set to 'To be invoiced' when invoice method
         is 'Before repair' else state becomes 'Confirmed'.
@@ -247,13 +247,13 @@ class RMA(models.Model):
         if self.filtered(lambda repair: repair.state != 'draft'):
             raise UserError(_("Only draft repairs can be confirmed."))
         self._check_company()
-        self.operations._check_company()
+        # self.operations._check_company()
         self.fees_lines._check_company()
         before_repair = self.filtered(lambda repair: repair.invoice_method == 'b4repair')
         before_repair.write({'state': '2binvoiced'})
         to_confirm = self - before_repair
-        to_confirm_operations = to_confirm.mapped('operations')
-        to_confirm_operations.write({'state': 'confirmed'})
+        # to_confirm_operations = to_confirm.mapped('operations')
+        # to_confirm_operations.write({'state': 'confirmed'})
         to_confirm.write({'state': 'confirmed'})
         return True
 
