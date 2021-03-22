@@ -22,7 +22,7 @@
     </record>
 
     <record id="view_repair_order_form" model="ir.ui.view">
-      <field name="name">repair.form</field>
+      <field name="name">rma.form</field>
       <field name="model">rma.rma</field>
       <field name="arch" type="xml">
         <form string="Repair Order">
@@ -200,7 +200,7 @@
       </field>
     </record>
 
-    <record id="view_rma_order_form_filter" model="ir.ui.view">
+    <record id="view_rma_form_filter" model="ir.ui.view">
       <field name="name">rma.select</field>
       <field name="model">rma.rma</field>
       <field name="arch" type="xml">
@@ -208,9 +208,9 @@
               <field name="name" string="Repair Order" filter_domain="['|', ('name', 'ilike', self), ('product_id', 'ilike', self)]"/>
               <field name="product_id"/>
               <field name="partner_id" filter_domain="[('partner_id', 'child_of', self)]"/>
-              <filter string="Quotations" name="quotations" domain="[('state', '=', 'draft')]"/>
+              <!-- <filter string="Quotations" name="quotations" domain="[('state', '=', 'draft')]"/>
               <filter string="Confirmed" domain="[('state', '=', 'confirmed')]" name="current" />
-              <filter string="Ready To Repair" name="ready_to_repair" domain="[('state', '=', 'ready')]"/>
+              <filter string="Ready To Repair" name="ready_to_repair" domain="[('state', '=', 'ready')]"/> -->
               <!-- <separator/>
               <filter string="Invoiced" name="invoiced" domain="[('invoiced', '=', True)]"/>
               <separator/>
@@ -239,8 +239,8 @@
       <field name="name">Repair Orders</field>
       <field name="type">ir.actions.act_window</field>
       <field name="res_model">rma.rma</field>
-      <field name="view_mode">tree,kanban,graph,pivot,form</field>
-      <!-- <field name="search_view_id" ref="view_repair_order_form_filter" /> -->
+      <field name="view_mode">tree,form</field>
+      <field name="search_view_id" ref="view_rma_form_filter" />
       <field name="help" type="html">
         <p class="o_view_nocontent_smiling_face">
         No repair order found. Let's create one!
