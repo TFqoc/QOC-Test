@@ -20,8 +20,8 @@ class RMA(models.Model):
     name = fields.Char(
         'RMA Reference',
         default='/',
-        copy=False, required=True,
-        states={'confirmed': [('readonly', True)]})
+        copy=False, required=True)
+        # states={'confirmed': [('readonly', True)]})
     product_id = fields.Many2one(
         'product.product', string='Product to Repair',
         domain="[('type', 'in', ['product', 'consu']), '|', ('company_id', '=', company_id), ('company_id', '=', False)]",
