@@ -2,3 +2,4 @@
 
 from . import models
 from . import mrp
+from . import picking
