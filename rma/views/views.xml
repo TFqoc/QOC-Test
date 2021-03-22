@@ -23,7 +23,7 @@
 
     <record id="view_repair_order_form" model="ir.ui.view">
       <field name="name">repair.form</field>
-      <field name="model">repair.order</field>
+      <field name="model">rma.rma</field>
       <field name="arch" type="xml">
         <form string="Repair Order">
           <header>
@@ -253,6 +253,6 @@
       </field>
     </record>
 
-    <menuitem id="rma_menu" name="RMAs" parent="menu_mrp_manufacturing" action="action_repair_order_graph" />
+    <menuitem id="rma_menu" name="RMAs" parent="menu_mrp_manufacturing" action="action_repair_order_tree" />
   </data>
 </odoo>
