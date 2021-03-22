@@ -227,8 +227,8 @@ class RMA(models.Model):
             return {
                 'name': self.product_id.display_name + _(': Insufficient Quantity To Repair'),
                 'view_mode': 'form',
-                'res_model': 'stock.warn.insufficient.qty.repair',
-                'view_id': self.env.ref('rma.stock_warn_insufficient_qty_repair_form_view').id,
+                'res_model': 'stock.warn.insufficient.qty.rma',
+                'view_id': self.env.ref('rma.stock_warn_insufficient_qty_rma_form_view').id,
                 'type': 'ir.actions.act_window',
                 'context': {
                     'default_product_id': self.product_id.id,
@@ -307,11 +307,11 @@ class RMATags(models.Model):
     ]
 
 class StockWarnInsufficientQtyRepair(models.TransientModel):
-    _name = 'stock.warn.insufficient.qty.repair'
+    _name = 'stock.warn.insufficient.qty.rma'
     _inherit = 'stock.warn.insufficient.qty'
     _description = 'Warn Insufficient Repair Quantity'
 
-    repair_id = fields.Many2one('repair.order', string='Repair')
+    repair_id = fields.Many2one('rma.rma', string='Repair')
 
     def _get_reference_document_company_id(self):
         return self.repair_id.company_id
