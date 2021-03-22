@@ -208,6 +208,55 @@ class RMA(models.Model):
             vals['name'] = vals['name'][:-1] if vals['name'].endswith('/') and vals['name'] != '/' else vals['name']
         return super(RMA, self).create(vals)
 
+    def action_validate(self):
+        self.ensure_one()
+        if self.filtered(lambda repair: any(op.product_uom_qty < 0 for op in repair.operations)):
+            raise UserError(_("You can not enter negative quantities."))
+        if self.product_id.type == 'consu':
+            return self.action_repair_confirm()
+        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        available_qty_owner = self.env['stock.quant']._get_available_quantity(self.product_id, self.location_id, self.lot_id, owner_id=self.partner_id, strict=True)
+        available_qty_noown = self.env['stock.quant']._get_available_quantity(self.product_id, self.location_id, self.lot_id, strict=True)
+        repair_qty = self.product_uom._compute_quantity(self.product_qty, self.product_id.uom_id)
+        for available_qty in [available_qty_owner, available_qty_noown]:
+            if float_compare(available_qty, repair_qty, precision_digits=precision) >= 0:
+                return self.action_repair_confirm()
+        else:
+            return {
+                'name': self.product_id.display_name + _(': Insufficient Quantity To Repair'),
+                'view_mode': 'form',
+                'res_model': 'stock.warn.insufficient.qty.repair',
+                'view_id': self.env.ref('repair.stock_warn_insufficient_qty_repair_form_view').id,
+                'type': 'ir.actions.act_window',
+                'context': {
+                    'default_product_id': self.product_id.id,
+                    'default_location_id': self.location_id.id,
+                    'default_repair_id': self.id,
+                    'default_quantity': repair_qty,
+                    'default_product_uom_name': self.product_id.uom_name
+                },
+                'target': 'new'
+            }
+            
+    def action_repair_confirm(self):
+        """ Repair order state is set to 'To be invoiced' when invoice method
+        is 'Before repair' else state becomes 'Confirmed'.
+        @param *arg: Arguments
+        @return: True
+        """
+        if self.filtered(lambda repair: repair.state != 'draft'):
+            raise UserError(_("Only draft repairs can be confirmed."))
+        self._check_company()
+        self.operations._check_company()
+        self.fees_lines._check_company()
+        before_repair = self.filtered(lambda repair: repair.invoice_method == 'b4repair')
+        before_repair.write({'state': '2binvoiced'})
+        to_confirm = self - before_repair
+        to_confirm_operations = to_confirm.mapped('operations')
+        to_confirm_operations.write({'state': 'confirmed'})
+        to_confirm.write({'state': 'confirmed'})
+        return True
+
 
 
 class RMATags(models.Model):
