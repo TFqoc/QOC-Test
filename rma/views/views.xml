@@ -4,10 +4,10 @@
       <field name="name">rma.tree</field>
       <field name="model">rma.rma</field>
       <field name="arch" type="xml">
-        <tree string="Repairs order" multi_edit="1" sample="1">
+        <tree string="RMAs" multi_edit="1" sample="1">
           <field name="name" />
           <field name="product_id" readonly="1" optional="show" />
-          <!-- <field name="product_qty" optional="hide" string="Quantity"/>
+          <field name="product_qty" optional="hide" string="Quantity"/>
               <field name="product_uom" string="Unit of Measure" readonly="1" optional="hide"/>
               <field name="user_id" optional="hide" widget='many2one_avatar_user'/>
               <field name="partner_id" readonly="1" optional="show"/>
@@ -16,7 +16,7 @@
               <field name="location_id" optional="hide"/>
               <field name="company_id" groups="base.group_multi_company" readonly="1" optional="show"/>
               <field name="state" optional="show" widget='badge' decoration-success="state == 'done'" decoration-info="state not in ('done', 'cancel')"/>
-              <field name="activity_exception_decoration" widget="activity_exception"/> -->
+              <field name="activity_exception_decoration" widget="activity_exception"/>
         </tree>
       </field>
     </record>
@@ -25,7 +25,7 @@
       <field name="name">rma.form</field>
       <field name="model">rma.rma</field>
       <field name="arch" type="xml">
-        <form string="Repair Order">
+        <form string="RMA">
           <header>
             <!-- <button name="action_validate" states="draft" type="object" string="Confirm Repair" class="oe_highlight" />
             <button name="action_repair_start" attrs="{'invisible': ['&amp;', ('state','!=','confirmed'), '!', '&amp;', ('state','=','ready'), ('invoice_method','=','b4repair')]}" type="object" string="Start Repair" class="oe_highlight" />

@@ -10,7 +10,7 @@ from odoo.tools import float_compare
 class RMA(models.Model):
     _name = 'rma.rma'
     _description = 'rma.rma'
-    # _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'create_date desc'
 
     _sql_constraints = [
@@ -20,8 +20,9 @@ class RMA(models.Model):
     name = fields.Char(
         'RMA Reference',
         default='/',
-        copy=False, required=True)
+        copy=False, required=True, readonly=True)
         # states={'confirmed': [('readonly', True)]})
+    sale_id = fields.Many2one('sale.order', string='Sale Order', readonly=True)
     product_id = fields.Many2one(
         'product.product', string='Product to Repair',
         domain="[('type', 'in', ['product', 'consu']), '|', ('company_id', '=', company_id), ('company_id', '=', False)]",
