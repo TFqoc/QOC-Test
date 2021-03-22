@@ -227,7 +227,7 @@ class RMA(models.Model):
             return {
                 'name': self.product_id.display_name + _(': Insufficient Quantity To Repair'),
                 'view_mode': 'form',
-                'res_model': 'stock.warn.insufficient.qty.repair',
+                'res_model': 'stock.warn.insufficient.qty',
                 'view_id': self.env.ref('stock.stock_warn_insufficient_qty_form_view').id,
                 'type': 'ir.actions.act_window',
                 'context': {
