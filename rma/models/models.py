@@ -265,6 +265,28 @@ class RMA(models.Model):
                 'rma_id':rep.id,
             })
         return True
+    
+    def action_send_mail(self):
+        self.ensure_one()
+        template_id = self.env.ref('rma.mail_template_repair_quotation').id
+        ctx = {
+            'default_model': 'rma.rma',
+            'default_res_id': self.id,
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'custom_layout': 'mail.mail_notification_light',
+        }
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'target': 'new',
+            'context': ctx,
+        }
+
+    def print_repair_order(self):
+        return self.env.ref('rma.action_report_repair_order').report_action(self)
 
 
 

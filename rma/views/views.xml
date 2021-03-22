@@ -31,8 +31,8 @@
             <!-- <button name="action_repair_start" attrs="{'invisible': ['&amp;', ('state','!=','confirmed'), '!', '&amp;', ('state','=','ready'), ('invoice_method','=','b4repair')]}" type="object" string="Start Repair" class="oe_highlight" /> -->
             <!-- <button name="action_repair_end" states="under_repair" type="object" string="End Repair" class="oe_highlight" /> -->
             <!-- <button name="action_repair_invoice_create" type="object" string="Create Invoice" class="oe_highlight" groups="account.group_account_invoice" attrs="{'invisible': ['|', ('state', '!=', '2binvoiced'), ('invoice_id', '!=', False)]}" /> -->
-            <!-- <button name="action_send_mail" states="draft" string="Send Quotation" type="object" /> -->
-            <!-- <button name="print_repair_order" states="draft" string="Print Quotation" type="object" /> -->
+            <button name="action_send_mail" states="draft" string="Send Quotation" type="object" />
+            <button name="print_repair_order" states="draft" string="Print Quotation" type="object" />
             <!-- <button name="action_repair_cancel_draft" states="cancel" string="Set to Draft" type="object" /> -->
             <!-- <button name="action_repair_cancel" string="Cancel Repair" type="object" confirm="Draft invoices for this order will be cancelled. Do you confirm the action?" attrs="{'invisible':['|', ('state', '=', 'cancel'), ('invoice_state', '!=', 'draft')]}" /> -->
             <!-- <button name="action_repair_cancel" string="Cancel Repair" type="object" attrs="{'invisible': ['|', ('state','=', 'cancel',), ('invoice_state', '=', 'draft')]}" /> -->
@@ -79,9 +79,9 @@
                 <field name="currency_id" invisible="1" />
               </group>
             </group>
-            <notebook>
+            <!-- <notebook>
               <page string="Parts" name="parts">
-                <!-- <field name="operations" context="{'default_product_uom_qty': product_qty, 'default_company_id': company_id}">
+                <field name="operations" context="{'default_product_uom_qty': product_qty, 'default_company_id': company_id}">
                           <form string="Operations">
                               <group>
                                   <group>
@@ -128,8 +128,8 @@
                               <field name="price_subtotal" widget="monetary"/>
                               <field name="currency_id" invisible="1"/>
                           </tree>
-                      </field> -->
-                <!-- <group class="oe_subtotal_footer oe_right">
+                      </field>
+                <group class="oe_subtotal_footer oe_right">
                           <field name="amount_untaxed" sum="Untaxed amount"/>
                           <field name="amount_tax"/>
                           <div class="oe_subtotal_footer_separator oe_inline">
@@ -139,10 +139,10 @@
                           </div>
                           <field name="amount_total" nolabel="1" sum="Total amount" class="oe_subtotal_footer_separator"/>
                       </group>
-                      <div class="oe_clear"/> -->
+                      <div class="oe_clear"/>
               </page>
               <page string="Operations" name="operations">
-                <!-- <field name="fees_lines" context="{'default_company_id': company_id}">
+                <field name="fees_lines" context="{'default_company_id': company_id}">
                           <form string="Fees">
                               <group>
                                   <field name="company_id" invisible="1" force_save="1"/>
@@ -172,10 +172,10 @@
                               <field name="price_subtotal" widget="monetary"/>
                               <field name="currency_id" invisible="1"/>
                           </tree>
-                      </field> -->
+                      </field>
               </page>
               <page string="Extra Info" name="extra_info" groups="base.group_no_one">
-                <!-- <group>
+                <group>
                           <group>
                               <field name="move_id"/>
                           </group>
@@ -183,19 +183,19 @@
                               <field name="repaired"/>
                               <field name="invoiced"/>
                           </group>
-                      </group> -->
+                      </group>
               </page>
               <page string="Notes" name="notes">
                 <field name="internal_notes" placeholder="Add internal notes." />
                 <field name="quotation_notes" placeholder="Add quotation notes." />
               </page>
-            </notebook>
+            </notebook> -->
           </sheet>
-          <!-- <div class="oe_chatter">
+          <div class="oe_chatter">
                   <field name="message_follower_ids"/>
                   <field name="activity_ids"/>
                   <field name="message_ids"/>
-              </div> -->
+              </div>
         </form>
       </field>
     </record>
