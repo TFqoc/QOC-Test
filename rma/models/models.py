@@ -9,7 +9,7 @@ from odoo.tools import float_compare
 
 class RMA(models.Model):
     _name = 'rma.rma'
-    _description = 'rma.rma'
+    _description = 'RMA'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'create_date desc'
 
