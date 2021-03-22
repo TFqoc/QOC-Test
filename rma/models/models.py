@@ -6,6 +6,10 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_compare
 
+import logging
+
+_logger = logging.getLogger(__name__)
+
 
 class RMA(models.Model):
     _name = 'rma.rma'
@@ -304,7 +308,3 @@ class RMATags(models.Model):
     _sql_constraints = [
         ('name_uniq', 'unique (name)', "Tag name already exists!"),
     ]
-
-
-# stock.return.picking
-# def create_returns()

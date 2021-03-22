@@ -1,11 +1,23 @@
 from odoo import models, fields, api, _
 
+import logging
+
+_logger = logging.getLogger(__name__)
+
 class Return(models.Model):
     _inherit ='stock.return.picking'
 
     def create_returns(self):
         for wizard in self:
             new_picking_id, pick_type_id = wizard._create_returns()
+            for line in wizard.product_return_moves:
+                self.env['rma.rma'].create({
+                    'sale_id':wizard.picking_id.sale_id.id,
+                    'product_id':line.product_id.id,
+                    'product_qty':line.product_qty,
+                    'product_uom':line.uom_id.id,
+                    'partner_id':wizard.picking_id.sale_id.partner_id.id,
+                })
         # Override the context to disable all the potential filters that could have been set previously
         ctx = dict(self.env.context)
         ctx.update({
