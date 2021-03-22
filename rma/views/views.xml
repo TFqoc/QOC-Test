@@ -211,7 +211,7 @@
               <filter string="Quotations" name="quotations" domain="[('state', '=', 'draft')]"/>
               <filter string="Confirmed" domain="[('state', '=', 'confirmed')]" name="current" />
               <filter string="Ready To Repair" name="ready_to_repair" domain="[('state', '=', 'ready')]"/>
-              <separator/>
+              <!-- <separator/>
               <filter string="Invoiced" name="invoiced" domain="[('invoiced', '=', True)]"/>
               <separator/>
               <filter name="filter_create_date" date="create_date"/>
@@ -222,7 +222,7 @@
               <filter invisible="1" string="Today Activities" name="activities_today"
                   domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
               <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
-                  domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                  domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/> -->
               <group expand="0" string="Group By">
                   <filter string="Customer" name="partner" domain="[]" context="{'group_by': 'partner_id'}"/>
                   <filter string="Product" name="product" domain="[]" context="{'group_by': 'product_id'}"/>
