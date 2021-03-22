@@ -248,7 +248,7 @@ class RMA(models.Model):
             raise UserError(_("Only draft repairs can be confirmed."))
         self._check_company()
         # self.operations._check_company()
-        self.fees_lines._check_company()
+        # self.fees_lines._check_company()
         before_repair = self.filtered(lambda repair: repair.invoice_method == 'b4repair')
         before_repair.write({'state': '2binvoiced'})
         to_confirm = self - before_repair
