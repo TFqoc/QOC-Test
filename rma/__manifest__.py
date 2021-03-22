@@ -28,6 +28,7 @@
         'data/ir_sequence_data.xml',
         'report/rma_reports.xml',
         'views/mrp_views.xml',
+        'views/insufficient_qty.xml',
         'views/rma_data.xml',
         'views/views.xml',
         'views/templates.xml',
