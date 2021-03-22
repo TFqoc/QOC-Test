@@ -17,6 +17,7 @@ class RMA(models.Model):
         ('name', 'unique (name)', 'The name of the Repair Order must be unique!'),
     ]
 
+    production_id = fields.Many2one('mrp.production', readonly=True)
     name = fields.Char(
         'RMA Reference',
         default='/',
@@ -255,6 +256,14 @@ class RMA(models.Model):
         # to_confirm_operations = to_confirm.mapped('operations')
         # to_confirm_operations.write({'state': 'confirmed'})
         to_confirm.write({'state': 'confirmed'})
+        # Create MO to do the repair work
+        for rep in to_confirm:
+            rep.production_id = self.env['mrp.production'].create({
+                'product_id':rep.product_id.id,
+                'product_qty':rep.product_qty,
+                'product_uom_id':rep.product_uom.id,
+                'rma_id':rep.id,
+            })
         return True
 
 
