@@ -290,7 +290,7 @@ class RMA(models.Model):
                     'production_id': rep.production_id.id,
                 }
                 ids.append(self.env['stock.move'].create(vals).id)
-            rep.production_id.move_raw_ids = (6,0,ids)
+            rep.production_id.move_raw_ids = [(6,0,ids)]
         return True
     
     def action_send_mail(self):
