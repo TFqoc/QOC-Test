@@ -240,6 +240,9 @@ class RMA(models.Model):
                 'target': 'new'
             }
 
+    def button_dummy(self):
+        # TDE FIXME: this button is very interesting
+        return True
     def action_repair_confirm(self):
         """ Repair order state is set to 'To be invoiced' when invoice method
         is 'Before repair' else state becomes 'Confirmed'.
