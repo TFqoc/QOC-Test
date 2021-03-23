@@ -277,6 +277,7 @@ class RMA(models.Model):
             # product_uom
             # product_uom_qty
             # date (date scheduled)
+            ids = []
             for op in rep.operations:
                 vals = {
                     'name':'operation',
@@ -288,7 +289,8 @@ class RMA(models.Model):
                     'date':datetime.datetime.now(),
                     'production_id': rep.production_id.id,
                 }
-                self.env['stock.move'].create(vals)
+                ids.append(self.env['stock.move'].create(vals).id)
+            rep.production_id.move_raw_ids = (6,0,ids)
         return True
     
     def action_send_mail(self):
