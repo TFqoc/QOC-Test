@@ -125,7 +125,7 @@ class RMA(models.Model):
     def _amount_untaxed(self):
         for order in self:
             total = sum(operation.price_subtotal for operation in order.operations)
-            total += sum(fee.price_subtotal for fee in order.fees_lines)
+            # total += sum(fee.price_subtotal for fee in order.fees_lines)
             order.amount_untaxed = order.pricelist_id.currency_id.round(total)
 
     @api.depends('operations.price_unit', 'operations.product_uom_qty', 'operations.product_id',
@@ -139,11 +139,11 @@ class RMA(models.Model):
                     tax_calculate = operation.tax_id.compute_all(operation.price_unit, order.pricelist_id.currency_id, operation.product_uom_qty, operation.product_id, order.partner_id)
                     for c in tax_calculate['taxes']:
                         val += c['amount']
-            for fee in order.fees_lines:
-                if fee.tax_id:
-                    tax_calculate = fee.tax_id.compute_all(fee.price_unit, order.pricelist_id.currency_id, fee.product_uom_qty, fee.product_id, order.partner_id)
-                    for c in tax_calculate['taxes']:
-                        val += c['amount']
+            # for fee in order.fees_lines:
+            #     if fee.tax_id:
+            #         tax_calculate = fee.tax_id.compute_all(fee.price_unit, order.pricelist_id.currency_id, fee.product_uom_qty, fee.product_id, order.partner_id)
+            #         for c in tax_calculate['taxes']:
+            #             val += c['amount']
             order.amount_tax = val
 
     @api.depends('amount_untaxed', 'amount_tax')
