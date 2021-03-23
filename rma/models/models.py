@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
 from random import randint
+import datetime
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
@@ -284,7 +285,7 @@ class RMA(models.Model):
                     'product_id':op.product_id.id,
                     'product_uom':op.product_uom.id,
                     'product_uom_qty':op.product_uom_qty,
-                    'date':False,
+                    'date':datetime.datetime.now(),
                     'production_id': rep.production_id.id,
                 }
                 self.env['stock.move'].create(vals)
