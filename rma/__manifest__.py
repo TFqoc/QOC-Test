@@ -29,6 +29,7 @@
         'report/rma_reports.xml',
         'views/mrp_views.xml',
         'views/insufficient_qty.xml',
+        'report/repair_templates_repair_order.xml',
         'views/rma_data.xml',
         'views/views.xml',
         'views/templates.xml',
