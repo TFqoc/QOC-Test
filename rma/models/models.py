@@ -72,9 +72,9 @@ class RMA(models.Model):
         domain="[('product_id','=', product_id), ('company_id', '=', company_id)]", check_company=True,
         help="Products repaired are all belonging to this lot")
     guarantee_limit = fields.Date('Warranty Expiration', states={'confirmed': [('readonly', True)]})
-    # operations = fields.One2many(
-    #     'repair.line', 'repair_id', 'Parts',
-    #     copy=True, readonly=True, states={'draft': [('readonly', False)]})
+    operations = fields.One2many(
+        'rma.line', 'repair_id', 'Parts',
+        copy=True, readonly=True, states={'draft': [('readonly', False)]})
     pricelist_id = fields.Many2one(
         'product.pricelist', 'Pricelist',
         default=lambda self: self.env['product.pricelist'].search([('company_id', 'in', [self.env.company.id, False])], limit=1).id,
@@ -305,6 +305,143 @@ class RMATags(models.Model):
     _sql_constraints = [
         ('name_uniq', 'unique (name)', "Tag name already exists!"),
     ]
+
+class RepairLine(models.Model):
+    _name = 'rma.line'
+    _description = 'RMA Line (parts)'
+
+    name = fields.Text('Description', required=True)
+    repair_id = fields.Many2one(
+        'rma.rma', 'Repair Order Reference', required=True,
+        index=True, ondelete='cascade', check_company=True)
+    company_id = fields.Many2one(
+        related='repair_id.company_id', store=True, index=True)
+    currency_id = fields.Many2one(
+        related='repair_id.currency_id')
+    type = fields.Selection([
+        ('add', 'Add'),
+        ('remove', 'Remove')], 'Type', default='add', required=True)
+    product_id = fields.Many2one(
+        'product.product', 'Product', required=True, check_company=True,
+        domain="[('type', 'in', ['product', 'consu']), '|', ('company_id', '=', company_id), ('company_id', '=', False)]")
+    # invoiced = fields.Boolean('Invoiced', copy=False, readonly=True)
+    price_unit = fields.Float('Unit Price', required=True, digits='Product Price')
+    price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
+    tax_id = fields.Many2many(
+        'account.tax', 'repair_operation_line_tax', 'repair_operation_line_id', 'tax_id', 'Taxes',
+        domain="[('type_tax_use','=','sale'), ('company_id', '=', company_id)]", check_company=True)
+    product_uom_qty = fields.Float(
+        'Quantity', default=1.0,
+        digits='Product Unit of Measure', required=True)
+    product_uom = fields.Many2one(
+        'uom.uom', 'Product Unit of Measure',
+        required=True, domain="[('category_id', '=', product_uom_category_id)]")
+    product_uom_category_id = fields.Many2one(related='product_id.uom_id.category_id')
+    # invoice_line_id = fields.Many2one(
+    #     'account.move.line', 'Invoice Line',
+    #     copy=False, readonly=True, check_company=True)
+    location_id = fields.Many2one(
+        'stock.location', 'Source Location',
+        index=True, required=True, check_company=True)
+    location_dest_id = fields.Many2one(
+        'stock.location', 'Dest. Location',
+        index=True, required=True, check_company=True)
+    move_id = fields.Many2one(
+        'stock.move', 'Inventory Move',
+        copy=False, readonly=True)
+    lot_id = fields.Many2one(
+        'stock.production.lot', 'Lot/Serial',
+        domain="[('product_id','=', product_id), ('company_id', '=', company_id)]", check_company=True)
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('confirmed', 'Confirmed'),
+        ('done', 'Done'),
+        ('cancel', 'Cancelled')], 'Status', default='draft',
+        copy=False, readonly=True, required=True,
+        help='The status of a repair line is set automatically to the one of the linked repair order.')
+
+    @api.constrains('lot_id', 'product_id')
+    def constrain_lot_id(self):
+        for line in self.filtered(lambda x: x.product_id.tracking != 'none' and not x.lot_id):
+            raise ValidationError(_("Serial number is required for operation line with product '%s'") % (line.product_id.name))
+
+    @api.depends('price_unit', 'repair_id', 'product_uom_qty', 'product_id', 'repair_id.invoice_method')
+    def _compute_price_subtotal(self):
+        for line in self:
+            taxes = line.tax_id.compute_all(line.price_unit, line.repair_id.pricelist_id.currency_id, line.product_uom_qty, line.product_id, line.repair_id.partner_id)
+            line.price_subtotal = taxes['total_excluded']
+
+    @api.onchange('type')
+    def onchange_operation_type(self):
+        """ On change of operation type it sets source location, destination location
+        and to invoice field.
+        @param product: Changed operation type.
+        @param guarantee_limit: Guarantee limit of current record.
+        @return: Dictionary of values.
+        """
+        if not self.type:
+            self.location_id = False
+            self.location_dest_id = False
+        elif self.type == 'add':
+            self.onchange_product_id()
+            args = self.repair_id.company_id and [('company_id', '=', self.repair_id.company_id.id)] or []
+            warehouse = self.env['stock.warehouse'].search(args, limit=1)
+            self.location_id = warehouse.lot_stock_id
+            self.location_dest_id = self.env['stock.location'].search([('usage', '=', 'production'), ('company_id', '=', self.repair_id.company_id.id)], limit=1)
+        else:
+            self.price_unit = 0.0
+            self.tax_id = False
+            self.location_id = self.env['stock.location'].search([('usage', '=', 'production')], limit=1).id
+            self.location_dest_id = self.env['stock.location'].search([('scrap_location', '=', True), ('company_id', 'in', [self.repair_id.company_id.id, False])], limit=1).id
+
+    @api.onchange('repair_id', 'product_id', 'product_uom_qty')
+    def onchange_product_id(self):
+        """ On change of product it sets product quantity, tax account, name,
+        uom of product, unit price and price subtotal. """
+        if not self.product_id or not self.product_uom_qty:
+            return
+        self = self.with_company(self.company_id)
+        partner = self.repair_id.partner_id
+        partner_invoice = self.repair_id.partner_invoice_id or partner
+        if partner:
+            self = self.with_context(lang=partner.lang)
+        product = self.product_id
+        self.name = product.display_name
+        if product.description_sale:
+            if partner:
+                self.name += '\n' + self.product_id.with_context(lang=partner.lang).description_sale
+            else:
+                self.name += '\n' + self.product_id.description_sale
+        self.product_uom = product.uom_id.id
+        if self.type != 'remove':
+            if partner:
+                fpos = self.env['account.fiscal.position'].get_fiscal_position(partner_invoice.id, delivery_id=self.repair_id.address_id.id)
+                self.tax_id = fpos.map_tax(self.product_id.taxes_id, self.product_id, partner)
+            warning = False
+            pricelist = self.repair_id.pricelist_id
+            if not pricelist:
+                warning = {
+                    'title': _('No pricelist found.'),
+                    'message':
+                        _('You have to select a pricelist in the Repair form !\n Please set one before choosing a product.')}
+                return {'warning': warning}
+            else:
+                self._onchange_product_uom()
+
+    @api.onchange('product_uom')
+    def _onchange_product_uom(self):
+        partner = self.repair_id.partner_id
+        pricelist = self.repair_id.pricelist_id
+        if pricelist and self.product_id and self.type != 'remove':
+            price = pricelist.get_product_price(self.product_id, self.product_uom_qty, partner, uom_id=self.product_uom.id)
+            if price is False:
+                warning = {
+                    'title': _('No valid pricelist line found.'),
+                    'message':
+                        _("Couldn't find a pricelist line matching this product and quantity.\nYou have to change either the product, the quantity or the pricelist.")}
+                return {'warning': warning}
+            else:
+                self.price_unit = price
 
 class StockWarnInsufficientQtyRepair(models.TransientModel):
     _name = 'stock.warn.insufficient.qty.rma'
