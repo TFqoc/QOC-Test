@@ -236,7 +236,7 @@
 
 
     <record id="action_repair_order_tree" model="ir.actions.act_window">
-      <field name="name">Repair Orders</field>
+      <field name="name">RMAs</field>
       <field name="type">ir.actions.act_window</field>
       <field name="res_model">rma.rma</field>
       <field name="view_mode">tree,form</field>
