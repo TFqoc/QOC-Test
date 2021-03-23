@@ -369,9 +369,9 @@ class RepairLine(models.Model):
     location_dest_id = fields.Many2one(
         'stock.location', 'Dest. Location',
         index=True, required=True, check_company=True)
-    # move_id = fields.Many2one(
-    #     'stock.move', 'Inventory Move',
-    #     copy=False, readonly=True)
+    move_id = fields.Many2one(
+        'stock.move', 'Inventory Move',
+        copy=False, readonly=True)
     lot_id = fields.Many2one(
         'stock.production.lot', 'Lot/Serial',
         domain="[('product_id','=', product_id), ('company_id', '=', company_id)]", check_company=True)
