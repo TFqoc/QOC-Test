@@ -262,12 +262,32 @@ class RMA(models.Model):
         to_confirm.write({'state': 'confirmed'})
         # Create MO to do the repair work
         for rep in to_confirm:
-            rep.production_id = self.env['mrp.production'].create({
+            rep.production_id = self.env['mrp.production'].sudo().create({
                 'product_id':rep.product_id.id,
                 'product_qty':rep.product_qty,
                 'product_uom_id':rep.product_uom.id,
                 'rma_id':rep.id,
             })
+            ## Set stock.moves for the new MO
+            # location_dest_id (destination)
+            # location_id (source)
+            # name
+            # product_id
+            # product_uom
+            # product_uom_qty
+            # date (date scheduled)
+            for op in rep.operations:
+                vals = {
+                    'name':'operation',
+                    'location_dest_id':op.location_dest_id.id,
+                    'location_id':op.location_id.id,
+                    'product_id':op.product_id.id,
+                    'product_uom':op.product_uom.id,
+                    'product_uom_qty':op.product_uom_qty,
+                    'date':False,
+                    'production_id': rep.production_id.id,
+                }
+                self.env['stock.move'].create(vals)
         return True
     
     def action_send_mail(self):
@@ -349,9 +369,9 @@ class RepairLine(models.Model):
     location_dest_id = fields.Many2one(
         'stock.location', 'Dest. Location',
         index=True, required=True, check_company=True)
-    move_id = fields.Many2one(
-        'stock.move', 'Inventory Move',
-        copy=False, readonly=True)
+    # move_id = fields.Many2one(
+    #     'stock.move', 'Inventory Move',
+    #     copy=False, readonly=True)
     lot_id = fields.Many2one(
         'stock.production.lot', 'Lot/Serial',
         domain="[('product_id','=', product_id), ('company_id', '=', company_id)]", check_company=True)
