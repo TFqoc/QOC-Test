@@ -109,9 +109,9 @@ class RMA(models.Model):
     tag_ids = fields.Many2many('rma.tags', string="Tags")
     invoiced = fields.Boolean('Invoiced', copy=False, readonly=True)
     repaired = fields.Boolean('Repaired', copy=False, readonly=True)
-    # amount_untaxed = fields.Float('Untaxed Amount', compute='_amount_untaxed', store=True)
-    # amount_tax = fields.Float('Taxes', compute='_amount_tax', store=True)
-    # amount_total = fields.Float('Total', compute='_amount_total', store=True)
+    amount_untaxed = fields.Float('Untaxed Amount', compute='_amount_untaxed', store=True)
+    amount_tax = fields.Float('Taxes', compute='_amount_tax', store=True)
+    amount_total = fields.Float('Total', compute='_amount_total', store=True)
     tracking = fields.Selection(string='Product Tracking', related="product_id.tracking", readonly=False)
     invoice_state = fields.Selection(string='Invoice State', related='invoice_id.state')
 
@@ -121,35 +121,35 @@ class RMA(models.Model):
             if order.partner_id:
                 order.default_address_id = order.partner_id.address_get(['contact'])['contact']
 
-    # @api.depends('operations.price_subtotal', 'invoice_method', 'fees_lines.price_subtotal', 'pricelist_id.currency_id')
-    # def _amount_untaxed(self):
-    #     for order in self:
-    #         total = sum(operation.price_subtotal for operation in order.operations)
-    #         total += sum(fee.price_subtotal for fee in order.fees_lines)
-    #         order.amount_untaxed = order.pricelist_id.currency_id.round(total)
+    @api.depends('operations.price_subtotal', 'invoice_method', 'fees_lines.price_subtotal', 'pricelist_id.currency_id')
+    def _amount_untaxed(self):
+        for order in self:
+            total = sum(operation.price_subtotal for operation in order.operations)
+            total += sum(fee.price_subtotal for fee in order.fees_lines)
+            order.amount_untaxed = order.pricelist_id.currency_id.round(total)
 
-    # @api.depends('operations.price_unit', 'operations.product_uom_qty', 'operations.product_id',
-    #              'fees_lines.price_unit', 'fees_lines.product_uom_qty', 'fees_lines.product_id',
-    #              'pricelist_id.currency_id', 'partner_id')
-    # def _amount_tax(self):
-    #     for order in self:
-    #         val = 0.0
-    #         for operation in order.operations:
-    #             if operation.tax_id:
-    #                 tax_calculate = operation.tax_id.compute_all(operation.price_unit, order.pricelist_id.currency_id, operation.product_uom_qty, operation.product_id, order.partner_id)
-    #                 for c in tax_calculate['taxes']:
-    #                     val += c['amount']
-    #         for fee in order.fees_lines:
-    #             if fee.tax_id:
-    #                 tax_calculate = fee.tax_id.compute_all(fee.price_unit, order.pricelist_id.currency_id, fee.product_uom_qty, fee.product_id, order.partner_id)
-    #                 for c in tax_calculate['taxes']:
-    #                     val += c['amount']
-    #         order.amount_tax = val
+    @api.depends('operations.price_unit', 'operations.product_uom_qty', 'operations.product_id',
+                 'fees_lines.price_unit', 'fees_lines.product_uom_qty', 'fees_lines.product_id',
+                 'pricelist_id.currency_id', 'partner_id')
+    def _amount_tax(self):
+        for order in self:
+            val = 0.0
+            for operation in order.operations:
+                if operation.tax_id:
+                    tax_calculate = operation.tax_id.compute_all(operation.price_unit, order.pricelist_id.currency_id, operation.product_uom_qty, operation.product_id, order.partner_id)
+                    for c in tax_calculate['taxes']:
+                        val += c['amount']
+            for fee in order.fees_lines:
+                if fee.tax_id:
+                    tax_calculate = fee.tax_id.compute_all(fee.price_unit, order.pricelist_id.currency_id, fee.product_uom_qty, fee.product_id, order.partner_id)
+                    for c in tax_calculate['taxes']:
+                        val += c['amount']
+            order.amount_tax = val
 
-    # @api.depends('amount_untaxed', 'amount_tax')
-    # def _amount_total(self):
-    #     for order in self:
-    #         order.amount_total = order.pricelist_id.currency_id.round(order.amount_untaxed + order.amount_tax)
+    @api.depends('amount_untaxed', 'amount_tax')
+    def _amount_total(self):
+        for order in self:
+            order.amount_total = order.pricelist_id.currency_id.round(order.amount_untaxed + order.amount_tax)
 
     @api.onchange('product_id')
     def onchange_product_id(self):
