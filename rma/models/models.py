@@ -269,7 +269,7 @@ class RMA(models.Model):
     
     def action_send_mail(self):
         self.ensure_one()
-        template_id = self.env.ref('rma.mail_template_repair_quotation').id
+        template_id = self.env.ref('rma.mail_template_rma').id
         ctx = {
             'default_model': 'rma.rma',
             'default_res_id': self.id,
