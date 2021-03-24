@@ -295,6 +295,7 @@ class RMA(models.Model):
                     'product_uom_qty':op.product_uom_qty,
                     'date':datetime.datetime.now(),
                     'production_id': rep.production_id.id,
+                    'picking_type_id': rep.picking_type_id,
                 }
                 ids.append(self.env['stock.move'].create(vals).id)
             rep.production_id.move_raw_ids = [(6,0,ids)]
