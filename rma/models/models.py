@@ -298,6 +298,13 @@ class RMA(models.Model):
                 }
                 ids.append(self.env['stock.move'].create(vals).id)
             rep.production_id.move_raw_ids = [(6,0,ids)]
+
+            (rep.production_id.move_raw_ids | rep.production_id.move_finished_ids).write({
+            'group_id': rep.production_id.procurement_group_id.id,
+            'origin': rep.production_id.name
+            })
+            rep.production_id.move_raw_ids.write({'date': rep.production_id.date_planned_start})
+            rep.production_id.move_finished_ids.write({'date': rep.production_id.date_planned_finished})
         return True
     
     def action_send_mail(self):
