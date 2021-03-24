@@ -17,6 +17,7 @@ class Return(models.TransientModel):
                     'location_id':wizard.location_id.id,
                     'product_uom':line.uom_id.id,
                     'partner_id':wizard.picking_id.sale_id.partner_id.id,
+                    'product_qty':1,
                 })
         # Override the context to disable all the potential filters that could have been set previously
         ctx = dict(self.env.context)
