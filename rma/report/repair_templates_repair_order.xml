@@ -91,7 +91,7 @@
                                     </t>
                                 </tr>
                             </t>
-                            <t t-if="o.fees_lines">
+                            <!-- <t t-if="o.fees_lines">
                                 <tr class="bg-200 o_line_section"><td colspan="5"><strong>Operations</strong></td></tr>
                                 <tr t-foreach="o.fees_lines" t-as="fees">
                                     <td>
@@ -114,7 +114,7 @@
                                        </td>
                                     </t>
                                 </tr>
-                            </t>
+                            </t> -->
                         </tbody>
                     </table>
 
