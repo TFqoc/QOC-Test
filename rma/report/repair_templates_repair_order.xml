@@ -59,7 +59,7 @@
                             <tr>
                                 <th>Description</th>
                                 <th class="text-right">Quantity</th>
-                                <t t-if="o.invoice_method != 'none'">
+                                <t t-if="o.invoice_method != 'none' or True">
                                     <th class="text-right">Unit Price</th>
                                     <th class="text-center">Tax</th>
                                     <th class="text-right">Price</th>
