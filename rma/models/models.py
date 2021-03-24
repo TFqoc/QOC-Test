@@ -496,3 +496,8 @@ class StockWarnInsufficientQtyRepair(models.TransientModel):
     def action_done(self):
         self.ensure_one()
         return self.repair_id.action_repair_confirm()
+
+class StockMove(models.Model):
+    _inherit = 'stock.move'
+
+    forecast_availability = fields.Float('Forcast Availability', compute='_compute_forecast_information', digits='Product Unit of Measure', store=True)
