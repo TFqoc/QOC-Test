@@ -78,7 +78,7 @@
                                         <span t-field="line.product_uom_qty"/>
                                         <span groups="uom.group_uom" t-field="line.product_uom.name"/>
                                     </td>
-                                    <t t-if="(line.repair_id.invoice_method != 'none')">
+                                    <t t-if="(line.repair_id.invoice_method != 'none') or True">
                                         <td class="text-right">
                                             <span t-field="line.price_unit"/>
                                         </td>
