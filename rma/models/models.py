@@ -116,6 +116,13 @@ class RMA(models.Model):
     tracking = fields.Selection(string='Product Tracking', related="product_id.tracking", readonly=False)
     invoice_state = fields.Selection(string='Invoice State', related='invoice_id.state')
 
+    @api.onchange('state')
+    def change_state(self):
+        if self.state == 'done':
+            quants = self.location_id.quant_ids.filtered(lambda x: x.product_id == self.product_id)
+            for q in quants:
+                q.quantity -= self.product_qty
+
     @api.depends('partner_id')
     def _compute_default_address_id(self):
         for order in self:
