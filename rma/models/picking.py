@@ -46,4 +46,4 @@ class Return(models.TransientModel):
 class Picking(models.Model):
     _inherit = 'stock.picking'
 
-    rma_ids = fields.One2many('rma.rma')
+    rma_ids = fields.Many2many('rma.rma')
