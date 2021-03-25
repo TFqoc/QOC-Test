@@ -10,15 +10,19 @@ class Return(models.TransientModel):
     def create_returns(self):
         for wizard in self:
             new_picking_id, pick_type_id = wizard._create_returns()
-            for line in wizard.product_return_moves:
-                self.env['rma.rma'].create({
-                    'sale_id':wizard.picking_id.sale_id.id,
-                    'product_id':line.product_id.id,
-                    'location_id':wizard.location_id.id,
-                    'product_uom':line.uom_id.id,
-                    'partner_id':wizard.picking_id.sale_id.partner_id.id,
-                    'product_qty':line.quantity,
-                })
+            if wizard.picking_id.code == 'outgoing':
+                for line in wizard.product_return_moves:
+                    rma = self.env['rma.rma'].create({
+                        'sale_id':wizard.picking_id.sale_id.id,
+                        'product_id':line.product_id.id,
+                        'location_id':wizard.location_id.id,
+                        'product_uom':line.uom_id.id,
+                        'partner_id':wizard.picking_id.sale_id.partner_id.id,
+                        'product_qty':line.quantity,
+                        'initial_return_picking':new_picking_id,
+                        # 'ship_picking':1,
+                    })
+                    wizard.picking_id.rma_ids = [(4,rma.id,0)]
         # Override the context to disable all the potential filters that could have been set previously
         ctx = dict(self.env.context)
         ctx.update({
@@ -38,3 +42,8 @@ class Return(models.TransientModel):
             'type': 'ir.actions.act_window',
             'context': ctx,
         }
+
+class Picking(models.Model):
+    _inherit = 'stock.picking'
+
+    rma_ids = fields.One2many('rma.rma')

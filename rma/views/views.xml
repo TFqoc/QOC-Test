@@ -47,6 +47,10 @@
                   <span class="o_stat_text">Invoices</span>
                 </div>
               </button> -->
+              <button class="oe_stat_button" type="object" name="get_deliveries"
+                        icon="fa-car">
+                        <field string="Deliveries" name="delivery_count" widget="statinfo"/>
+                    </button>
             </div>
             <label for="name" />
             <h1>

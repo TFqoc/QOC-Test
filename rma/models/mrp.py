@@ -1,5 +1,5 @@
 from odoo import models, fields, api, _
-from odoo.tools import float_round
+
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -9,11 +9,9 @@ class MRP(models.Model):
     rma_id = fields.Many2one('rma.rma', readonly=True)
 
     def complete_rma(self):
-        _logger.info("STATE: "+ str(self.state))
         if self.state == 'done' and self.rma_id:
             self.rma_id.state = 'done'
-            _logger.info("RMA STATE: "+ str(self.rma_id.state))
-
+            self.rma_id.ship_repair()
 
     def button_mark_done(self):
         self._button_mark_done_sanity_checks()
@@ -93,5 +91,3 @@ class MRP(models.Model):
                 'view_mode': 'tree,form',
             })
         return action
-    
-    #TODO don't produce the product if we have an RMA attached

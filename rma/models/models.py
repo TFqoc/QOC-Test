@@ -21,6 +21,9 @@ class RMA(models.Model):
         ('name', 'unique (name)', 'The name of the Repair Order must be unique!'),
     ]
 
+    initial_return_picking = fields.Many2one('stock.picking', readonly=True)
+    ship_picking = fields.Many2one('stock.picking', readonly=True)
+
     production_id = fields.Many2one('mrp.production', readonly=True)
     name = fields.Char(
         'RMA Reference',
@@ -117,6 +120,28 @@ class RMA(models.Model):
     amount_total = fields.Float('Total', compute='_amount_total', store=True)
     tracking = fields.Selection(string='Product Tracking', related="product_id.tracking", readonly=False)
     invoice_state = fields.Selection(string='Invoice State', related='invoice_id.state')
+
+    delivery_count = fields.Integer(compute="_compute_deliveries")
+
+    def _compute_deliveries(self):
+        for record in self:
+            record.delivery_count = self.env['stock.picking'].search_count([('rma_id', '=', record.id)])
+    
+    def get_deliveries(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Deliveries',
+            'view_mode': 'tree',
+            'res_model': 'stock.picking',
+            'domain': [('rma_id', '=', self.id)],
+            'context': "{'create': False}"
+        }
+
+    def ship_repair(self):
+        # Called when MO is compeleted from mrp.production model
+        # TODO Create delivery on this model
+        pass
 
     @api.onchange('state')
     def change_state(self):
