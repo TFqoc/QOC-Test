@@ -222,6 +222,7 @@ class RMA(models.Model):
 
     def action_validate(self):
         self.ensure_one()
+        
         # if self.filtered(lambda repair: any(op.product_uom_qty < 0 for op in repair.operations)):
         #     raise UserError(_("You can not enter negative quantities."))
         if self.product_id.type == 'consu':
