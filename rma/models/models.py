@@ -125,7 +125,7 @@ class RMA(models.Model):
 
     def _compute_deliveries(self):
         for record in self:
-            record.delivery_count = self.env['stock.picking'].search_count([('rma_id', 'in', record.id)])
+            record.delivery_count = self.env['stock.picking'].search_count([('rma_ids', '=', record.id)])
     
     def get_deliveries(self):
         self.ensure_one()
@@ -134,7 +134,7 @@ class RMA(models.Model):
             'name': 'Deliveries',
             'view_mode': 'tree',
             'res_model': 'stock.picking',
-            'domain': [('rma_id', 'in', self.id)],
+            'domain': [('rma_ids', '=', self.id)],
             'context': "{'create': False}"
         }
 
