@@ -14,6 +14,7 @@ class MRP(models.Model):
             self.rma_id.state = 'done'
             _logger.info("RMA STATE: "+ str(self.rma_id.state))
 
+
     def button_mark_done(self):
         self._button_mark_done_sanity_checks()
 
