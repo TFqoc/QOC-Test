@@ -137,6 +137,7 @@ class RMA(models.Model):
             'domain': [('rma_id', 'ilike', self.id)],
             'context': "{'create': False}"
         }
+        
 
     def ship_repair(self):
         # Called when MO is compeleted from mrp.production model
