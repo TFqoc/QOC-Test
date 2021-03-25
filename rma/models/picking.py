@@ -10,7 +10,7 @@ class Return(models.TransientModel):
     def create_returns(self):
         for wizard in self:
             new_picking_id, pick_type_id = wizard._create_returns()
-            if wizard.pick_type_id.code == 'outgoing':
+            if pick_type_id.code == 'outgoing':
                 for line in wizard.product_return_moves:
                     rma = self.env['rma.rma'].create({
                         'sale_id':wizard.picking_id.sale_id.id,
