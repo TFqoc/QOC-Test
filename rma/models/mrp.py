@@ -1,5 +1,7 @@
 from odoo import models, fields, api
 from odoo.tools import float_round
+import logging
+_logger = logging.getLogger(__name__)
 
 class MRP(models.Model):
     _inherit = 'mrp.production'
@@ -8,8 +10,10 @@ class MRP(models.Model):
 
     @api.onchange('state')
     def change_state(self):
+        _logger.info("STATE: "+ str(self.state))
         if self.state == 'done' and self.rma_id:
             self.rma_id.state = 'done'
+            _logger.info("RMA STATE: "+ str(self.rma_id.state))
 
     def button_mark_done(self):
         self._button_mark_done_sanity_checks()
