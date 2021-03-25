@@ -21,8 +21,8 @@ class RMA(models.Model):
         ('name', 'unique (name)', 'The name of the Repair Order must be unique!'),
     ]
 
-    initial_return_picking = fields.Many2one('stock.picking', readonly=True)
-    ship_picking = fields.Many2one('stock.picking', readonly=True)
+    shipment = fields.Many2one('stock.picking', readonly=True)
+    in_picking = fields.Many2one('stock.picking', readonly=True)
 
     production_id = fields.Many2one('mrp.production', readonly=True)
     name = fields.Char(
@@ -142,7 +142,12 @@ class RMA(models.Model):
     def ship_repair(self):
         # Called when MO is compeleted from mrp.production model
         # TODO Create delivery on this model
-        pass
+        self.shipment = self.env['stock.picking'].create({
+            'location_dest_id':self.env['stock.location']._name_search("Partner Locations/Customers"),
+            'location_id':self.location_id,
+            'move_type':'direct',
+            # 'picking_type_id':'',
+        })
 
     @api.onchange('state')
     def change_state(self):
@@ -288,6 +293,8 @@ class RMA(models.Model):
         """
         if self.filtered(lambda repair: repair.state != 'draft'):
             raise UserError(_("Only draft repairs can be confirmed."))
+        if self.in_picking.state != 'done':
+            raise UserError("The product to repair has not been recieved yet!")
         self._check_company()
         # self.operations._check_company()
         # self.fees_lines._check_company()

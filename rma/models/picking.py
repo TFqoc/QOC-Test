@@ -19,10 +19,10 @@ class Return(models.TransientModel):
                         'product_uom':line.uom_id.id,
                         'partner_id':wizard.picking_id.sale_id.partner_id.id,
                         'product_qty':line.quantity,
-                        'initial_return_picking':new_picking_id,
+                        'in_picking':new_picking_id,
                         # 'ship_picking':1,
                     })
-                    wizard.picking_id.rma_ids = [(4,rma.id,0)]
+                    # wizard.picking_id.rma_ids = [(4,rma.id,0)]
         # Override the context to disable all the potential filters that could have been set previously
         ctx = dict(self.env.context)
         ctx.update({
