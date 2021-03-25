@@ -11,31 +11,82 @@ class MRP(models.Model):
         if self.state == 'done' and self.rma_id:
             self.rma_id.state = 'done'
 
-    # def _post_inventory(self, cancel_backorder=False):
-    #     if self.rma_id:
-    #         return True
-    #     for order in self:
-    #         moves_not_to_do = order.move_raw_ids.filtered(lambda x: x.state == 'done')
-    #         moves_to_do = order.move_raw_ids.filtered(lambda x: x.state not in ('done', 'cancel'))
-    #         for move in moves_to_do.filtered(lambda m: m.product_qty == 0.0 and m.quantity_done > 0):
-    #             move.product_uom_qty = move.quantity_done
-    #         # MRP do not merge move, catch the result of _action_done in order
-    #         # to get extra moves.
-    #         moves_to_do = moves_to_do._action_done()
-    #         moves_to_do = order.move_raw_ids.filtered(lambda x: x.state == 'done') - moves_not_to_do
+    def button_mark_done(self):
+        self._button_mark_done_sanity_checks()
 
-    #         finish_moves = order.move_finished_ids.filtered(lambda m: m.product_id == order.product_id and m.state not in ('done', 'cancel'))
-    #         # the finish move can already be completed by the workorder.
-    #         if not finish_moves.quantity_done:
-    #             finish_moves.quantity_done = float_round(order.qty_producing - order.qty_produced, precision_rounding=order.product_uom_id.rounding, rounding_method='HALF-UP')
-    #             finish_moves.move_line_ids.lot_id = order.lot_producing_id
-    #         order._cal_price(moves_to_do)
+        if not self.env.context.get('button_mark_done_production_ids'):
+            self = self.with_context(button_mark_done_production_ids=self.ids)
+        res = self._pre_button_mark_done()
+        if res is not True:
+            return res
 
-    #         moves_to_finish = order.move_finished_ids.filtered(lambda x: x.state not in ('done', 'cancel'))
-    #         moves_to_finish = moves_to_finish._action_done(cancel_backorder=cancel_backorder)
-    #         order.action_assign()
-    #         consume_move_lines = moves_to_do.mapped('move_line_ids')
-    #         order.move_finished_ids.move_line_ids.consume_line_ids = [(6, 0, consume_move_lines.ids)]
-    #     return True
+        if self.env.context.get('mo_ids_to_backorder'):
+            productions_to_backorder = self.browse(self.env.context['mo_ids_to_backorder'])
+            productions_not_to_backorder = self - productions_to_backorder
+        else:
+            productions_not_to_backorder = self
+            productions_to_backorder = self.env['mrp.production']
+
+        self.workorder_ids.button_finish()
+
+        productions_not_to_backorder._post_inventory(cancel_backorder=True)
+        productions_to_backorder._post_inventory(cancel_backorder=False)
+        backorders = productions_to_backorder._generate_backorder_productions()
+
+        # if completed products make other confirmed/partially_available moves available, assign them
+        done_move_finished_ids = (productions_to_backorder.move_finished_ids | productions_not_to_backorder.move_finished_ids).filtered(lambda m: m.state == 'done')
+        done_move_finished_ids._trigger_assign()
+
+        # Moves without quantity done are not posted => set them as done instead of canceling. In
+        # case the user edits the MO later on and sets some consumed quantity on those, we do not
+        # want the move lines to be canceled.
+        (productions_not_to_backorder.move_raw_ids | productions_not_to_backorder.move_finished_ids).filtered(lambda x: x.state not in ('done', 'cancel')).write({
+            'state': 'done',
+            'product_uom_qty': 0.0,
+        })
+
+        for production in self:
+            production.write({
+                'date_finished': fields.Datetime.now(),
+                'product_qty': production.qty_produced if not production.rma_id else production.rma_id.product_qty,
+                'priority': '0',
+                'is_locked': True,
+            })
+
+        for workorder in self.workorder_ids.filtered(lambda w: w.state not in ('done', 'cancel')):
+            workorder.duration_expected = workorder._get_duration_expected()
+
+        if not backorders:
+            if self.env.context.get('from_workorder'):
+                return {
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'mrp.production',
+                    'views': [[self.env.ref('mrp.mrp_production_form_view').id, 'form']],
+                    'res_id': self.id,
+                    'target': 'main',
+                }
+            return True
+        context = self.env.context.copy()
+        context = {k: v for k, v in context.items() if not k.startswith('default_')}
+        for k, v in context.items():
+            if k.startswith('skip_'):
+                context[k] = False
+        action = {
+            'res_model': 'mrp.production',
+            'type': 'ir.actions.act_window',
+            'context': dict(context, mo_ids_to_backorder=None)
+        }
+        if len(backorders) == 1:
+            action.update({
+                'view_mode': 'form',
+                'res_id': backorders[0].id,
+            })
+        else:
+            action.update({
+                'name': _("Backorder MO"),
+                'domain': [('id', 'in', backorders.ids)],
+                'view_mode': 'tree,form',
+            })
+        return action
     
     #TODO don't produce the product if we have an RMA attached
