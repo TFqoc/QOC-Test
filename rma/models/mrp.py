@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.tools import float_round
 import logging
 _logger = logging.getLogger(__name__)
@@ -8,8 +8,7 @@ class MRP(models.Model):
 
     rma_id = fields.Many2one('rma.rma', readonly=True)
 
-    @api.onchange('state')
-    def change_state(self):
+    def complete_rma(self):
         _logger.info("STATE: "+ str(self.state))
         if self.state == 'done' and self.rma_id:
             self.rma_id.state = 'done'
@@ -56,6 +55,7 @@ class MRP(models.Model):
                 'priority': '0',
                 'is_locked': True,
             })
+            production.complete_rma() # Validation checks are included in the method so no need to do them here
 
         for workorder in self.workorder_ids.filtered(lambda w: w.state not in ('done', 'cancel')):
             workorder.duration_expected = workorder._get_duration_expected()
