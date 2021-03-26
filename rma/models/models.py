@@ -158,6 +158,7 @@ class RMA(models.Model):
                     if line.product_id == op.product_id:
                         sale_line = line
                         break
+                    
             vals = {
                 'name':'operation',
                 'location_dest_id':op.location_dest_id.id,
