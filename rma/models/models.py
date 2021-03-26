@@ -154,10 +154,7 @@ class RMA(models.Model):
         for op in self.operations:
             sale_line = False
             if self.sale_id:
-                for line in self.sale_id.order_line:
-                    if line.product_id.id == op.product_id.id:
-                        sale_line = line.id
-                        break
+                sale_line = self.sale_id.order_line.filtered(lambda l: l.product_id == op.product_id)[0]
                 if not sale_line:
                     raise ValidationError("Could not find valid Sale Order Line for the RMA")
 
@@ -170,7 +167,7 @@ class RMA(models.Model):
                 'product_uom_qty':op.product_uom_qty,
                 'date':datetime.datetime.now(),
                 'picking_type_id': self.shipment.picking_type_id.id,
-                'sale_line_id':sale_line,
+                'sale_line_id':sale_line.id,
             }
             ids.append(self.env['stock.move'].create(vals).id)
         self.shipment.move_ids_without_package = [(6,0,ids)]
