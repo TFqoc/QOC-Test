@@ -30,7 +30,7 @@ class RMA(models.Model):
         default='/',
         copy=False, required=True, readonly=True)
         # states={'confirmed': [('readonly', True)]})
-    sale_id = fields.Many2one('sale.order', string='Sale Order', readonly=True)
+    sale_id = fields.Many2one('sale.order', string='Sale Order', readonly=True, required=True)
     product_id = fields.Many2one(
         'product.product', string='Product to Repair',
         domain="[('type', 'in', ['product', 'consu']), '|', ('company_id', '=', company_id), ('company_id', '=', False)]",
@@ -156,13 +156,13 @@ class RMA(models.Model):
             # if self.sale_id:
             # sale_line = self.sale_id.order_line.filtered(lambda l: l.product_id == self.product_id)
             for line in self.sale_id.order_line:
-                _logger.info("PRODUCT COMPARE: "+str(line.product_id)+" vs "+str(self.product_id))
+                # _logger.info("PRODUCT COMPARE: "+str(line.product_id)+" vs "+str(self.product_id))
                 if self.product_id == line.product_id:
                     sale_line = line.product_id
             if not sale_line:
                 raise ValidationError("Could not find valid Sale Order Line for the RMA\nValue: "+str(sale_line))
-            else:
-                _logger.info("\nSALE_ID: "+str(sale_line))
+            # else:
+            #     _logger.info("\nSALE_ID: "+str(sale_line))
 
             vals = {
                 'name':'operation',
@@ -175,7 +175,9 @@ class RMA(models.Model):
                 'picking_type_id': self.shipment.picking_type_id.id,
                 'sale_line_id':sale_line.id,
             }
-            ids.append(self.env['stock.move'].create(vals).id)
+            move = self.env['stock.move'].create(vals)
+            sale_line.move_ids = [(4,move.id,0)]
+            ids.append(move.id)
         self.shipment.move_ids_without_package = [(6,0,ids)]
         # Attach shipment to sale order
         if self.sale_id:
