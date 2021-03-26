@@ -163,6 +163,7 @@ class RMA(models.Model):
                 raise ValidationError("Could not find valid Sale Order Line for the RMA\nValue: "+str(sale_line))
             _logger.info("\nSALE_ID: "+str(sale_line))
 
+
             vals = {
                 'name':'operation',
                 'location_dest_id':op.location_dest_id.id,
