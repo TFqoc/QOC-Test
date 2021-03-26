@@ -154,7 +154,11 @@ class RMA(models.Model):
         for op in self.operations:
             sale_line = False
             # if self.sale_id:
-            sale_line = self.sale_id.order_line.filtered(lambda l: l.product_id == op.product_id)
+            # sale_line = self.sale_id.order_line.filtered(lambda l: l.product_id == op.product_id)
+            for line in self.sale_id.order_line:
+                _logger.info("PRODUCT COMPARE: "+str(op.product_id)+" vs "+str(line.product_id))
+                if op.product_id == line.product_id:
+                    sale_line = line.product_id
             if not sale_line:
                 raise ValidationError("Could not find valid Sale Order Line for the RMA\nValue: "+str(sale_line))
             else:
