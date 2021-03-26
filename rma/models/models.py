@@ -158,7 +158,7 @@ class RMA(models.Model):
             for line in self.sale_id.order_line:
                 # _logger.info("PRODUCT COMPARE: "+str(line.product_id)+" vs "+str(self.product_id))
                 if self.product_id == line.product_id:
-                    sale_line = line.product_id
+                    sale_line = line
             if not sale_line:
                 raise ValidationError("Could not find valid Sale Order Line for the RMA\nValue: "+str(sale_line))
             # else:
