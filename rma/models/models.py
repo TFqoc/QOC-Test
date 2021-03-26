@@ -138,7 +138,6 @@ class RMA(models.Model):
             'context': "{'create': False}"
         }
 
-
     def ship_repair(self):
         # Called when MO is compeleted from mrp.production model
         # TODO Create delivery on this model
