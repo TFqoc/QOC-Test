@@ -146,6 +146,9 @@ class RMA(models.Model):
             'location_id':self.location_id.id,
             'move_type':'direct',
             'picking_type_id':self.env['stock.picking.type'].search([('code', '=', 'outgoing'),('warehouse_id.company_id', '=', self.company_id.id),], limit=1).id,
+            'partner_id':self.in_picking.partner_id.id,
+            'sale_id':self.in_picking.sale_id.id,
+            'origin':self.name,
         })
         ids = []
         for op in self.operations:
