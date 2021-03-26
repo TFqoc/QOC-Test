@@ -143,7 +143,7 @@ class RMA(models.Model):
         # Called when MO is compeleted from mrp.production model
         # TODO Create delivery on this model
         self.shipment = self.env['stock.picking'].create({
-            'location_dest_id':self.env['stock.location']._name_search("Partner Locations/Customers"),
+            'location_dest_id':self.env['stock.location'].search([("name","=","Customers")], limit=1)[0].id,
             'location_id':self.location_id,
             'move_type':'direct',
             # 'picking_type_id':'',
