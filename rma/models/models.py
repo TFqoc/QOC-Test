@@ -147,6 +147,21 @@ class RMA(models.Model):
             'move_type':'direct',
             'picking_type_id':self.env['stock.picking.type'].search([('code', '=', 'outgoing'),('warehouse_id.company_id', '=', self.company_id.id),], limit=1).id,
         })
+        ids = []
+        for op in self.operations:
+            vals = {
+                'name':'operation',
+                'location_dest_id':op.location_dest_id.id,
+                'location_id':op.location_id.id,
+                'product_id':op.product_id.id,
+                'product_uom':op.product_uom.id,
+                'product_uom_qty':op.product_uom_qty,
+                'date':datetime.datetime.now(),
+                # 'production_id': self.production_id.id,
+                'picking_type_id': self.shipment.picking_type_id.id,
+            }
+            ids.append(self.env['stock.move'].create(vals).id)
+        self.shipment.move_ids_without_package = [(6,0,ids)]
 
     @api.onchange('state')
     def change_state(self):
