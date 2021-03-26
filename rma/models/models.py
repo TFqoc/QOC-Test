@@ -152,6 +152,12 @@ class RMA(models.Model):
         })
         ids = []
         for op in self.operations:
+            sale_line = False
+            if self.sale_id:
+                for line in self.sale_id.order_lines:
+                    if line.product_id == op.product_id:
+                        sale_line = line
+                        break
             vals = {
                 'name':'operation',
                 'location_dest_id':op.location_dest_id.id,
@@ -161,6 +167,7 @@ class RMA(models.Model):
                 'product_uom_qty':op.product_uom_qty,
                 'date':datetime.datetime.now(),
                 'picking_type_id': self.shipment.picking_type_id.id,
+                'sale_line_id':sale_line,
             }
             ids.append(self.env['stock.move'].create(vals).id)
         self.shipment.move_ids_without_package = [(6,0,ids)]
