@@ -152,11 +152,11 @@ class RMA(models.Model):
         })
         ids = []
         for op in self.operations:
-            sale_line = False
+            sale_line = -1
             if self.sale_id:
                 for line in self.sale_id.order_line:
                     if line.product_id == op.product_id:
-                        sale_line = line
+                        sale_line = line.id
                         break
 
             vals = {
