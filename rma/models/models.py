@@ -145,7 +145,7 @@ class RMA(models.Model):
             'location_dest_id':self.env['stock.location'].search([("name","=","Customers")], limit=1).id,
             'location_id':self.location_id.id,
             'move_type':'direct',
-            'picking_type_id':self.env['stock.picking.type'].search([('code', '=', 'outgoing'),('warehouse_id.company_id', '=', self.company_id),], limit=1).id,
+            'picking_type_id':self.env['stock.picking.type'].search([('code', '=', 'outgoing'),('warehouse_id.company_id', '=', self.company_id.id),], limit=1).id,
         })
 
     @api.onchange('state')
