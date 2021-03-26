@@ -156,7 +156,7 @@ class RMA(models.Model):
             # if self.sale_id:
             # sale_line = self.sale_id.order_line.filtered(lambda l: l.product_id == self.product_id)
             for line in self.sale_id.order_line:
-                _logger.info("PRODUCT COMPARE: "+str(op.product_id)+" vs "+str(self.product_id))
+                _logger.info("PRODUCT COMPARE: "+str(line.product_id)+" vs "+str(self.product_id))
                 if op.product_id == line.product_id:
                     sale_line = line.product_id
             if not sale_line:
