@@ -153,12 +153,12 @@ class RMA(models.Model):
         ids = []
         for op in self.operations:
             sale_line = False
-            if self.sale_id:
-                sale_line = self.sale_id.order_line.filtered(lambda l: l.product_id == op.product_id)
-                if not sale_line:
-                    raise ValidationError("Could not find valid Sale Order Line for the RMA")
-                else:
-                    _logger.info("\nSALE_ID: "+str(sale_line))
+            # if self.sale_id:
+            sale_line = self.sale_id.order_line.filtered(lambda l: l.product_id == op.product_id)
+            if not sale_line:
+                raise ValidationError("Could not find valid Sale Order Line for the RMA\nValue: "+str(sale_line))
+            else:
+                _logger.info("\nSALE_ID: "+str(sale_line))
 
             vals = {
                 'name':'operation',
