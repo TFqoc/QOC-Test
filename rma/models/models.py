@@ -160,11 +160,13 @@ class RMA(models.Model):
                 'product_uom':op.product_uom.id,
                 'product_uom_qty':op.product_uom_qty,
                 'date':datetime.datetime.now(),
-                # 'production_id': self.production_id.id,
                 'picking_type_id': self.shipment.picking_type_id.id,
             }
             ids.append(self.env['stock.move'].create(vals).id)
         self.shipment.move_ids_without_package = [(6,0,ids)]
+        # Attach shipment to sale order
+        if self.sale_id:
+            self.sale_id.picking_ids = [(4,self.shipment.id,0)]
 
     @api.onchange('state')
     def change_state(self):
