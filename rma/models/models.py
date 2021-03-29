@@ -455,6 +455,8 @@ class RMA(models.Model):
                 if not account:
                     raise UserError(_('No account defined for product "%s".', operation.product_id.name))
 
+                _logger.info("TEST: Preparing Product \'"+name+"\'")
+
                 invoice_line_vals = {
                     'name': name,
                     'account_id': account.id,
