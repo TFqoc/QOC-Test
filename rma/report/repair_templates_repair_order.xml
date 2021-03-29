@@ -71,8 +71,8 @@
                                 <tr class="bg-200 o_line_section"><td colspan="5"><strong>Parts</strong></td></tr>
                                 <tr t-foreach="o.operations" t-as="line">
                                     <td>
-                                        <p t-if="line.type == 'add'"><i>(Add)</i> <span t-field="line.name" /></p>
-                                        <p t-if="line.type == 'remove'">(<i>Remove</i>) <span t-field="line.name"/></p>
+                                        <p t-if="line.type == 'add'"> <span t-field="line.name" /></p>
+                                        <p t-if="line.type == 'remove'"> <span t-field="line.name"/></p>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="line.product_uom_qty"/>
