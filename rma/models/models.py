@@ -304,7 +304,7 @@ class RMA(models.Model):
         @param *arg: Arguments
         @return: True
         """
-        if self.filtered(lambda repair: repair.state != 'draft'):
+        if self.filtered(lambda repair: repair.state not in ['draft', 'ready']):
             raise UserError(_("Only draft repairs can be confirmed."))
         # if self.in_picking.state != 'done':
         #     raise UserError("The product to repair has not been recieved yet!")
