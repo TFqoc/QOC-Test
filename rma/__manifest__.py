@@ -31,6 +31,7 @@
         'views/insufficient_qty.xml',
         'report/repair_templates_repair_order.xml',
         'views/rma_data.xml',
+        'views/account_move.xml',
         'views/views.xml',
         'views/templates.xml',
     ],
