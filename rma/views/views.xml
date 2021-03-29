@@ -30,27 +30,23 @@
             <button name="action_validate" states="draft" type="object" string="Confirm Repair" class="oe_highlight" />
             <!-- <button name="action_repair_start" attrs="{'invisible': ['&amp;', ('state','!=','confirmed'), '!', '&amp;', ('state','=','ready'), ('invoice_method','=','b4repair')]}" type="object" string="Start Repair" class="oe_highlight" /> -->
             <!-- <button name="action_repair_end" states="under_repair" type="object" string="End Repair" class="oe_highlight" /> -->
-            <!-- <button name="action_repair_invoice_create" type="object" string="Create Invoice" class="oe_highlight" groups="account.group_account_invoice" attrs="{'invisible': ['|', ('state', '!=', '2binvoiced'), ('invoice_id', '!=', False)]}" /> -->
+            <button name="action_repair_invoice_create" type="object" string="Create Invoice" class="oe_highlight" groups="account.group_account_invoice" attrs="{'invisible': ['|', ('state', '!=', '2binvoiced'), ('invoice_id', '!=', False)]}" />
             <button name="action_send_mail" string="Send Quotation" type="object" />
             <button name="print_repair_order" string="Print Quotation" type="object" />
-            <!-- <button name="action_repair_cancel_draft" states="cancel" string="Set to Draft" type="object" /> -->
-            <!-- <button name="action_repair_cancel" string="Cancel Repair" type="object" confirm="Draft invoices for this order will be cancelled. Do you confirm the action?" attrs="{'invisible':['|', ('state', '=', 'cancel'), ('invoice_state', '!=', 'draft')]}" /> -->
-            <!-- <button name="action_repair_cancel" string="Cancel Repair" type="object" attrs="{'invisible': ['|', ('state','=', 'cancel',), ('invoice_state', '=', 'draft')]}" /> -->
+            <button name="action_repair_cancel_draft" states="cancel" string="Set to Draft" type="object" />
+            <button name="action_repair_cancel" string="Cancel Repair" type="object" confirm="Draft invoices for this order will be cancelled. Do you confirm the action?" attrs="{'invisible':['|', ('state', '=', 'cancel'), ('invoice_state', '!=', 'draft')]}" />
+            <button name="action_repair_cancel" string="Cancel Repair" type="object" attrs="{'invisible': ['|', ('state','=', 'cancel',), ('invoice_state', '=', 'draft')]}" />
             <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done" />
           </header>
           <sheet string="Repairs order">
             <div class="oe_button_box" name="button_box">
               <field name="invoice_id" invisible="1" />
-              <!-- <button name="action_created_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('invoice_id', '=', False)]}" groups="account.group_account_invoice">
+              <button name="action_created_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('invoice_id', '=', False)]}" groups="account.group_account_invoice">
                 <div class="o_field_widget o_stat_info">
                   <span class="o_stat_text">1</span>
                   <span class="o_stat_text">Invoices</span>
                 </div>
-              </button> -->
-              <button class="oe_stat_button" type="object" name="get_deliveries"
-                        icon="fa-car">
-                        <field string="Deliveries" name="delivery_count" widget="statinfo"/>
-                    </button>
+              </button>
             </div>
             <label for="name" />
             <h1>
@@ -105,7 +101,7 @@
                                       </div>
                                       <field name="price_unit"/>
                                       <field name="tax_id" widget="many2many_tags"/>
-                                      <!-- <field name="invoiced" invisible="1"/> -->
+                                      <field name="invoiced" invisible="1"/>
                                       <field name="price_subtotal" widget="monetary" invisible="1"/>
                                       <field name="currency_id" invisible="1"/>
                                   </group>
@@ -117,7 +113,7 @@
                               </group>
                               <group name="History" string="History" attrs="{'invisible':[('move_id','=', False)]}">
                                   <field name="move_id"/>
-                                  <!-- <field name="invoice_line_id" invisible="1"/> -->
+                                  <field name="invoice_line_id" invisible="1"/>
                               </group>
                           </form>
                           <tree string="Operations" editable="bottom">
@@ -216,10 +212,10 @@
               <field name="name" string="Repair Order" filter_domain="['|', ('name', 'ilike', self), ('product_id', 'ilike', self)]"/>
               <field name="product_id"/>
               <field name="partner_id" filter_domain="[('partner_id', 'child_of', self)]"/>
-              <!-- <filter string="Quotations" name="quotations" domain="[('state', '=', 'draft')]"/>
+              <filter string="Quotations" name="quotations" domain="[('state', '=', 'draft')]"/>
               <filter string="Confirmed" domain="[('state', '=', 'confirmed')]" name="current" />
-              <filter string="Ready To Repair" name="ready_to_repair" domain="[('state', '=', 'ready')]"/> -->
-              <!-- <separator/>
+              <filter string="Ready To Repair" name="ready_to_repair" domain="[('state', '=', 'ready')]"/>
+              <separator/>
               <filter string="Invoiced" name="invoiced" domain="[('invoiced', '=', True)]"/>
               <separator/>
               <filter name="filter_create_date" date="create_date"/>
@@ -230,7 +226,7 @@
               <filter invisible="1" string="Today Activities" name="activities_today"
                   domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
               <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
-                  domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/> -->
+                  domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
               <group expand="0" string="Group By">
                   <filter string="Customer" name="partner" domain="[]" context="{'group_by': 'partner_id'}"/>
                   <filter string="Product" name="product" domain="[]" context="{'group_by': 'product_id'}"/>

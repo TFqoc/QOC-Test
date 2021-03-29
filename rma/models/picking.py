@@ -20,9 +20,7 @@ class Return(models.TransientModel):
                         'partner_id':wizard.picking_id.sale_id.partner_id.id,
                         'product_qty':line.quantity,
                         'in_picking':new_picking_id,
-                        # 'ship_picking':1,
                     })
-                    # wizard.picking_id.rma_ids = [(4,rma.id,0)]
         # Override the context to disable all the potential filters that could have been set previously
         ctx = dict(self.env.context)
         ctx.update({
@@ -42,8 +40,3 @@ class Return(models.TransientModel):
             'type': 'ir.actions.act_window',
             'context': ctx,
         }
-
-class Picking(models.Model):
-    _inherit = 'stock.picking'
-
-    rma_ids = fields.Many2many('rma.rma')

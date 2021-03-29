@@ -14,11 +14,13 @@ class MRP(models.Model):
             self.rma_id.state = 'done'
             self.rma_id.ship_repair()
 
-    def button_mark_done(self):
-        self._button_mark_done_sanity_checks()
-
+    def action_confirm(self):
         if self.rma_id.in_picking.state != 'done':
             raise UserError("The product to repair has not been recieved yet!")
+        return super(MRP, self).action_confirm()
+
+    def button_mark_done(self):
+        self._button_mark_done_sanity_checks()
 
         if not self.env.context.get('button_mark_done_production_ids'):
             self = self.with_context(button_mark_done_production_ids=self.ids)
