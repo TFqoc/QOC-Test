@@ -151,33 +151,29 @@ class RMA(models.Model):
             'origin':self.name,
         })
         ids = []
-        for op in self.operations:
-            sale_line = False
-            # if self.sale_id:
-            # sale_line = self.sale_id.order_line.filtered(lambda l: l.product_id == self.product_id)
-            for line in self.sale_id.order_line:
-                # _logger.info("PRODUCT COMPARE: "+str(line.product_id)+" vs "+str(self.product_id))
-                if self.product_id == line.product_id:
-                    sale_line = line
-            if not sale_line:
-                raise ValidationError("Could not find valid Sale Order Line for the RMA\nValue: "+str(sale_line))
-            _logger.info("\nSALE_ID: "+str(sale_line))
 
+        sale_line = False
+        for line in self.sale_id.order_line:
+            if self.product_id == line.product_id:
+                sale_line = line
+        if not sale_line:
+            raise ValidationError("Could not find valid Sale Order Line for the RMA\nValue: "+str(sale_line))
+        # _logger.info("\nSALE_ID: "+str(sale_line))
 
-            vals = {
-                'name':'operation',
-                'location_dest_id':op.location_dest_id.id,
-                'location_id':op.location_id.id,
-                'product_id':op.product_id.id,
-                'product_uom':op.product_uom.id,
-                'product_uom_qty':op.product_uom_qty,
-                'date':datetime.datetime.now(),
-                'picking_type_id': self.shipment.picking_type_id.id,
-                'sale_line_id':sale_line.id,
-            }
-            move = self.env['stock.move'].create(vals)
-            sale_line.move_ids = [(4,move.id,0)]
-            ids.append(move.id)
+        vals = {
+            'name':'operation',
+            'location_dest_id':self.shipment.location_dest_id.id,
+            'location_id':self.shipment.location_id.id,
+            'product_id':self.product_id.id,
+            'product_uom':self.product_uom.id,
+            'product_uom_qty':self.product_uom_qty,
+            'date':datetime.datetime.now(),
+            'picking_type_id': self.shipment.picking_type_id.id,
+            'sale_line_id':sale_line.id,
+        }
+        move = self.env['stock.move'].create(vals)
+        sale_line.move_ids = [(4,move.id,0)]
+        ids.append(move.id)
         self.shipment.move_ids_without_package = [(6,0,ids)]
         # Attach shipment to sale order
         if self.sale_id:
