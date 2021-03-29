@@ -90,7 +90,7 @@
                               <group>
                                   <group>
                                       <field name="company_id" invisible="1" force_save="1"/>
-                                      <field name="type"/>
+                                      <!-- <field name="type"/> -->
                                       <field name="product_id"/>
                                       <field name="name"/>
                                       <field name="product_uom_category_id" invisible="1"/>
@@ -118,7 +118,7 @@
                           </form>
                           <tree string="Operations" editable="bottom">
                               <field name="company_id" invisible="1" force_save="1"/>
-                              <field name="type"/>
+                              <!-- <field name="type"/> -->
                               <field name="product_id"/>
                               <field name='name' optional="show"/>
                               <field name="product_uom_category_id" invisible="1"/>

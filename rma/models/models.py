@@ -609,11 +609,11 @@ class RepairLine(models.Model):
     currency_id = fields.Many2one(
         related='repair_id.currency_id')
     type = fields.Selection([
-        ('add', 'Add'),
+        ('add', ''),
         ('remove', 'Remove')], 'Type', default='add', required=True)
     product_id = fields.Many2one(
         'product.product', 'Product', required=True, check_company=True,
-        domain="[('type', 'in', ['product', 'consu']), '|', ('company_id', '=', company_id), ('company_id', '=', False)]")
+        domain="[('type', 'in', ['product', 'consu', 'service']), '|', ('company_id', '=', company_id), ('company_id', '=', False)]")
     invoiced = fields.Boolean('Invoiced', copy=False, readonly=True)
     price_unit = fields.Float('Unit Price', required=True, digits='Product Price')
     price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
