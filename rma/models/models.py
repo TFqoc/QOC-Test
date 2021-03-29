@@ -295,6 +295,7 @@ class RMA(models.Model):
                 'target': 'new'
             }
 
+
     def button_dummy(self):
         # TDE FIXME: this button is very interesting
         return True
