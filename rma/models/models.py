@@ -529,16 +529,17 @@ class RMA(models.Model):
             #     invoice_vals['invoice_line_ids'].append((0, 0, invoice_line_vals))
 
         # Create invoices.
-        invoices_vals_list_per_company = defaultdict(list)
-        for (partner_invoice_id, currency_id, company_id), invoices in grouped_invoices_vals.items():
-            for invoice in invoices:
-                invoices_vals_list_per_company[company_id].append(invoice)
+        # invoices_vals_list_per_company = defaultdict(list)
+        # for (partner_invoice_id, currency_id, company_id), invoices in grouped_invoices_vals.items():
+        #     for invoice in invoices:
+        #         invoices_vals_list_per_company[company_id].append(invoice)
 
-        for company_id, invoices_vals_list in invoices_vals_list_per_company.items():
-            # VFE TODO remove the default_company_id ctxt key ?
-            # Account fallbacks on self.env.company, which is correct with with_company
-            self.env['account.move'].with_company(company_id).with_context(default_company_id=company_id, default_move_type='out_invoice').create(invoices_vals_list)
-
+        # for company_id, invoices_vals_list in invoices_vals_list_per_company.items():
+        #     # VFE TODO remove the default_company_id ctxt key ?
+        #     # Account fallbacks on self.env.company, which is correct with with_company
+        #     self.env['account.move'].with_company(company_id).with_context(default_company_id=company_id, default_move_type='out_invoice').create(invoices_vals_list)
+        self.env['account.move'].with_context(default_company_id=repair.company_id, default_move_type='out_invoice').create(invoice_vals)
+        
         repairs.write({'invoiced': True})
         repairs.mapped('operations').filtered(lambda op: op.type == 'add').write({'invoiced': True})
         # repairs.mapped('fees_lines').write({'invoiced': True})
