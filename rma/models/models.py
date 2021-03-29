@@ -295,6 +295,62 @@ class RMA(models.Model):
                 'target': 'new'
             }
 
+    def action_confirm_ready(self):
+        if self.filtered(lambda repair: repair.state != 'ready'):
+            raise UserError(_("Only ready repairs can be confirmed."))
+        # if self.in_picking.state != 'done':
+        #     raise UserError("The product to repair has not been recieved yet!")
+        self._check_company()
+        self.operations._check_company()
+        # self.fees_lines._check_company()
+        before_repair = self.filtered(lambda repair: repair.invoice_method == 'b4repair')
+        # before_repair.write({'state': '2binvoiced'})
+        to_confirm = before_repair
+        to_confirm_operations = to_confirm.mapped('operations')
+        to_confirm_operations.write({'state': 'confirmed'})
+        to_confirm.write({'state': 'confirmed'})
+        # Create MO to do the repair work
+        for rep in to_confirm:
+            rep.production_id = self.env['mrp.production'].sudo().create({
+                'product_id':rep.product_id.id,
+                'product_qty':rep.product_qty,
+                'product_uom_id':rep.product_uom.id,
+                'rma_id':rep.id,
+                'internal_notes':rep.internal_notes,
+            })
+            ## Set stock.moves for the new MO
+            # location_dest_id (destination)
+            # location_id (source)
+            # name
+            # product_id
+            # product_uom
+            # product_uom_qty
+            # date (date scheduled)
+            ids = []
+            for op in rep.operations:
+                if op.product_id.type == 'service':
+                    continue
+                vals = {
+                    'name':'operation',
+                    'location_dest_id':op.location_dest_id.id,
+                    'location_id':op.location_id.id,
+                    'product_id':op.product_id.id,
+                    'product_uom':op.product_uom.id,
+                    'product_uom_qty':op.product_uom_qty,
+                    'date':datetime.datetime.now(),
+                    'production_id': rep.production_id.id,
+                    'picking_type_id': rep.production_id.picking_type_id.id,
+                }
+                ids.append(self.env['stock.move'].create(vals).id)
+            rep.production_id.move_raw_ids = [(6,0,ids)]
+
+            (rep.production_id.move_raw_ids | rep.production_id.move_finished_ids).write({
+            'group_id': rep.production_id.procurement_group_id.id,
+            'origin': rep.production_id.name
+            })
+            rep.production_id.move_raw_ids.write({'date': rep.production_id.date_planned_start})
+            rep.production_id.move_finished_ids.write({'date': rep.production_id.date_planned_finished})
+        return True
 
     def button_dummy(self):
         # TDE FIXME: this button is very interesting
@@ -305,25 +361,19 @@ class RMA(models.Model):
         @param *arg: Arguments
         @return: True
         """
-        if self.filtered(lambda repair: repair.state not in ['draft', 'ready']):
+        if self.filtered(lambda repair: repair.state != 'draft'):
             raise UserError(_("Only draft repairs can be confirmed."))
         # if self.in_picking.state != 'done':
         #     raise UserError("The product to repair has not been recieved yet!")
         self._check_company()
         self.operations._check_company()
         # self.fees_lines._check_company()
-        to_confirm = False
-        if self.filtered(lambda repair: repair.state == 'ready'):
-            before_repair = self.filtered(lambda repair: repair.invoice_method == 'b4repair')
-            before_repair.write({'state': '2binvoiced'})
-            to_confirm = self - before_repair
-        else:
-            to_confirm = self.filtered(lambda repair: repair.state == 'ready')
-        
+        before_repair = self.filtered(lambda repair: repair.invoice_method == 'b4repair')
+        before_repair.write({'state': '2binvoiced'})
+        to_confirm = self - before_repair
         to_confirm_operations = to_confirm.mapped('operations')
         to_confirm_operations.write({'state': 'confirmed'})
         to_confirm.write({'state': 'confirmed'})
-
         # Create MO to do the repair work
         for rep in to_confirm:
             rep.production_id = self.env['mrp.production'].sudo().create({
