@@ -538,8 +538,10 @@ class RMA(models.Model):
         #     # VFE TODO remove the default_company_id ctxt key ?
         #     # Account fallbacks on self.env.company, which is correct with with_company
         #     self.env['account.move'].with_company(company_id).with_context(default_company_id=company_id, default_move_type='out_invoice').create(invoices_vals_list)
-        self.env['account.move'].with_context(default_company_id=repair.company_id.id, default_move_type='out_invoice').create(invoice_vals)
-        
+        move = self.env['account.move'].with_context(default_company_id=repair.company_id.id, default_move_type='out_invoice').create(invoice_vals)
+        for line in invoice_vals['invoice_line_ids']:
+            move.invoice_line_ids = line # Line is (0,0,vals_dict) to create a new record
+
         repairs.write({'invoiced': True})
         repairs.mapped('operations').filtered(lambda op: op.type == 'add').write({'invoiced': True})
         # repairs.mapped('fees_lines').write({'invoiced': True})
