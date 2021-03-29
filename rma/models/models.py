@@ -312,12 +312,15 @@ class RMA(models.Model):
         self._check_company()
         self.operations._check_company()
         # self.fees_lines._check_company()
-        before_repair = self.filtered(lambda repair: repair.invoice_method == 'b4repair')
-        before_repair.write({'state': '2binvoiced'})
-        to_confirm = self - before_repair
-        to_confirm_operations = to_confirm.mapped('operations')
-        to_confirm_operations.write({'state': 'confirmed'})
-        to_confirm.write({'state': 'confirmed'})
+        if self.filtered(lambda repair: repair.state == 'ready'):
+            before_repair = self.filtered(lambda repair: repair.invoice_method == 'b4repair')
+            before_repair.write({'state': '2binvoiced'})
+            to_confirm = self - before_repair
+            to_confirm_operations = to_confirm.mapped('operations')
+            to_confirm_operations.write({'state': 'confirmed'})
+            to_confirm.write({'state': 'confirmed'})
+        else:
+            self.filtered(lambda repair: repair.state == 'ready').write({'state': 'confirmed'})
         # Create MO to do the repair work
         for rep in to_confirm:
             rep.production_id = self.env['mrp.production'].sudo().create({
