@@ -1,4 +1,5 @@
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError, ValidationError
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -15,6 +16,9 @@ class MRP(models.Model):
 
     def button_mark_done(self):
         self._button_mark_done_sanity_checks()
+
+        if self.rma_id.in_picking.state != 'done':
+            raise UserError("The product to repair has not been recieved yet!")
 
         if not self.env.context.get('button_mark_done_production_ids'):
             self = self.with_context(button_mark_done_production_ids=self.ids)

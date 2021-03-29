@@ -323,8 +323,8 @@ class RMA(models.Model):
         """
         if self.filtered(lambda repair: repair.state != 'draft'):
             raise UserError(_("Only draft repairs can be confirmed."))
-        if self.in_picking.state != 'done':
-            raise UserError("The product to repair has not been recieved yet!")
+        # if self.in_picking.state != 'done':
+        #     raise UserError("The product to repair has not been recieved yet!")
         self._check_company()
         self.operations._check_company()
         # self.fees_lines._check_company()
