@@ -166,7 +166,7 @@ class RMA(models.Model):
             'location_id':self.shipment.location_id.id,
             'product_id':self.product_id.id,
             'product_uom':self.product_uom.id,
-            'product_uom_qty':self.product_uom_qty,
+            'product_uom_qty':self.product_qty,
             'date':datetime.datetime.now(),
             'picking_type_id': self.shipment.picking_type_id.id,
             'sale_line_id':sale_line.id,
@@ -284,8 +284,8 @@ class RMA(models.Model):
     def action_validate(self):
         self.ensure_one()
 
-        # if self.filtered(lambda repair: any(op.product_uom_qty < 0 for op in repair.operations)):
-        #     raise UserError(_("You can not enter negative quantities."))
+        if self.filtered(lambda repair: any(op.product_uom_qty < 0 for op in repair.operations)):
+            raise UserError(_("You can not enter negative quantities."))
         if self.product_id.type == 'consu':
             return self.action_repair_confirm()
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
@@ -326,13 +326,13 @@ class RMA(models.Model):
         if self.in_picking.state != 'done':
             raise UserError("The product to repair has not been recieved yet!")
         self._check_company()
-        # self.operations._check_company()
+        self.operations._check_company()
         # self.fees_lines._check_company()
         before_repair = self.filtered(lambda repair: repair.invoice_method == 'b4repair')
         before_repair.write({'state': '2binvoiced'})
         to_confirm = self - before_repair
-        # to_confirm_operations = to_confirm.mapped('operations')
-        # to_confirm_operations.write({'state': 'confirmed'})
+        to_confirm_operations = to_confirm.mapped('operations')
+        to_confirm_operations.write({'state': 'confirmed'})
         to_confirm.write({'state': 'confirmed'})
         # Create MO to do the repair work
         for rep in to_confirm:
@@ -352,6 +352,8 @@ class RMA(models.Model):
             # date (date scheduled)
             ids = []
             for op in rep.operations:
+                if op.product_id.type == 'service':
+                    continue
                 vals = {
                     'name':'operation',
                     'location_dest_id':op.location_dest_id.id,
