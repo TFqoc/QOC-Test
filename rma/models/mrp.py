@@ -21,7 +21,7 @@ class MRP(models.Model):
     def action_confirm(self):
         self._check_company()
         for production in self:
-            if self.rma_id.in_picking.state != 'done':
+            if self.rma_id and self.rma_id.in_picking.state != 'done':
                 raise UserError("The product to repair has not been recieved yet!")
             if production.bom_id:
                 production.consumption = production.bom_id.consumption
