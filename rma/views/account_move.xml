@@ -10,6 +10,7 @@
                         <tree>
                             <field name="name" string="RMA"/>
                             <field name="product_id" string="Product"/>
+                            <field name="state" invisible="1"/>
                         </tree>
                     </field>
                 </field>
