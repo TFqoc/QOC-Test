@@ -609,7 +609,7 @@ class RepairLine(models.Model):
     product_id = fields.Many2one(
         'product.product', 'Product', required=True, check_company=True,
         domain="[('type', 'in', ['product', 'consu']), '|', ('company_id', '=', company_id), ('company_id', '=', False)]")
-    # invoiced = fields.Boolean('Invoiced', copy=False, readonly=True)
+    invoiced = fields.Boolean('Invoiced', copy=False, readonly=True)
     price_unit = fields.Float('Unit Price', required=True, digits='Product Price')
     price_subtotal = fields.Float('Subtotal', compute='_compute_price_subtotal', store=True, digits=0)
     tax_id = fields.Many2many(
@@ -622,9 +622,9 @@ class RepairLine(models.Model):
         'uom.uom', 'Product Unit of Measure',
         required=True, domain="[('category_id', '=', product_uom_category_id)]")
     product_uom_category_id = fields.Many2one(related='product_id.uom_id.category_id')
-    # invoice_line_id = fields.Many2one(
-    #     'account.move.line', 'Invoice Line',
-    #     copy=False, readonly=True, check_company=True)
+    invoice_line_id = fields.Many2one(
+        'account.move.line', 'Invoice Line',
+        copy=False, readonly=True, check_company=True)
     location_id = fields.Many2one(
         'stock.location', 'Source Location',
         index=True, required=True, check_company=True)
