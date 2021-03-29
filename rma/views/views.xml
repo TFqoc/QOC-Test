@@ -85,7 +85,7 @@
             </group>
             <notebook>
               <page string="Parts" name="parts">
-                <field name="operations" context="{'default_product_uom_qty': product_qty, 'default_company_id': company_id}">
+                <field name="operations" context="{'default_product_uom_qty': product_qty, 'default_company_id': company_id}" attrs="{'readonly':[('invoice_id','!=', False)]}">
                           <form string="Operations">
                               <group>
                                   <group>
