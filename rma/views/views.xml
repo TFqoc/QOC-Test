@@ -27,7 +27,7 @@
       <field name="arch" type="xml">
         <form string="RMA">
           <header>
-            <button name="action_validate" states="draft" type="object" string="Confirm Repair" class="oe_highlight" />
+            <button name="action_validate" states="draft, ready" type="object" string="Confirm Repair" class="oe_highlight" />
             <!-- <button name="action_repair_start" attrs="{'invisible': ['&amp;', ('state','!=','confirmed'), '!', '&amp;', ('state','=','ready'), ('invoice_method','=','b4repair')]}" type="object" string="Start Repair" class="oe_highlight" /> -->
             <!-- <button name="action_repair_end" states="under_repair" type="object" string="End Repair" class="oe_highlight" /> -->
             <button name="action_repair_invoice_create" type="object" string="Create Invoice" class="oe_highlight" groups="account.group_account_invoice" attrs="{'invisible': ['|', ('state', '!=', '2binvoiced'), ('invoice_id', '!=', False)]}" />
