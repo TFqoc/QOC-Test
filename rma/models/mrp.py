@@ -9,6 +9,7 @@ class MRP(models.Model):
 
     rma_id = fields.Many2one('rma.rma', readonly=True)
 
+
     def complete_rma(self):
         if self.state == 'done' and self.rma_id:
             if self.rma_id.invoice_method == 'after_repair':
