@@ -91,7 +91,7 @@ class RMA(models.Model):
         ("none", "No Invoice"),
         ("b4repair", "Before Repair"),
         ("after_repair", "After Repair")], string="Invoice Method",
-        default='none', index=True, readonly=True, required=True,
+        default='after_repair', index=True, readonly=True, required=True,
         states={'draft': [('readonly', False)]},
         help='Selecting \'Before Repair\' or \'After Repair\' will allow you to generate invoice before or after the repair is done respectively. \'No invoice\' means you don\'t want to generate invoice for this repair order.')
     invoice_id = fields.Many2one(

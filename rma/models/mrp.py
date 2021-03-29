@@ -11,7 +11,10 @@ class MRP(models.Model):
 
     def complete_rma(self):
         if self.state == 'done' and self.rma_id:
-            self.rma_id.state = 'done'
+            if self.rma_id.invoice_method == 'after_repair':
+                self.rma_id.state = '2binvoiced'
+            else:
+                self.rma_id.state = 'done'
             self.rma_id.ship_repair()
 
     def action_confirm(self):
