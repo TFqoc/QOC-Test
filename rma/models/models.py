@@ -755,5 +755,5 @@ class AccountMove(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    repair_line_ids = fields.One2many('repair.line', 'invoice_line_id', readonly=True, copy=False)
-    # repair_fee_ids = fields.One2many('repair.fee', 'invoice_line_id', readonly=True, copy=False)
+    repair_line_ids = fields.One2many('rma.line', 'invoice_line_id', readonly=True, copy=False)
+    # repair_fee_ids = fields.One2many('rma.fee', 'invoice_line_id', readonly=True, copy=False)
