@@ -324,6 +324,7 @@ class RMA(models.Model):
                 'product_qty':rep.product_qty,
                 'product_uom_id':rep.product_uom.id,
                 'rma_id':rep.id,
+                'internal_notes':rep.internal_notes,
             })
             ## Set stock.moves for the new MO
             # location_dest_id (destination)

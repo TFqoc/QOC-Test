@@ -8,6 +8,11 @@
               <field name="user_id" position="after">
                 <field name="rma_id" string="RMA" attrs="{'invisible':[('rma_id', '=', False)]}"/>
               </field>
+              <xpath expr="form//notebook/page[last()]" position="after">
+                <page string="Notes" name="notes">
+                  <field name="internal_notes" placeholder="Add internal notes."/>
+                </page>
+              </xpath>
             </field>
           </record>
     </data>
