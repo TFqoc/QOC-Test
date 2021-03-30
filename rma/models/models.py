@@ -422,6 +422,19 @@ class RMA(models.Model):
                     'picking_type_id': rep.production_id.picking_type_id.id,
                 }
                 ids.append(self.env['stock.move'].create(vals).id)
+            # Create stock move for the actual product to repair
+            vals = {
+                    'name':'operation',
+                    'location_dest_id':rep.production_id.location_src_id.id,
+                    'location_id':rep.location_id.id,
+                    'product_id':rep.product_id.id,
+                    'product_uom':rep.product_uom.id,
+                    'product_uom_qty':rep.product_qty,
+                    'date':datetime.datetime.now(),
+                    'production_id': rep.production_id.id,
+                    'picking_type_id': rep.production_id.picking_type_id.id,
+                }
+                
             rep.production_id.move_raw_ids = [(6,0,ids)]
 
             (rep.production_id.move_raw_ids | rep.production_id.move_finished_ids).write({
