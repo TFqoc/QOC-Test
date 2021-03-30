@@ -434,7 +434,8 @@ class RMA(models.Model):
                     'production_id': rep.production_id.id,
                     'picking_type_id': rep.production_id.picking_type_id.id,
                 }
-                
+            ids.append(self.env['stock.move'].create(vals).id)
+
             rep.production_id.move_raw_ids = [(6,0,ids)]
 
             (rep.production_id.move_raw_ids | rep.production_id.move_finished_ids).write({
