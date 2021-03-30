@@ -722,6 +722,14 @@ class RepairLine(models.Model):
         ('cancel', 'Cancelled')], 'Status', default='draft',
         copy=False, readonly=True, required=True,
         help='The status of a repair line is set automatically to the one of the linked repair order.')
+    location_required = fields.Boolean(compute='_compute_location_required', store=True)
+
+    @api.depends('product_id')
+    def _compute_loaction_required(self):
+        if self.product_id and self.product_id.type == 'service':
+            self.location_required = False
+        else:
+            self.location_required = True
 
     @api.constrains('lot_id', 'product_id')
     def constrain_lot_id(self):
