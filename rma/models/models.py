@@ -47,10 +47,12 @@ class RMA(models.Model):
         'res.partner', 'Customer',
         index=True, states={'confirmed': [('readonly', True)]}, check_company=True, change_default=True,
         help='Choose partner for whom the order will be invoiced and delivered. You can find a partner by its Name, TIN, Email or Internal Reference.')
-    address_id = fields.Many2one(
-        'res.partner', 'Delivery Address',
-        domain="[('parent_id','=',partner_id)]", check_company=True,
-        states={'confirmed': [('readonly', True)]})
+    # address_id = fields.Many2one(
+    #     'res.partner', 'Delivery Address',
+    #     domain="[('parent_id','=',partner_id)]", check_company=True,
+    #     states={'confirmed': [('readonly', True)]})
+    address_id = fields.Many2one('res.partner', 'Delivery Address',
+        related='sale_id.partner_shipping_id')
     default_address_id = fields.Many2one('res.partner', compute='_compute_default_address_id')
     state = fields.Selection([
         ('draft', 'Quotation'),
@@ -263,6 +265,8 @@ class RMA(models.Model):
         if vals['name'].startswith('/'):
             vals['name'] = (self.env['ir.sequence'].next_by_code('rma.rma') or '/') + vals['name']
             vals['name'] = vals['name'][:-1] if vals['name'].endswith('/') and vals['name'] != '/' else vals['name']
+        sale = self.env['sale.order'].browse(vals.get('sale_id'))
+        vals['partner_invoice_id'] = sale.partner_invoice_id.id
         return super(RMA, self).create(vals)
 
     def action_validate(self):
