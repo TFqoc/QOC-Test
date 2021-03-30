@@ -164,10 +164,11 @@ class RMA(models.Model):
 
     @api.onchange('state')
     def change_state(self):
-        if self.state == 'done':
-            quants = self.location_id.quant_ids.filtered(lambda x: x.product_id == self.product_id)
-            for q in quants:
-                q.quantity -= self.product_qty
+        # if self.state == 'done':
+        #     quants = self.location_id.quant_ids.filtered(lambda x: x.product_id == self.product_id)
+        #     for q in quants:
+        #         q.quantity -= self.product_qty
+        pass
 
     @api.depends('partner_id')
     def _compute_default_address_id(self):
@@ -342,6 +343,20 @@ class RMA(models.Model):
                     'picking_type_id': rep.production_id.picking_type_id.id,
                 }
                 ids.append(self.env['stock.move'].create(vals).id)
+            # Create stock move for the actual product to repair
+            vals = {
+                    'name':'operation',
+                    'location_dest_id':rep.production_id.location_src_id.id,
+                    'location_id':rep.location_id.id,
+                    'product_id':rep.product_id.id,
+                    'product_uom':rep.product_uom.id,
+                    'product_uom_qty':rep.product_qty,
+                    'date':datetime.datetime.now(),
+                    'production_id': rep.production_id.id,
+                    'picking_type_id': rep.production_id.picking_type_id.id,
+                }
+            ids.append(self.env['stock.move'].create(vals).id)
+            
             rep.production_id.move_raw_ids = [(6,0,ids)]
 
             (rep.production_id.move_raw_ids | rep.production_id.move_finished_ids).write({
