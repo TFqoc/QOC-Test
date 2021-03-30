@@ -32,6 +32,7 @@
         'report/repair_templates_repair_order.xml',
         'views/rma_data.xml',
         'views/account_move.xml',
+        'views/sale.xml',
         'views/views.xml',
         'views/templates.xml',
     ],
