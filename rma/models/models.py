@@ -725,7 +725,7 @@ class RepairLine(models.Model):
     location_required = fields.Boolean(compute='_compute_location_required', store=True)
 
     @api.depends('product_id')
-    def _compute_loaction_required(self):
+    def _compute_location_required(self):
         if self.product_id and self.product_id.type == 'service':
             self.location_required = False
         else:
