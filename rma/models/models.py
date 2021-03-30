@@ -726,10 +726,11 @@ class RepairLine(models.Model):
 
     @api.depends('product_id')
     def _compute_location_required(self):
-        if self.product_id and self.product_id.type == 'service':
-            self.location_required = False
-        else:
-            self.location_required = True
+        for record in self:
+            if record.product_id and record.product_id.type == 'service':
+                record.location_required = False
+            else:
+                record.location_required = True
 
     @api.constrains('lot_id', 'product_id')
     def constrain_lot_id(self):
