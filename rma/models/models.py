@@ -720,7 +720,7 @@ class RepairLine(models.Model):
             line.price_subtotal = taxes['total_excluded']
 
     @api.onchange('type')
-    def onchange_operation_type(self):
+    def onchange_operation_type(self, check_product=True):
         """ On change of operation type it sets source location, destination location
         and to invoice field.
         @param product: Changed operation type.
@@ -731,7 +731,8 @@ class RepairLine(models.Model):
             self.location_id = False
             self.location_dest_id = False
         elif self.type == 'add':
-            self.onchange_product_id()
+            if check_product:
+                self.onchange_product_id()
             args = self.repair_id.company_id and [('company_id', '=', self.repair_id.company_id.id)] or []
             warehouse = self.env['stock.warehouse'].search(args, limit=1)
             self.location_id = warehouse.lot_stock_id
@@ -749,9 +750,7 @@ class RepairLine(models.Model):
         if not self.product_id or not self.product_uom_qty:
             return
         
-        if self.product_id.type == 'service':
-            self.location_id = False
-            self.location_dest_id = False
+        self.onchange_operation_type(False) # False is for don't call change_product again
 
         self = self.with_company(self.company_id)
         partner = self.repair_id.partner_id
