@@ -91,7 +91,7 @@ class RMA(models.Model):
         ("none", "No Invoice"),
         ("b4repair", "Before Repair"),
         ("after_repair", "After Repair")], string="Invoice Method",
-        default='after_repair', index=True, readonly=True, required=True,
+        default='none', index=True, readonly=True, required=True,
         states={'draft': [('readonly', False)]},
         help='Selecting \'Before Repair\' or \'After Repair\' will allow you to generate invoice before or after the repair is done respectively. \'No invoice\' means you don\'t want to generate invoice for this repair order.')
     invoice_id = fields.Many2one(
@@ -737,6 +737,9 @@ class RepairLine(models.Model):
                 warehouse = self.env['stock.warehouse'].search(args, limit=1)
                 self.location_id = warehouse.lot_stock_id
                 self.location_dest_id = self.env['stock.location'].search([('usage', '=', 'production'), ('company_id', '=', self.repair_id.company_id.id)], limit=1)
+            else:
+                self.location_id = False
+                self.location_dest_id = False
         else:
             self.price_unit = 0.0
             self.tax_id = False
@@ -749,6 +752,7 @@ class RepairLine(models.Model):
         uom of product, unit price and price subtotal. """
         if not self.product_id or not self.product_uom_qty:
             return
+        
         self = self.with_company(self.company_id)
         partner = self.repair_id.partner_id
         partner_invoice = self.repair_id.partner_invoice_id or partner
