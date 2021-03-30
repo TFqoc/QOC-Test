@@ -705,10 +705,10 @@ class RepairLine(models.Model):
         copy=False, readonly=True, check_company=True)
     location_id = fields.Many2one(
         'stock.location', 'Source Location',
-        index=True, required=True, check_company=True)
+        index=True, required=False, check_company=True)
     location_dest_id = fields.Many2one(
         'stock.location', 'Dest. Location',
-        index=True, required=True, check_company=True)
+        index=True, required=False, check_company=True)
     move_id = fields.Many2one(
         'stock.move', 'Inventory Move',
         copy=False, readonly=True)
