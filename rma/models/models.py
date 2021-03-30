@@ -732,14 +732,10 @@ class RepairLine(models.Model):
             self.location_dest_id = False
         elif self.type == 'add':
             self.onchange_product_id()
-            if self.product_id.type != 'service':
-                args = self.repair_id.company_id and [('company_id', '=', self.repair_id.company_id.id)] or []
-                warehouse = self.env['stock.warehouse'].search(args, limit=1)
-                self.location_id = warehouse.lot_stock_id
-                self.location_dest_id = self.env['stock.location'].search([('usage', '=', 'production'), ('company_id', '=', self.repair_id.company_id.id)], limit=1)
-            else:
-                self.location_id = False
-                self.location_dest_id = False
+            args = self.repair_id.company_id and [('company_id', '=', self.repair_id.company_id.id)] or []
+            warehouse = self.env['stock.warehouse'].search(args, limit=1)
+            self.location_id = warehouse.lot_stock_id
+            self.location_dest_id = self.env['stock.location'].search([('usage', '=', 'production'), ('company_id', '=', self.repair_id.company_id.id)], limit=1)
         else:
             self.price_unit = 0.0
             self.tax_id = False
@@ -753,6 +749,10 @@ class RepairLine(models.Model):
         if not self.product_id or not self.product_uom_qty:
             return
         
+        if self.product_id.type == 'service':
+            self.location_id = False
+            self.location_dest_id = False
+
         self = self.with_company(self.company_id)
         partner = self.repair_id.partner_id
         partner_invoice = self.repair_id.partner_invoice_id or partner
