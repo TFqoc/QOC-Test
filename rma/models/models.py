@@ -732,10 +732,11 @@ class RepairLine(models.Model):
             self.location_dest_id = False
         elif self.type == 'add':
             self.onchange_product_id()
-            args = self.repair_id.company_id and [('company_id', '=', self.repair_id.company_id.id)] or []
-            warehouse = self.env['stock.warehouse'].search(args, limit=1)
-            self.location_id = warehouse.lot_stock_id
-            self.location_dest_id = self.env['stock.location'].search([('usage', '=', 'production'), ('company_id', '=', self.repair_id.company_id.id)], limit=1)
+            if self.product_id.type != 'service':
+                args = self.repair_id.company_id and [('company_id', '=', self.repair_id.company_id.id)] or []
+                warehouse = self.env['stock.warehouse'].search(args, limit=1)
+                self.location_id = warehouse.lot_stock_id
+                self.location_dest_id = self.env['stock.location'].search([('usage', '=', 'production'), ('company_id', '=', self.repair_id.company_id.id)], limit=1)
         else:
             self.price_unit = 0.0
             self.tax_id = False
