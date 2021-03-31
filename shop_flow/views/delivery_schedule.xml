@@ -69,6 +69,7 @@
 
                   function get_more_rows(el){
                     get_index += 1;
+                    $("#spinner").show();
                     $.ajax({
                       url: "/shop_flow/get_more_data/",
                       data: {group:get_index,group_size:<t t-esc="batch_size"/>},
@@ -84,6 +85,7 @@
                         if (Boolean(code)){
                           $("#getmore").hide();
                         }
+                        $("#spinner").hide();
                       }
                     });
                   }
@@ -252,6 +254,7 @@
                         <tr onclick="get_more_rows(this)" id="getmore">
                           <td colspan="3">
                             <span id="getmore_text">Get More Rows</span>
+                            <i class="fas fa-sync fa-spin" id="spinner"></i>
                           </td>
                         </tr>
                       </tbody>
@@ -275,6 +278,7 @@
           <script>
             // class target is .dropdown-content
             $(".dropdown-content").hide();
+            $("#spinner").hide();
           </script>
           <!-- <script>
             function open_forecast(el, id){
