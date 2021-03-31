@@ -149,17 +149,15 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <t t-set="count_loaded" t-value="0" />
-                        <!-- <t t-set="orders" t-value="records.get_all_sale_orders()"/> -->
-
                         <t t-set="sort_key" t-value="lambda x: 'commitment_date' if x.commitment_date else 'expected_date' if x.expected_date else 'id'"/>
                         <t t-set="dummy" t-value="records._compute_expected_date()"/>
-                        <t t-set="orders" t-value="records.sorted(key=sort_key)[:80]"/>
+                        <t t-set="batch_size" t-value="80"/> <!-- Remember to change this on the controller if edited -->
+                        <t t-set="orders" t-value="records.sorted(key=sort_key)[:batch_size]"/>
                         <t t-foreach="orders" t-as="record">
                           <!-- Record is a Sales Order -->
+                          
                           <!-- <t t-set="is_delivered" t-value="record._compute_delivered() or record.is_delivered"/> -->
-                          <tr t-if="count_loaded &lt; 500"> <!-- and record.state == 'sale' and not is_delivered"> -->
-                            <t t-set="count_loaded" t-value="count_loaded + 1" />
+                          <tr>
                             <td>
                               <span class="fa fa-caret-right" onclick="toggle_dropdown(this)" style="padding-left: 2px; padding-right: 5px;" />
                               <span>
@@ -248,7 +246,7 @@
 
                           </tr>
                         </t>
-                        <tr onclick="get_more_rows(this)" id="getmore">
+                        <tr t-if="len(objects) > batch_size" onclick="get_more_rows(this)" id="getmore">
                           <td colspan="3">
                             <p id="getmore_text">Get More Rows</p>
                           </td>
