@@ -246,7 +246,7 @@
 
                           </tr>
                         </t>
-                        <tr t-if="len(orders) > batch_size" onclick="get_more_rows(this)" id="getmore">
+                        <tr onclick="get_more_rows(this)" id="getmore">
                           <td colspan="3">
                             <p id="getmore_text">Get More Rows</p>
                           </td>
