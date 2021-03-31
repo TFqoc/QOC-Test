@@ -261,7 +261,7 @@
 
     <menuitem id="rma_menu" name="RMAs" parent="mrp.menu_mrp_manufacturing" action="action_repair_order_tree" />
 
-
+<!-- Also in account_move.xml but that file won't load even though it's in the manifiest and the odoo.log file says it gets loaded -->
     <record id="view_account_move_rma" model="ir.ui.view">
       <field name="name">rma.account.move</field>
       <field name="model">account.move</field>
@@ -275,7 +275,6 @@
                       <field name="state" invisible="1"/>
                   </tree>
               </field>
-              <field name="id"/>
           </field>
       </field>
     </record>
