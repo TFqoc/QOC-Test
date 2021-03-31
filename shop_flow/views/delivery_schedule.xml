@@ -73,11 +73,12 @@
                       url: "/shop_flow/get_more_data/",
                       data: {group:get_index,group_size:<t t-esc="batch_size"/>},
                       success: function( result ) {
-                        data = result.substr(1);
-                        code = result.substr(0,1);
+                        index = result.search(/\S|$/) + 1;
+                        code = parseInt(result.substr(0,index));
+                        data = result.substr(index);
                         console.log("Code: " + code);
                         console.log("Data " + data);
-                        console.log("Data Slice " + data.slice(1));
+                        //console.log("Data Slice " + data.slice(1));
                         //rows = data.slice(1).join(' ');
                         $("#getmore").before(data);
                         if (Boolean(code)){
