@@ -260,37 +260,5 @@
     </record>
 
     <menuitem id="rma_menu" name="RMAs" parent="mrp.menu_mrp_manufacturing" action="action_repair_order_tree" />
-
-<!-- Also in account_move.xml but that file won't load even though it's in the manifiest and the odoo.log file says it gets loaded -->
-    <record id="view_account_move_rma" model="ir.ui.view">
-      <field name="name">rma.account.move</field>
-      <field name="model">account.move</field>
-      <field name="inherit_id" ref="account.view_move_form"/>
-      <field name="arch" type="xml">
-        <field name="payment_reference" position="after">
-              <field name="repair_ids" attrs="{'invisible':[('repair_ids', '=', [])]}">
-                  <tree>
-                      <field name="name" string="RMA"/>
-                      <field name="product_id" string="Product"/>
-                      <field name="state" invisible="1"/>
-                  </tree>
-              </field>
-          </field>
-      </field>
-    </record>
-
-    <record id="view_account_move_rma" model="ir.ui.view">
-      <field name="name">rma.sale.order</field>
-      <field name="model">sale.order</field>
-      <field name="inherit_id" ref="sale.view_order_form"/>
-      <field name="arch" type="xml">
-          <div name="button_box" position="inside">
-              <button class="oe_stat_button" type="object" name="get_repairs"
-                  icon="fa-wrench" attrs="{'invisible': [('repair_count', '=', 0)]}">
-                  <field string="Repairs" name="repair_count" widget="statinfo"/>
-              </button>
-          </div>
-      </field>
-    </record>
   </data>
 </odoo>
