@@ -72,13 +72,13 @@
                       url: "/shop_flow/get_more_data/",
                       data: {group:get_index},
                       success: function( result ) {
-                        data = result.split('&amp;');
-                        code = data[0];
+                        data = result.substr(1);
+                        code = result.substr(0,1);
                         console.log("Code: " + code);
                         console.log("Data " + data);
                         console.log("Data Slice " + data.slice(1));
-                        rows = data.slice(1).join(' ');
-                        $("#getmore").before(rows);
+                        //rows = data.slice(1).join(' ');
+                        $("#getmore").before(data);
                         if (Boolean(code)){
                           $("#getmore").hide();
                         }
@@ -246,10 +246,10 @@
 
                           </tr>
                         </t>
+                        <!-- <tr t-if="len(orders) > batch_size" onclick="get_more_rows(this)" id="getmore"> -->
                         <tr onclick="get_more_rows(this)" id="getmore">
                           <td colspan="3">
                             <span id="getmore_text">Get More Rows</span>
-                            <t t-set="debug" t-value="orders.debug()"/>
                           </td>
                         </tr>
                       </tbody>

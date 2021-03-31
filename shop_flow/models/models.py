@@ -38,8 +38,8 @@ class SaleOrder(models.Model):
                         break
             record.is_delivered = res
 
-    def debug(self):
-        _logger.info("Context: " + str(self.env.context))
+    # def debug(self):
+    #     _logger.info("Context: " + str(self.env.context))
 
     @api.model
     def get_all_sale_orders(self):
