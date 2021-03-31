@@ -249,12 +249,7 @@
                         <tr onclick="get_more_rows(this)" id="getmore">
                           <td colspan="3">
                             <span id="getmore_text">Get More Rows</span>
-                            
-                          </td>
-                        </tr>
-                        <tr>
-                          <td colspan="3">
-                            <button name="debug" string="Print Context" type="object" class="btn-primary"/>
+                            <t t-set="debug" t-value="orders.debug()"/>
                           </td>
                         </tr>
                       </tbody>
