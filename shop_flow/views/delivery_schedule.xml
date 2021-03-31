@@ -254,7 +254,7 @@
                         <tr onclick="get_more_rows(this)" id="getmore">
                           <td colspan="3">
                             <span id="getmore_text">Get More Rows</span>
-                            <i class="fas fa-sync fa-spin" id="spinner"></i>
+                            <i class="fa fa-spinner fa-spin" id="spinner"></i>
                           </td>
                         </tr>
                       </tbody>
