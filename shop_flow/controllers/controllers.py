@@ -49,7 +49,7 @@ class DeliveryScheduleManager(http.Controller):
     def get_so_data(self, **kw):
         # _logger.info("\nContext: " + str(http.request.env.context))
         group_number = int(kw['group'])
-        group_size = 80
+        group_size = int(kw['group_size'])
         is_done = False
         data  = http.request.env['sale.order'].search([])
         min = 0 + group_size*group_number

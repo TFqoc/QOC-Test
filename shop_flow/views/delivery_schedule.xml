@@ -6,6 +6,7 @@
       <field name="arch" type="xml">
         <qweb>
           <!-- <script src="../js/delivery_qweb.js"/>  -->
+          <t t-set="batch_size" t-value="5"/> <!-- Remember to change this on the controller if edited -->
           <script>
             function toggle_dropdown(el){
                     var target = el.parentElement.parentElement.nextElementSibling;
@@ -70,7 +71,7 @@
                     get_index += 1;
                     $.ajax({
                       url: "/shop_flow/get_more_data/",
-                      data: {group:get_index},
+                      data: {group:get_index,group_size:<t t-esc="batch_size"/>},
                       success: function( result ) {
                         data = result.substr(1);
                         code = result.substr(0,1);
@@ -151,7 +152,7 @@
                       <tbody>
                         <t t-set="sort_key" t-value="lambda x: 'commitment_date' if x.commitment_date else 'expected_date' if x.expected_date else 'id'"/>
                         <t t-set="dummy" t-value="records._compute_expected_date()"/>
-                        <t t-set="batch_size" t-value="80"/> <!-- Remember to change this on the controller if edited -->
+            
                         <t t-set="orders" t-value="records.sorted(key=sort_key)[:batch_size]"/>
                         <t t-foreach="orders" t-as="record">
                           <!-- Record is a Sales Order -->
