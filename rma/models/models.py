@@ -30,7 +30,7 @@ class RMA(models.Model):
         default='/',
         copy=False, required=True, readonly=True)
         # states={'confirmed': [('readonly', True)]})
-    sale_id = fields.Many2one('sale.order', string='Sale Order', readonly=True, required=True)
+    sale_id = fields.Many2one('sale.order', string='Sale Order', readonly=False, required=True)
     product_id = fields.Many2one(
         'product.product', string='Product to Repair',
         domain="[('type', 'in', ['product', 'consu']), '|', ('company_id', '=', company_id), ('company_id', '=', False)]",
