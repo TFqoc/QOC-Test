@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class ProductTemplate(models.Model):
@@ -37,7 +39,9 @@ class MailComposer(models.TransientModel):
 
     @api.model
     def create(self, vals):
+        _logger.info("CREATING WIZARD")
         if self.env.context['active_model'] == 'purchase.order':
+            _logger.info("GATHERING ATTACHMENTS")
             order = self.env.browse(self.env.context['active_id'])
             ids = []
             for line in order.order_line:
