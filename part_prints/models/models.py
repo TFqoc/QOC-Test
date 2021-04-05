@@ -47,6 +47,7 @@ class PurchaseOrder(models.Model):
             action.update({
                 'default_attachment_ids': [(6,0,ids)],
             })
+        return action
 
 class MailComposer(models.TransientModel):
     _inherit = 'mail.compose.message'
