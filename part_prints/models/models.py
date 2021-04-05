@@ -28,11 +28,11 @@ class MRP(models.Model):
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-    def action_rfq_send(self):
-        # Do some cool stuff to add all the attachments to the email
-        # purchase.py line 305
-        # Check the template used and see if you can edit that to put attachements there.
-        pass
+    # def action_rfq_send(self):
+    #     # Do some cool stuff to add all the attachments to the email
+    #     # purchase.py line 305
+    #     # Check the template used and see if you can edit that to put attachements there.
+    #     pass
 
 class MailComposer(models.TransientModel):
     _inherit = 'mail.compose.message'
