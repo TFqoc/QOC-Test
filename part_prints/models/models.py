@@ -35,7 +35,7 @@ class PurchaseOrder(models.Model):
         action = super(PurchaseOrder, self).action_rfq_send()
         if action['context']['active_model'] == 'purchase.order':
             _logger.info("GATHERING ATTACHMENTS")
-            order = self.env['purchase.order'].browse(self.env.context['active_id'])
+            order = self.env['purchase.order'].browse(action['context']['active_id'])
             ids = []
             for line in order.order_line:
                 if line.product_id.part_print:
