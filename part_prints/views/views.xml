@@ -22,7 +22,7 @@
         <xpath expr="//notebook/page[last()]" position="after">
           <page string="Part Print" name="part_print">
             <group>
-              <field name="part_print" widget="pdf_viewer"/>
+              <field name="part_print" string="" widget="pdf_viewer"/>
             </group>
           </page>
         </xpath>
