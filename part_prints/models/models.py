@@ -52,21 +52,7 @@ class PurchaseOrder(models.Model):
 class MailComposer(models.TransientModel):
     _inherit = 'mail.compose.message'
 
-    @api.model
-    def create(self, vals):
-        _logger.info("CREATING WIZARD")
-        if self.env.context['active_model'] == 'purchase.order':
-            _logger.info("GATHERING ATTACHMENTS")
-            order = self.env.browse(self.env.context['active_id'])
-            ids = []
-            for line in order.order_line:
-                if line.product_id.part_print:
-                    ids.append(self.env['ir.attachment'].create({
-                        'name':'Part Print',
-                        'type':'binary',
-                        'db_datas':line.product_id.part_print,
-                    }).id)
-            vals.update({
-                'attachment_ids': [(6,0,ids)],
-            })
-        return super(MailComposer, self).create(vals)
+    @api.onchange('attachment_ids')
+    def change_attachment_ids(self):
+        _logger.info("ATTACHMENTS WERE: " + str(self._origin.attachment_ids))
+        _logger.info("ATTACHMENTS ARE: " + str(self.attachment_ids))
