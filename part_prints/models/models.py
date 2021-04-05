@@ -44,7 +44,7 @@ class PurchaseOrder(models.Model):
                         'type':'binary',
                         'db_datas':line.product_id.part_print,
                     }).id)
-            action.update({
+            action.context.update({
                 'default_attachment_ids': [(6,0,ids)],
             })
         return action
