@@ -49,7 +49,7 @@ class PurchaseOrder(models.Model):
                     _logger.info("FOUND AN ATTACHMENT")
             _logger.info("UPDATING CONTEXT")
             action['context'].update({
-                'default_attachment_ids': [(6,0,ids)],
+                'default_attachment_ids': ids,# [(6,0,ids)],
                 'default_dummy_field': str(ids),
             })
         _logger.info("RETURNING ACTION WITH CONTEXT: " + str(action['context']))
@@ -60,24 +60,24 @@ class MailComposer(models.TransientModel):
 
     dummy_field = fields.Char()
 
-    @api.model
-    def default_get(self, fields):
-        _logger.info("GETTING DEFAULTS")
-        res = super(MailComposer, self).default_get(fields)
-        if 'default_attachment_ids' in self._context:
-            _logger.info("ADDING ATTACHMENTS: " + str(self._context['default_attachment_ids']))
-            attachment_ids = self._context['default_attachment_ids']
-            res.update({
-                'attachment_ids':attachment_ids,
-            })
-        return res
+    # @api.model
+    # def default_get(self, fields):
+    #     _logger.info("GETTING DEFAULTS")
+    #     res = super(MailComposer, self).default_get(fields)
+    #     if 'default_attachment_ids' in self._context:
+    #         _logger.info("ADDING ATTACHMENTS: " + str(self._context['default_attachment_ids']))
+    #         attachment_ids = self._context['default_attachment_ids']
+    #         res.update({
+    #             'attachment_ids':attachment_ids,
+    #         })
+    #     return res
 
-    @api.model
-    def create(self, vals):
-        res = super(MailComposer, self).create(vals)
-        # This method is never called
-        _logger.info("CREATE METHOD CALLED")
-        return res
+    # @api.model
+    # def create(self, vals):
+    #     res = super(MailComposer, self).create(vals)
+    #     # This method is never called
+    #     _logger.info("CREATE METHOD CALLED")
+    #     return res
 
     @api.onchange('attachment_ids')
     def change_attachment_ids(self):
