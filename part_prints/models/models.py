@@ -45,9 +45,11 @@ class PurchaseOrder(models.Model):
                         'db_datas':line.product_id.part_print,
                     }).id)
                     _logger.info("FOUND AN ATTACHMENT")
+            _logger.info("UPDATING CONTEXT")
             action['context'].update({
                 'default_attachment_ids': [(6,0,ids)],
             })
+        _logger.info("RETURNING ACTION")
         return action
 
 class MailComposer(models.TransientModel):
