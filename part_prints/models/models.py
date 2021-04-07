@@ -40,9 +40,11 @@ class PurchaseOrder(models.Model):
             for line in order.order_line:
                 if line.product_id.part_print:
                     ids.append(self.env['ir.attachment'].create({
-                        'name':'Part Print',
+                        'name':'Part Print.pdf',
                         'type':'binary',
-                        'db_datas':line.product_id.part_print,
+                        'res_model':'mail.compose.message',
+                        # 'db_datas':line.product_id.part_print,
+                        'datas':line.product_id.part_print,
                     }).id)
                     _logger.info("FOUND AN ATTACHMENT")
             _logger.info("UPDATING CONTEXT")
