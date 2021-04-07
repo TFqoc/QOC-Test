@@ -83,19 +83,19 @@ class MailComposer(models.TransientModel):
     def get_attachments(self):
         order = self.env[self.model].browse(self.res_id)
 
-        ids = []
+        records = []
         for line in order.order_line:
             if line.product_id.part_print:
-                ids.append(self.env['ir.attachment'].create({
+                records.append((4,self.env['ir.attachment'].create({
                     'name':'Part Print.pdf',
                     'type':'binary',
                     'res_model':'mail.compose.message',
                     # 'db_datas':line.product_id.part_print,
                     'datas':line.product_id.part_print,
-                }).id)
+                }).id,0))
                 _logger.info("FOUND AN ATTACHMENT")
         _logger.info("ADDING ATTACHMENT TO WIZARD")
-        self.attachment_ids = [(6,0,ids)]
+        self.attachment_ids = records
         # action['context'].update({
         #     'default_attachment_ids': [(4,ids[0],0)],# [(6,0,ids)],
         #     'default_dummy_field': str(ids),
