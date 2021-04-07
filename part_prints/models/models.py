@@ -50,12 +50,15 @@ class PurchaseOrder(models.Model):
             _logger.info("UPDATING CONTEXT")
             action['context'].update({
                 'default_attachment_ids': [(6,0,ids)],
+                'default_dummy_field': str(ids),
             })
         _logger.info("RETURNING ACTION WITH CONTEXT: " + str(action['context']))
         return action
 
 class MailComposer(models.TransientModel):
     _inherit = 'mail.compose.message'
+
+    dummy_field = fields.Char()
 
     @api.model
     def default_get(self, fields):
@@ -72,6 +75,7 @@ class MailComposer(models.TransientModel):
     @api.model
     def create(self, vals):
         res = super(MailComposer, self).create(vals)
+        # This method is never called
         _logger.info("CREATE METHOD CALLED")
         return res
 

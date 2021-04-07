@@ -40,6 +40,18 @@
         </field>
       </field>
     </record>
+
+    <record id="view_purchase_message_email" model="ir.ui.view">
+      <field name="name">part.message.compose</field>
+      <field name="model">mail.compose.message</field>
+      <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <field name="body" position="after">
+          <field name="dummy_field"/>
+        </field>
+      </field>
+    </record>
     <!-- explicit list view definition -->
 <!--
     <record model="ir.ui.view" id="part_prints.list">
