@@ -51,7 +51,7 @@ class PurchaseOrder(models.Model):
             action['context'].update({
                 'default_attachment_ids': [(6,0,ids)],
             })
-        _logger.info("RETURNING ACTION")
+        _logger.info("RETURNING ACTION WITH CONTEXT: " + str(action['context']))
         return action
 
 class MailComposer(models.TransientModel):
