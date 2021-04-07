@@ -49,7 +49,7 @@ class PurchaseOrder(models.Model):
                     _logger.info("FOUND AN ATTACHMENT")
             _logger.info("UPDATING CONTEXT")
             action['context'].update({
-                'default_attachment_ids': 'This is a bad assignment',# [(6,0,ids)],
+                'default_attachment_ids': (6,0,[922]),# [(6,0,ids)],
                 'default_dummy_field': str(ids),
             })
         _logger.info("RETURNING ACTION WITH CONTEXT: " + str(action['context']))
