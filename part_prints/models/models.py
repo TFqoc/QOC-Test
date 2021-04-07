@@ -79,6 +79,7 @@ class MailComposer(models.TransientModel):
     #     _logger.info("CREATE METHOD CALLED")
     #     return res
 
+    @api.onchange('dummy_field')
     def get_attachments(self):
         order = self.env[self.model].browse(self.res_id)
 
