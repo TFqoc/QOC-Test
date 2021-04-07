@@ -69,6 +69,12 @@ class MailComposer(models.TransientModel):
             })
         return res
 
+    @api.model
+    def create(self, vals):
+        res = super(MailComposer, self).create(vals)
+        _logger.info("CREATE METHOD CALLED")
+        return res
+
     @api.onchange('attachment_ids')
     def change_attachment_ids(self):
         _logger.info("ATTACHMENTS WERE: " + str(self._origin.attachment_ids))
