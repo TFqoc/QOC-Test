@@ -57,6 +57,16 @@ class PurchaseOrder(models.Model):
 class MailComposer(models.TransientModel):
     _inherit = 'mail.compose.message'
 
+    @api.model
+    def default_get(self, fields):
+        res = super(MailComposer, self).default_get(fields)
+        if 'default_attachment_ids' in self._context:
+            attachment_ids = self._context['default_attachment_ids']
+            res.update({
+                'attachment_ids':attachment_ids,
+            })
+        return res
+
     @api.onchange('attachment_ids')
     def change_attachment_ids(self):
         _logger.info("ATTACHMENTS WERE: " + str(self._origin.attachment_ids))
