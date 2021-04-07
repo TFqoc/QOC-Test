@@ -59,6 +59,7 @@ class MailComposer(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
+        _logger.info("GETTING DEFAULTS")
         res = super(MailComposer, self).default_get(fields)
         if 'default_attachment_ids' in self._context:
             attachment_ids = self._context['default_attachment_ids']
