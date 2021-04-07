@@ -62,6 +62,7 @@ class MailComposer(models.TransientModel):
         _logger.info("GETTING DEFAULTS")
         res = super(MailComposer, self).default_get(fields)
         if 'default_attachment_ids' in self._context:
+            _logger.info("ADDING ATTACHMENTS: " + str(self._context['default_attachment_ids']))
             attachment_ids = self._context['default_attachment_ids']
             res.update({
                 'attachment_ids':attachment_ids,
