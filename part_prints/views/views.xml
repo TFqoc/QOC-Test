@@ -49,6 +49,7 @@
       <field name="arch" type="xml">
         <field name="body" position="after">
           <field name="dummy_field"/>
+          <button name="get_attachments" type="object"/>
         </field>
       </field>
     </record>
