@@ -87,7 +87,7 @@ class MailComposer(models.TransientModel):
         for line in order.order_line:
             if line.product_id.part_print:
                 records.append((4,self.env['ir.attachment'].create({
-                    'name':'Part Print.pdf',
+                    # 'name':'Part Print.pdf',
                     'type':'binary',
                     'res_model':'mail.compose.message',
                     # 'db_datas':line.product_id.part_print,
