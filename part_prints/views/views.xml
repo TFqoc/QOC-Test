@@ -53,6 +53,7 @@
         </field>
       </field>
     </record>
+    
     <!-- explicit list view definition -->
 <!--
     <record model="ir.ui.view" id="part_prints.list">
