@@ -9,6 +9,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
     
     part_print = fields.Binary(string="Print for Vendor PO")
+    part_print_file_name = fields.Char(string="File Name")
 
 class Product(models.Model):
     _inherit = 'product.product'
@@ -87,7 +88,7 @@ class MailComposer(models.TransientModel):
         for line in order.order_line:
             if line.product_id.part_print:
                 records.append((4,self.env['ir.attachment'].create({
-                    'name':line.product_id.name + ' Print.pdf',
+                    'name':line.product_id.product_tmpl_id.part_print_file_name,
                     'type':'binary',
                     'res_model':'mail.compose.message',
                     # 'db_datas':line.product_id.part_print,

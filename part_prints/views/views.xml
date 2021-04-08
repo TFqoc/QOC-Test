@@ -9,6 +9,8 @@
       <field name="arch" type="xml">
         <field name="uom_po_id" position="after">
           <field name="part_print"/>
+          <field name="part_print" filename="part_print_file_name"/>
+          <field name="part_print_file_name" invisible="1"/>
         </field>
       </field>
     </record>
