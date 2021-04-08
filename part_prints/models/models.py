@@ -86,15 +86,9 @@ class MailComposer(models.TransientModel):
         records = []
         for line in order.order_line:
             if line.product_id.part_print:
-                records.append((4,self.env['ir.attachment'].create({
-                    # 'name':'Part Print.pdf',
-                    'type':'binary',
-                    'res_model':'mail.compose.message',
-                    # 'db_datas':line.product_id.part_print,
-                    'datas':line.product_id.part_print,
-                }).id,0))
-                _logger.info("FOUND AN ATTACHMENT")
-        _logger.info("ADDING ATTACHMENT TO WIZARD")
+                records.append((4,self.env['ir.attachment'].search([('res_model', '=', 'product.template'), ('res_id', '=', line.product_id.product_tmpl_id.id)], limit=1).id,0))
+                # _logger.info("FOUND AN ATTACHMENT")
+        # _logger.info("ADDING ATTACHMENT TO WIZARD")
         self.attachment_ids = records
 
 
