@@ -48,12 +48,11 @@
       <field name="type">form</field>
       <field name="arch" type="xml">
         <field name="body" position="after">
-          <field name="dummy_field"/>
-          <button name="get_attachments" type="object"/>
+          <field name="dummy_field" invisible="1"/>
         </field>
       </field>
     </record>
-    
+
     <!-- explicit list view definition -->
 <!--
     <record model="ir.ui.view" id="part_prints.list">
