@@ -41,7 +41,7 @@
       </field>
     </record>
 
-    <record id="view_purchase_message_email" model="ir.ui.view">
+    <!-- <record id="view_purchase_message_email" model="ir.ui.view">
       <field name="name">part.message.compose</field>
       <field name="model">mail.compose.message</field>
       <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
@@ -52,7 +52,7 @@
           <button name="get_attachments" type="object"/>
         </field>
       </field>
-    </record>
+    </record> -->
     <!-- explicit list view definition -->
 <!--
     <record model="ir.ui.view" id="part_prints.list">

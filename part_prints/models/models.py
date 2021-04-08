@@ -34,23 +34,23 @@ class PurchaseOrder(models.Model):
         # Check the template used and see if you can edit that to put attachements there.
         action = super(PurchaseOrder, self).action_rfq_send()
         if action['context']['active_model'] == 'purchase.order':
-            _logger.info("GATHERING ATTACHMENTS")
-            order = self.env['purchase.order'].browse(action['context']['active_id'])
-            ids = []
-            for line in order.order_line:
-                if line.product_id.part_print:
-                    ids.append(self.env['ir.attachment'].create({
-                        'name':'Part Print.pdf',
-                        'type':'binary',
-                        'res_model':'mail.compose.message',
-                        # 'db_datas':line.product_id.part_print,
-                        'datas':line.product_id.part_print,
-                    }).id)
-                    _logger.info("FOUND AN ATTACHMENT")
-            _logger.info("UPDATING CONTEXT")
+            # _logger.info("GATHERING ATTACHMENTS")
+            # order = self.env['purchase.order'].browse(action['context']['active_id'])
+            # ids = []
+            # for line in order.order_line:
+            #     if line.product_id.part_print:
+            #         ids.append(self.env['ir.attachment'].create({
+            #             'name':'Part Print.pdf',
+            #             'type':'binary',
+            #             'res_model':'mail.compose.message',
+            #             # 'db_datas':line.product_id.part_print,
+            #             'datas':line.product_id.part_print,
+            #         }).id)
+            #         _logger.info("FOUND AN ATTACHMENT")
+            # _logger.info("UPDATING CONTEXT")
             action['context'].update({
-                'default_attachment_ids': [(4,ids[0],0)],# [(6,0,ids)],
-                'default_dummy_field': str(ids),
+                # 'default_attachment_ids': [(4,ids[0],0)],# [(6,0,ids)], This line doesn't work for setting the default values for some reason.
+                'default_dummy_field': 'dummy', # Triggers the onchange method
             })
         _logger.info("RETURNING ACTION WITH CONTEXT: " + str(action['context']))
         return action
@@ -79,7 +79,7 @@ class MailComposer(models.TransientModel):
     #     _logger.info("CREATE METHOD CALLED")
     #     return res
 
-    @api.onchange('dummy_field')
+    @api.onchange('dummy_field') # Dummy field will only change once when default is set from the action call.
     def get_attachments(self):
         order = self.env[self.model].browse(self.res_id)
 
@@ -96,10 +96,6 @@ class MailComposer(models.TransientModel):
                 _logger.info("FOUND AN ATTACHMENT")
         _logger.info("ADDING ATTACHMENT TO WIZARD")
         self.attachment_ids = records
-        # action['context'].update({
-        #     'default_attachment_ids': [(4,ids[0],0)],# [(6,0,ids)],
-        #     'default_dummy_field': str(ids),
-        # })
 
 
     @api.onchange('attachment_ids')
