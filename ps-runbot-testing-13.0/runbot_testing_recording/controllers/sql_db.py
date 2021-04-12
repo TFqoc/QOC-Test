@@ -12,7 +12,7 @@ def new_execute(self, query, params=None, log_exceptions=None):
     result = old_execute(self, query, params, log_exceptions)
 
     #Prints the type of the query as a debug message.
-    _logger.debug("QUERY IS A", type(query))
+    # _logger.debug("QUERY IS A", type(query))
 
     string_query = query if isinstance(query,str) else query.as_string(Cursor)
 
